@@ -1,0 +1,19 @@
+{
+  "name": "azdevops-ext-changelog-builder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joachim Dalen <joachim@dalenapps.no> (https://joachimdalen.no/)",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^16.11.11",
+    "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "chalk": "^5.0.0",
+    "mustache": "^4.2.0"
+  }
+}
