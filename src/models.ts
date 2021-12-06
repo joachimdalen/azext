@@ -3,7 +3,7 @@ export interface ChangelogDefinition {
   publishDate: string;
   modules: ChangelogModule[];
 }
-export type ChangelogArea = "feature" | "fix" | "tests" | "other";
+export type ChangelogArea = "feature" | "fix" | "tests" | "other" | "docs";
 export interface ChangelogModule {
   version: string;
   name: string;

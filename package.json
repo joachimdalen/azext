@@ -1,5 +1,5 @@
 {
-  "name": "azdevops-ext-changelog-builder",
+  "name": "@joachimdalen/azdevops-ext-changelog-builder",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,13 +9,17 @@
   "author": "Joachim Dalen <joachim@dalenapps.no> (https://joachimdalen.no/)",
   "license": "ISC",
   "devDependencies": {
+    "@types/command-line-args": "^5.2.0",
     "@types/mustache": "^4.1.2",
     "@types/node": "^16.11.11",
+    "@types/prettier": "^2.4.2",
     "typescript": "^4.5.2"
   },
   "dependencies": {
     "@octokit/rest": "^18.12.0",
     "chalk": "^4.1.2",
-    "mustache": "^4.2.0"
+    "command-line-args": "^5.2.0",
+    "mustache": "^4.2.0",
+    "prettier": "^2.5.1"
   }
 }
