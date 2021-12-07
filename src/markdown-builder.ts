@@ -1,5 +1,4 @@
 import { EOL } from 'os'
-
 export default class MarkdownBuilder {
   private _content: string
   constructor() {
@@ -16,6 +15,9 @@ export default class MarkdownBuilder {
   }
   addListItem(text: string) {
     this._content = this._content + `- ${text}` + EOL
+  }
+  addSubListItem(text: string) {
+    this._content = this._content + `\t - ${text}` + EOL
   }
   addRaw(text: string) {
     this._content = this._content + text + EOL

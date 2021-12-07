@@ -18,23 +18,32 @@ class GitHub {
     }
   }
   async getIssues(id: number, repo: string): Promise<GitHubIssue | undefined> {
-    console.log(`ℹ️ Loading issue ${chalk.cyan(id)} from GitHub`);
+    console.log(`ℹ️ Loading issue ${chalk.cyan(id)} from GitHub`)
 
-    const repos = this.getRepoParts(repo)
-    const res = await this._octokit.rest.issues.get({
-      issue_number: id,
-      repo: repos.repo,
-      owner: repos.owner,
-    })
+    try {
+      const repos = this.getRepoParts(repo)
+      const res = await this._octokit.rest.issues.get({
+        issue_number: id,
+        repo: repos.repo,
+        owner: repos.owner,
+      })
 
-    if (res.status === 200) {
-      const data = res.data
-      return {
-        id: data.id,
-        number: data.number,
-        sumitter: data.user?.login,
-        title: data.title,
-        url: data.html_url,
+      if (res.status === 200) {
+        const data = res.data
+        return {
+          id: data.id,
+          number: data.number,
+          sumitter: data.user?.login,
+          title: data.title,
+          url: data.html_url,
+        }
+      }
+    } catch (error) {
+      const err = error as any
+      if (err?.status) {
+        if (err.status === 404) {
+          console.log(chalk.redBright(`Failed to find issue with id: ${id}`))
+        }
       }
     }
 
