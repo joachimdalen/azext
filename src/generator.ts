@@ -1,5 +1,8 @@
-import GitHub from './github'
-import { ChangelogCache, ChangelogConfig, ChangelogDefinition } from './models'
+import {
+  ChangelogConfig,
+  ChangelogDefinition,
+  GeneratorContext,
+} from './models'
 import fs from 'fs/promises'
 import Replacer from './replacer'
 import { GitHubIssue } from './types'
@@ -7,78 +10,27 @@ import commandLineArgs from 'command-line-args'
 import cliArgs, { CliOptions } from './cli-args'
 import MarkdownBuilder from './markdown-builder'
 import prettier from 'prettier'
-interface GeneratorContext {
-  config: ChangelogConfig
-  issues: Map<number, GitHubIssue>
-  tags: string[]
-}
+import { MetaDataLoader } from './metadata'
+import { isNumber } from './utils'
 
-const isNumber = (item: number | undefined): item is number => {
-  return !!item
-}
-const isIssue = (item: GitHubIssue | undefined): item is GitHubIssue => {
-  return !!item
-}
 class Generator {
-  private readonly _github: GitHub
-  constructor() {
-    this._github = new GitHub()
-  }
   async generateChangelog(options: CliOptions) {
+    const metadataLoader = new MetaDataLoader(options)
     const configString = await fs.readFile(options.config)
     const logString = await fs.readFile(options.log)
 
     const config: ChangelogConfig = JSON.parse(configString.toString())
     const log: ChangelogDefinition[] = JSON.parse(logString.toString())
 
-    const issueResponse = await Promise.all(
-      log
-        .flatMap((x) => x.modules.flatMap((x) => x.changes.map((x) => x.issue)))
-        .filter(isNumber)
-        .map((x) => this._github.getIssues(x, config.repository)),
-    )
-    const issues = issueResponse.filter(isIssue)
-    const pullRequestIds = log
-      .flatMap((x) =>
-        x.modules.flatMap((x) => x.changes.map((x) => x.pullRequest)),
-      )
-      .filter(isNumber)
+    const context = await metadataLoader.loadMetadata(config, log)
 
-    const githubIssues = new Map<number, GitHubIssue>(
-      issues.map((i) => [i.number, i]),
-    )
-
-    const distinctTags = log
-      .flatMap((x) =>
-        x.modules.flatMap((y) => y.changes.flatMap((z) => z.type)),
-      )
-      .filter((value, index, self) => {
-        return self.indexOf(value) === index
-      })
-
-    const context: GeneratorContext = {
-      config,
-      issues: githubIssues,
-      tags: distinctTags,
-    }
-
-    // const id = issues[0];
-    // if (id !== undefined) {
-    //   const issue = await this._github.getIssues(id, config.repository);
-    //   console.log(issue);
-    // }
     let fileContent = this.buildFile(context, log)
     if (options.noFormat === false) {
       fileContent = prettier.format(fileContent, { parser: 'markdown' })
     }
 
     await fs.writeFile(options.output, fileContent)
-    if (options.generateCache) {
-      const cache: ChangelogCache = {
-        issues: [...githubIssues.values()],
-      }
-      await fs.writeFile('changelog-cache.json', JSON.stringify(cache, null, 2))
-    }
+    await metadataLoader.writeMetadataCache(context)
   }
 
   buildFile(context: GeneratorContext, logs: ChangelogDefinition[]): string {

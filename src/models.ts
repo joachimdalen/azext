@@ -1,4 +1,4 @@
-import { GitHubIssue } from './types'
+import { GitHubIssue, GitHubPullRequest } from './types'
 
 export interface ChangelogDefinition {
   version: string
@@ -19,7 +19,8 @@ export interface ChangelogEntry {
 }
 
 export interface ChangelogCache {
-  issues: GitHubIssue[]
+  issues?: GitHubIssue[]
+  pullRequests?: GitHubPullRequest[]
 }
 
 export interface ChangelogConfig {
@@ -37,4 +38,10 @@ export interface ChangelogConfig {
   useDescriptiveIssues: boolean
   attributionTitleFormat: string
   attributionSubTitle: string
+}
+export interface GeneratorContext {
+  config: ChangelogConfig
+  issues: Map<number, GitHubIssue>
+  pullRequests: Map<number, GitHubPullRequest>
+  tags: string[]
 }
