@@ -37,7 +37,7 @@ class GitHub {
         return {
           id: data.id,
           number: data.number,
-          sumitter: data.user?.login,
+          submitter: data.user?.login,
           title: data.title,
           url: data.html_url
         };
@@ -74,7 +74,7 @@ class GitHub {
         return {
           id: data.id,
           number: data.number,
-          sumitter: data.user?.login,
+          submitter: data.user?.login,
           title: data.title,
           url: data.html_url
         };
