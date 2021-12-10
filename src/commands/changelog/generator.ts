@@ -46,36 +46,38 @@ class Generator {
   buildFile(context: GeneratorContext, logs: ChangelogDefinition[]): string {
     var builder = new MarkdownBuilder();
     var replacer = new Replacer();
+    const cfg = context.config;
     builder.addHeader(
-      context.config.changelogTitle.format,
-      context.config.changelogTitle.size
+      replacer.replaceEmojisIf(
+        cfg.changelogTitle.format,
+        cfg.replaceEmojis.changelogTitle
+      ),
+      cfg.changelogTitle.size
     );
 
     const getSection = (tags: string[], release: ChangelogDefinition) => {
       builder.addNewLine();
+      const formattedHeader = replacer.replace(cfg.releaseTitleFormat.format, {
+        version: release.version,
+        publishDate: release.publishDate
+      });
       builder.addHeader(
-        replacer.replace(context.config.releaseTitleFormat.format, {
-          version: release.version,
-          publishDate: release.publishDate
-        }),
-        context.config.releaseTitleFormat.size
+        replacer.replaceEmojisIf(
+          formattedHeader,
+          cfg.replaceEmojis.releaseTitle
+        ),
+        cfg.releaseTitleFormat.size
       );
 
       if (release.summary) {
         builder.addRaw(
-          replacer.replaceEmojisIf(
-            release.summary,
-            context.config.replaceEmojis.summary
-          )
+          replacer.replaceEmojisIf(release.summary, cfg.replaceEmojis.summary)
         );
         builder.addNewLine();
       }
       if (release.notes) {
         builder.addNote(
-          replacer.replaceEmojisIf(
-            release.notes,
-            context.config.replaceEmojis.notes
-          )
+          replacer.replaceEmojisIf(release.notes, cfg.replaceEmojis.notes)
         );
 
         builder.addNewLine();
@@ -89,10 +91,10 @@ class Generator {
         if (change.length > 0) {
           builder.addHeader(
             replacer.replaceEmojisIf(
-              context.config.tagMapping[tag],
-              context.config.replaceEmojis.tags
+              cfg.tagMapping[tag],
+              cfg.replaceEmojis.tags
             ),
-            context.config.tagSize
+            cfg.tagSize
           );
         }
 
@@ -100,18 +102,30 @@ class Generator {
           const change = rm.changes.filter((x) => x.type === tag);
 
           if (change.length > 0) {
-            builder.addHeader(
-              replacer.replace(context.config.moduleTitleFormat.format, {
+            const formattedHeader = replacer.replace(
+              cfg.moduleTitleFormat.format,
+              {
                 name: rm.name,
                 version: rm.version
-              }),
-              context.config.moduleTitleFormat.size
+              }
+            );
+            builder.addHeader(
+              replacer.replaceEmojisIf(
+                formattedHeader,
+                cfg.replaceEmojis.moduleTitle
+              ),
+              cfg.moduleTitleFormat.size
             );
 
             change.forEach((c) => {
               if (c.issue !== undefined) {
                 const ghIssue = context.issues.get(c.issue);
-                builder.addListItem(c.description);
+                builder.addListItem(
+                  replacer.replaceEmojisIf(
+                    c.description,
+                    cfg.replaceEmojis.githubIssues
+                  )
+                );
 
                 if (ghIssue) {
                   builder.addSubListItem(
@@ -119,7 +133,12 @@ class Generator {
                   );
                 }
               } else {
-                builder.addListItem(c.description);
+                builder.addListItem(
+                  replacer.replaceEmojisIf(
+                    c.description,
+                    cfg.replaceEmojis.githubIssues
+                  )
+                );
               }
             });
           }
@@ -133,17 +152,24 @@ class Generator {
         .filter((x) => moduleIssues.includes(x.number))
         .filter((x) => {
           if (x.submitter === undefined) return false;
-          return !context.config.knownAuthors.includes(x.submitter);
+          return !cfg.knownAuthors.includes(x.submitter);
         });
 
       if (nonAuthors.length > 0) {
         builder.addHeader(
-          context.config.attributionTitleFormat.format,
-          context.config.attributionTitleFormat.size
+          replacer.replaceEmojisIf(
+            cfg.attributionTitleFormat.format,
+            cfg.replaceEmojis.attributionTitle
+          ),
+          cfg.attributionTitleFormat.size
         );
         builder.addHeader(
-          context.config.attributionSubTitle.format,
-          context.config.attributionSubTitle.size
+          replacer.replaceEmojisIf(
+            cfg.attributionSubTitle.format,
+            cfg.replaceEmojis.attributionSubTitle
+          ),
+
+          cfg.attributionSubTitle.size
         );
 
         nonAuthors.forEach((x) =>
@@ -166,7 +192,12 @@ class Generator {
 
     const getIssueLink = (issue: GitHubIssue, config: ChangelogConfig) => {
       const base = config.useDescriptiveIssues
-        ? `[${escapeText(issue.title)}](${issue.url})`
+        ? `[${escapeText(
+            replacer.replaceEmojisIf(
+              issue.title,
+              cfg.replaceEmojis.githubIssues
+            )
+          )}](${issue.url})`
         : `[GH#${issue.number}](${issue.url})`;
       if (issue.submitter === undefined) return base;
       if (config.knownAuthors.includes(issue.submitter)) return base;
