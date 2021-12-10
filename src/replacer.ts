@@ -1,6 +1,6 @@
 class Replacer {
-  private readonly _openTag = "{{";
-  private readonly _closeTag = "}}";
+  private readonly _openTag = '{{';
+  private readonly _closeTag = '}}';
 
   public replace(template: string, context: any) {
     const keys = Object.keys(context);

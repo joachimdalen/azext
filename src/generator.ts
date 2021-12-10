@@ -1,138 +1,162 @@
-import {
-  ChangelogConfig,
-  ChangelogDefinition,
-  GeneratorContext,
-} from './models'
-import fs from 'fs/promises'
-import Replacer from './replacer'
-import { GitHubIssue } from './types'
-import commandLineArgs from 'command-line-args'
-import cliArgs, { CliOptions } from './cli-args'
-import MarkdownBuilder from './markdown-builder'
-import prettier from 'prettier'
-import { MetaDataLoader } from './metadata'
-import { isNumber } from './utils'
+import fs from 'fs/promises';
+import Replacer from './replacer';
+
+import commandLineArgs from 'command-line-args';
+import cliArgs, { CliOptions } from './cli-args';
+import MarkdownBuilder from './markdown-builder';
+import prettier from 'prettier';
+import { MetaDataLoader } from './metadata';
+import { isNumber } from './utils';
+import chalk from 'chalk';
+import ChangelogConfig from './models/changelog-config';
+import ChangelogDefinition from './models/changelog-definition';
+import GeneratorContext from './models/generator-context';
+import GitHubIssue from './models/github-issue';
 
 class Generator {
   async generateChangelog(options: CliOptions) {
-    const metadataLoader = new MetaDataLoader(options)
-    const configString = await fs.readFile(options.config)
-    const logString = await fs.readFile(options.log)
+    const metadataLoader = new MetaDataLoader(options);
+    const configString = await fs.readFile(options.config);
+    const logString = await fs.readFile(options.log);
 
-    const config: ChangelogConfig = JSON.parse(configString.toString())
-    const log: ChangelogDefinition[] = JSON.parse(logString.toString())
+    const config: ChangelogConfig = JSON.parse(configString.toString());
+    const log: ChangelogDefinition[] = JSON.parse(logString.toString());
 
-    const context = await metadataLoader.loadMetadata(config, log)
+    const context = await metadataLoader.loadMetadata(config, log);
 
-    let fileContent = this.buildFile(context, log)
-    if (options.noFormat === false) {
-      fileContent = prettier.format(fileContent, { parser: 'markdown' })
+    const filteredLogs =
+      options.version !== undefined
+        ? log.filter((z) => z.version === options.version)
+        : log;
+
+    if (filteredLogs.length === 0) {
+      console.log(chalk.redBright('No changelog entries found'));
+      return;
     }
 
-    await fs.writeFile(options.output, fileContent)
-    await metadataLoader.writeMetadataCache(context)
+    let fileContent = this.buildFile(context, filteredLogs);
+    if (options.noFormat === false) {
+      fileContent = prettier.format(fileContent, { parser: 'markdown' });
+    }
+
+    await fs.writeFile(options.output, fileContent);
+    await metadataLoader.writeMetadataCache(context);
   }
 
   buildFile(context: GeneratorContext, logs: ChangelogDefinition[]): string {
-    var builder = new MarkdownBuilder()
-    var replacer = new Replacer()
-    builder.addH1('Changelog')
+    var builder = new MarkdownBuilder();
+    var replacer = new Replacer();
+    builder.addHeader(
+      context.config.changelogTitle.format,
+      context.config.changelogTitle.size
+    );
 
     const getSection = (tags: string[], release: ChangelogDefinition) => {
-      builder.addNewLine()
-      builder.addRaw(
-        replacer.replace(context.config.releaseTitleFormat, {
+      builder.addNewLine();
+      builder.addHeader(
+        replacer.replace(context.config.releaseTitleFormat.format, {
           version: release.version,
-          publishDate: release.publishDate,
+          publishDate: release.publishDate
         }),
-      )
+        context.config.releaseTitleFormat.size
+      );
 
       tags.forEach((tag) => {
         const change = release.modules.flatMap((y) =>
-          y.changes.filter((x) => x.type === tag),
-        )
+          y.changes.filter((x) => x.type === tag)
+        );
 
         if (change.length > 0) {
-          builder.addRaw(context.config.tagMapping[tag])
+          builder.addHeader(
+            context.config.tagMapping[tag],
+            context.config.tagSize
+          );
         }
 
         release.modules.forEach((rm) => {
-          const change = rm.changes.filter((x) => x.type === tag)
+          const change = rm.changes.filter((x) => x.type === tag);
 
           if (change.length > 0) {
-            builder.addRaw(
-              replacer.replace(context.config.moduleTitleFormat, {
+            builder.addHeader(
+              replacer.replace(context.config.moduleTitleFormat.format, {
                 name: rm.name,
-                version: rm.version,
+                version: rm.version
               }),
-            )
+              context.config.moduleTitleFormat.size
+            );
 
             change.forEach((c) => {
               if (c.issue !== undefined) {
-                const ghIssue = context.issues.get(c.issue)
-                builder.addListItem(c.description)
+                const ghIssue = context.issues.get(c.issue);
+                builder.addListItem(c.description);
 
                 if (ghIssue) {
                   builder.addSubListItem(
-                    `Reported in ${getIssueLink(ghIssue, context.config)}`,
-                  )
+                    `Reported in ${getIssueLink(ghIssue, context.config)}`
+                  );
                 }
               } else {
-                builder.addListItem(c.description)
+                builder.addListItem(c.description);
               }
-            })
+            });
           }
-        })
-      })
+        });
+      });
 
       const moduleIssues = release.modules
         .flatMap((x) => x.changes.flatMap((y) => y.issue))
-        .filter(isNumber)
+        .filter(isNumber);
       const nonAuthors = [...context.issues.values()]
         .filter((x) => moduleIssues.includes(x.number))
         .filter((x) => {
-          if (x.sumitter === undefined) return false
-          return !context.config.knownAuthors.includes(x.sumitter)
-        })
+          if (x.sumitter === undefined) return false;
+          return !context.config.knownAuthors.includes(x.sumitter);
+        });
 
       if (nonAuthors.length > 0) {
-        builder.addRaw(context.config.attributionTitleFormat)
-        builder.addRaw(context.config.attributionSubTitle)
+        builder.addHeader(
+          context.config.attributionTitleFormat.format,
+          context.config.attributionTitleFormat.size
+        );
+        builder.addHeader(
+          context.config.attributionSubTitle.format,
+          context.config.attributionSubTitle.size
+        );
 
         nonAuthors.forEach((x) =>
           builder.addListItem(
-            `[${x.sumitter}](https://github.com/${x.sumitter})`,
-          ),
-        )
+            `[${x.sumitter}](https://github.com/${x.sumitter})`
+          )
+        );
       }
 
-      builder.addSplitter()
-    }
+      builder.addSplitter();
+    };
 
     const escapeText = (text: string): string => {
       return text
         .replaceAll('[', '\\[')
         .replaceAll(']', '\\]')
         .replaceAll('<', '\\<')
-        .replaceAll('>', '\\>')
-    }
+        .replaceAll('>', '\\>');
+    };
 
     const getIssueLink = (issue: GitHubIssue, config: ChangelogConfig) => {
       const base = config.useDescriptiveIssues
         ? `[${escapeText(issue.title)}](${issue.url})`
-        : `[GH#${issue.number}](${issue.url})`
-      if (issue.sumitter === undefined) return base
-      if (config.knownAuthors.includes(issue.sumitter)) return base
-      const author = `[${issue.sumitter}](https://github.com/${issue.sumitter})`
-      return `${base} - Thanks ${author}`
-    }
-    logs.forEach((l) => getSection(context.tags, l))
-    return builder.get()
+        : `[GH#${issue.number}](${issue.url})`;
+      if (issue.sumitter === undefined) return base;
+      if (config.knownAuthors.includes(issue.sumitter)) return base;
+      const author = `[${issue.sumitter}](https://github.com/${issue.sumitter})`;
+      return `${base} - Thanks ${author}`;
+    };
+    logs.forEach((l) => getSection(context.tags, l));
+    return builder.get();
   }
 }
 
 const parseOptions = (): CliOptions => {
-  const options = commandLineArgs(cliArgs)
+  const options = commandLineArgs(cliArgs);
 
   return {
     output: options.output,
@@ -143,7 +167,8 @@ const parseOptions = (): CliOptions => {
     fromCache: options['from-cache'],
     cacheOutput: options['cache-output'],
     cacheFile: options['cache-file'],
-  }
-}
+    version: options.version
+  };
+};
 
-new Generator().generateChangelog(parseOptions()).then(() => console.log('ok'))
+new Generator().generateChangelog(parseOptions()).then(() => console.log('ok'));
