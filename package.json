@@ -11,6 +11,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/command-line-args": "^5.2.0",
+    "@types/command-line-usage": "^5.0.2",
     "@types/mustache": "^4.1.2",
     "@types/node": "^16.11.11",
     "@types/node-emoji": "^1.8.1",
@@ -25,6 +26,7 @@
     "@octokit/rest": "^18.12.0",
     "chalk": "^4.1.2",
     "command-line-args": "^5.2.0",
+    "command-line-usage": "^6.1.1",
     "mustache": "^4.2.0",
     "node-emoji": "^1.11.0",
     "prettier": "^2.5.1"

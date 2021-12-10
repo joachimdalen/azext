@@ -1,38 +1,56 @@
-import commandLineArgs from 'command-line-args';
+import commandLineArgs, { OptionDefinition } from 'command-line-args';
+import commandLineUsage, { Section } from 'command-line-usage';
 import ChangelogCommand from './commands/changelog/changelog-command';
-import GenerateChangelogCommand from './commands/changelog/sub-commands/generate-changelog-command';
-import ICommand from './commands/i-command';
+import {
+  helpCommand,
+  helpOption,
+  helpOptionUsage,
+  introSections,
+  IOptionWithHelp
+} from './constants';
 
-const mainDefinitions = [{ name: 'command', defaultOption: true }];
-const mainOptions = commandLineArgs(mainDefinitions, {
+const mainDefinitions: OptionDefinition[] = [
+  { name: 'command', defaultOption: true },
+  helpOption
+];
+const mainOptions: IOptionWithHelp = commandLineArgs(mainDefinitions, {
   stopAtFirstUnknown: true
-});
+}) as IOptionWithHelp;
+
+const sections: Section[] = [
+  ...introSections,
+  {
+    header: 'Command List',
+    content: [
+      { name: 'init', summary: 'Generate default config folder' },
+      { name: 'changelog', summary: 'Tools to manage and generate changelogs' },
+      helpCommand
+    ]
+  },
+  {
+    header: 'Options',
+    optionList: [helpOptionUsage]
+  }
+];
+
 const argv = mainOptions._unknown || [];
 
 console.log('mainOptions\n===========');
 console.log(mainOptions);
 
-if (mainOptions.command === 'changelog') {
-  new ChangelogCommand().parse(argv);
-}
+/* if (mainOptions.help) {
+  const usage = commandLineUsage(sections);
+  console.log(usage);
+} */
 
-interface RootCommandMapping {
-  [key: string]: CommandMapping;
-}
-
-interface CommandMapping {
-  base: ICommand;
-  subCommands?: {
-    [key: string]: CommandMapping;
-  };
-}
-const commandMapping: RootCommandMapping = {
-  changelog: {
-    base: new ChangelogCommand(),
-    subCommands: {
-      generate: {
-        base: new GenerateChangelogCommand()
-      }
-    }
+switch (mainOptions.command) {
+  case 'help': {
+    const usage = commandLineUsage(sections);
+    console.log(usage);
+    break;
   }
-};
+  case 'changelog': {
+    new ChangelogCommand().parse(argv);
+    break;
+  }
+}
