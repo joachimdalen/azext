@@ -1,15 +1,14 @@
 import chalk from 'chalk';
 import { CliOptions } from './cli-args';
 import GitHub from './github';
-import {
-  ChangelogCache,
-  ChangelogConfig,
-  ChangelogDefinition,
-  GeneratorContext
-} from './models';
-import { GitHubIssue, GitHubPullRequest } from './types';
 import fs from 'fs/promises';
 import { isIssue, isPullRequest, isNumber } from './utils';
+import ChangelogCache from './models/changelog-cache';
+import ChangelogConfig from './models/changelog-config';
+import ChangelogDefinition from './models/changelog-definition';
+import GeneratorContext from './models/generator-context';
+import GitHubIssue from './models/github-issue';
+import GitHubPullRequest from './models/github-pull-request';
 
 export class MetaDataLoader {
   private readonly _github: GitHub;

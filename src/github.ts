@@ -1,7 +1,9 @@
 import { Octokit } from '@octokit/rest';
 import chalk from 'chalk';
 import { Endpoints } from '@octokit/types';
-import { GitHubIssue, GitHubPullRequest } from './types';
+import GitHubIssue from './models/github-issue';
+import GitHubPullRequest from './models/github-pull-request';
+
 type GithubIssueRequest =
   Endpoints['GET /repos/{owner}/{repo}/issues/{issue_number}']['response'];
 type GithubPrRequest =
