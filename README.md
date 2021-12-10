@@ -1,4 +1,4 @@
-# Azure DevOps Extension Changelog Generator
+# Azure DevOps Extension Tools
 
 
 ## Options

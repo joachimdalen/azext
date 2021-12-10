@@ -1,5 +1,5 @@
 import commandLineArgs from 'command-line-args';
-import { ICommand } from '../changelog-command';
+import ICommand from '../../i-command';
 import options, { CliOptions } from '../cli-args';
 import Generator from '../generator';
 

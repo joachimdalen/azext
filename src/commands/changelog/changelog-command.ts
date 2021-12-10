@@ -1,13 +1,12 @@
 import commandLineArgs from 'command-line-args';
-import GenerateChangelogCommand from './commands/generate-changelog-command';
-
-export interface ICommand {
-  parse: (argv: string[]) => void;
-}
+import ICommand from '../i-command';
+import GenerateChangelogCommand from './sub-commands/generate-changelog-command';
 
 class ChangelogCommand implements ICommand {
   parse(args: string[]) {
-    const changelogDefinitions = [{ name: 'changelogcommand', defaultOption: true }];
+    const changelogDefinitions = [
+      { name: 'changelogcommand', defaultOption: true }
+    ];
     const changelogOptions = commandLineArgs(changelogDefinitions, {
       argv: args
     });
