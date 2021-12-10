@@ -3,5 +3,5 @@ export default interface GitHubPullRequest {
   number: number;
   title: string;
   url: string;
-  sumitter?: string;
+  submitter?: string;
 }

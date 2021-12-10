@@ -1,7 +1,7 @@
 {
-  "name": "@joachimdalen/azdevops-ext-changelog-builder",
+  "name": "@joachimdalen/azext",
   "version": "1.0.0",
-  "description": "",
+  "description": "A collection of utilities to help with extension development for Azure DevOps",
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.config.js",
@@ -13,6 +13,7 @@
     "@types/command-line-args": "^5.2.0",
     "@types/mustache": "^4.1.2",
     "@types/node": "^16.11.11",
+    "@types/node-emoji": "^1.8.1",
     "@types/prettier": "^2.4.2",
     "@types/webpack": "^5.28.0",
     "ts-loader": "^9.2.6",
@@ -25,6 +26,7 @@
     "chalk": "^4.1.2",
     "command-line-args": "^5.2.0",
     "mustache": "^4.2.0",
+    "node-emoji": "^1.11.0",
     "prettier": "^2.5.1"
   }
 }

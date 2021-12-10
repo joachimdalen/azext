@@ -51,6 +51,9 @@ export default class MarkdownBuilder {
   addRaw(text: string) {
     this._content = this._content + text + EOL;
   }
+  addNote(text: string) {
+    this._content = this._content + `> ${text}` + EOL;
+  }
   addSplitter() {
     this._content = this._content + '---' + EOL;
   }

@@ -1,3 +1,4 @@
+import emoji from 'node-emoji';
 class Replacer {
   private readonly _openTag = '{{';
   private readonly _closeTag = '}}';
@@ -9,6 +10,9 @@ class Replacer {
       tmp = tmp.replace(this._openTag + k + this._closeTag, context[k]);
     });
     return tmp;
+  }
+  public replaceEmojisIf(text: string, condition: boolean) {
+    return condition ? emoji.emojify(text) : text;
   }
 }
 export default Replacer;

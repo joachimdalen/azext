@@ -6,8 +6,8 @@ import prettier from 'prettier';
 import { MetaDataLoader } from './metadata';
 
 import chalk from 'chalk';
-import Replacer from '../../replacer';
-import { isNumber } from '../../utils';
+import Replacer from '../../core/replacer';
+import { isNumber } from '../../core/utils';
 import ChangelogConfig from './models/changelog-config';
 import ChangelogDefinition from './models/changelog-definition';
 import GeneratorContext from './models/generator-context';
@@ -61,6 +61,26 @@ class Generator {
         context.config.releaseTitleFormat.size
       );
 
+      if (release.summary) {
+        builder.addRaw(
+          replacer.replaceEmojisIf(
+            release.summary,
+            context.config.replaceEmojis.summary
+          )
+        );
+        builder.addNewLine();
+      }
+      if (release.notes) {
+        builder.addNote(
+          replacer.replaceEmojisIf(
+            release.notes,
+            context.config.replaceEmojis.notes
+          )
+        );
+
+        builder.addNewLine();
+      }
+
       tags.forEach((tag) => {
         const change = release.modules.flatMap((y) =>
           y.changes.filter((x) => x.type === tag)
@@ -68,7 +88,10 @@ class Generator {
 
         if (change.length > 0) {
           builder.addHeader(
-            context.config.tagMapping[tag],
+            replacer.replaceEmojisIf(
+              context.config.tagMapping[tag],
+              context.config.replaceEmojis.tags
+            ),
             context.config.tagSize
           );
         }
@@ -109,8 +132,8 @@ class Generator {
       const nonAuthors = [...context.issues.values()]
         .filter((x) => moduleIssues.includes(x.number))
         .filter((x) => {
-          if (x.sumitter === undefined) return false;
-          return !context.config.knownAuthors.includes(x.sumitter);
+          if (x.submitter === undefined) return false;
+          return !context.config.knownAuthors.includes(x.submitter);
         });
 
       if (nonAuthors.length > 0) {
@@ -125,7 +148,7 @@ class Generator {
 
         nonAuthors.forEach((x) =>
           builder.addListItem(
-            `[${x.sumitter}](https://github.com/${x.sumitter})`
+            `[${x.submitter}](https://github.com/${x.submitter})`
           )
         );
       }
@@ -145,9 +168,9 @@ class Generator {
       const base = config.useDescriptiveIssues
         ? `[${escapeText(issue.title)}](${issue.url})`
         : `[GH#${issue.number}](${issue.url})`;
-      if (issue.sumitter === undefined) return base;
-      if (config.knownAuthors.includes(issue.sumitter)) return base;
-      const author = `[${issue.sumitter}](https://github.com/${issue.sumitter})`;
+      if (issue.submitter === undefined) return base;
+      if (config.knownAuthors.includes(issue.submitter)) return base;
+      const author = `[${issue.submitter}](https://github.com/${issue.submitter})`;
       return `${base} - Thanks ${author}`;
     };
     logs.forEach((l) => getSection(context.tags, l));
