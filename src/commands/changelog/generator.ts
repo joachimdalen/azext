@@ -1,13 +1,13 @@
 import fs from 'fs/promises';
-import Replacer from './replacer';
 
-import commandLineArgs from 'command-line-args';
-import cliArgs, { CliOptions } from './cli-args';
+import { CliOptions } from './cli-args';
 import MarkdownBuilder from './markdown-builder';
 import prettier from 'prettier';
 import { MetaDataLoader } from './metadata';
-import { isNumber } from './utils';
+
 import chalk from 'chalk';
+import Replacer from '../../replacer';
+import { isNumber } from '../../utils';
 import ChangelogConfig from './models/changelog-config';
 import ChangelogDefinition from './models/changelog-definition';
 import GeneratorContext from './models/generator-context';
@@ -154,21 +154,4 @@ class Generator {
     return builder.get();
   }
 }
-
-const parseOptions = (): CliOptions => {
-  const options = commandLineArgs(cliArgs);
-
-  return {
-    output: options.output,
-    config: options.config,
-    log: options.log,
-    noFormat: options['no-format'],
-    generateCache: options['generate-cache'],
-    fromCache: options['from-cache'],
-    cacheOutput: options['cache-output'],
-    cacheFile: options['cache-file'],
-    version: options.version
-  };
-};
-
-new Generator().generateChangelog(parseOptions()).then(() => console.log('ok'));
+export default Generator;

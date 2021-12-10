@@ -1,8 +1,8 @@
 import chalk from 'chalk';
 import { CliOptions } from './cli-args';
-import GitHub from './github';
+import GitHub from '../../data-providers/github';
 import fs from 'fs/promises';
-import { isIssue, isPullRequest, isNumber } from './utils';
+import { isIssue, isPullRequest, isNumber } from '../../utils';
 import ChangelogCache from './models/changelog-cache';
 import ChangelogConfig from './models/changelog-config';
 import ChangelogDefinition from './models/changelog-definition';

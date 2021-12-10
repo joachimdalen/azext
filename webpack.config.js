@@ -1,7 +1,7 @@
 const path = require("path");
 
 module.exports = {
-  entry: "./src/generator.ts",
+  entry: "./src/azext.ts",
   mode: "development",
   target: "node",
   module: {
@@ -17,6 +17,7 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js"],
   },
   output: {
+    filename: "azext",
     path: path.resolve(__dirname, "dist"),
   },
 };
