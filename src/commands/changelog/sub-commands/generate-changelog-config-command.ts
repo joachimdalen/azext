@@ -22,15 +22,15 @@ const defaultConfig: ChangelogConfig = {
   sectionSplitter: '---',
   tagSize: 'h3',
   tagMapping: {
-    feature: '🚀 Features',
-    fix: '🐛 Fixes',
-    tests: '🧪 Tests',
-    other: '💬 Other',
-    docs: 'Documentation'
+    feature: ':rocket: Features',
+    fix: ':bug: Fixes',
+    tests: ':test_tube: Tests',
+    other: ':speech_balloon: Other',
+    docs: ':memo: Documentation'
   },
   attributionTitleFormat: {
     size: 'h2',
-    format: '🌟 Contributors'
+    format: ':star2: Contributors'
   },
   attributionSubTitle: {
     format: 'Thank you to the following for contributing to the latest release'
