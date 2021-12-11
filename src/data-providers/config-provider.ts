@@ -4,9 +4,8 @@ import fs from 'fs/promises';
 class ConfigProvider {
   private readonly _defaultFolder = '.azext';
 
-  private async createConfigFolderIfNotExists(path?: string) {
+  public async createConfigFolderIfNotExists(path?: string) {
     const folderPath = path ?? this._defaultFolder;
-
     try {
       await fs.stat(folderPath);
     } catch {
@@ -32,7 +31,7 @@ class ConfigProvider {
     await this.createConfigFolderIfNotExists();
     await fs.writeFile(
       this.getFullFilePath(configName),
-      asJson ? JSON.stringify(data) : data
+      asJson ? JSON.stringify(data, null, 2) : data
     );
   }
 }

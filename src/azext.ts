@@ -1,6 +1,7 @@
 import commandLineArgs, { OptionDefinition } from 'command-line-args';
 import commandLineUsage, { Section } from 'command-line-usage';
 import ChangelogCommand from './commands/changelog/changelog-command';
+import InitCommand from './commands/init/init-command';
 import {
   helpCommand,
   helpOption,
@@ -47,6 +48,10 @@ switch (mainOptions.command) {
   case 'help': {
     const usage = commandLineUsage(sections);
     console.log(usage);
+    break;
+  }
+  case 'init': {
+    new InitCommand().parse(argv);
     break;
   }
   case 'changelog': {
