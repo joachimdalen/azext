@@ -9,6 +9,7 @@ import {
 } from '../../constants';
 import ICommand from '../i-command';
 import GenerateChangelogCommand from './sub-commands/generate-changelog-command';
+import GenerateChangelogConfigCommand from './sub-commands/generate-changelog-config-command';
 
 const sections: Section[] = [
   ...introSections,
@@ -26,18 +27,19 @@ const sections: Section[] = [
   }
 ];
 
+type Options = IOptionWithHelp & {
+  changelogcommand: 'help' | 'generate' | 'config';
+};
+
 class ChangelogCommand implements ICommand {
   parse(args: string[]) {
     const changelogDefinitions = [
       { name: 'changelogcommand', defaultOption: true },
       helpOption
     ];
-    const changelogOptions: IOptionWithHelp = commandLineArgs(
-      changelogDefinitions,
-      {
-        argv: args
-      }
-    ) as IOptionWithHelp;
+    const changelogOptions: Options = commandLineArgs(changelogDefinitions, {
+      argv: args
+    }) as Options;
 
     console.log('changelogOptions\n============');
     console.log(changelogOptions);
@@ -47,6 +49,10 @@ class ChangelogCommand implements ICommand {
       case 'help': {
         const usage = commandLineUsage(sections);
         console.log(usage);
+        break;
+      }
+      case 'config': {
+        new GenerateChangelogConfigCommand().parse(argv);
         break;
       }
       case 'generate': {
