@@ -8,7 +8,12 @@
     "prettify": "prettier --write src"
   },
   "author": "Joachim Dalen <joachim@dalenapps.no> (https://joachimdalen.no/)",
-  "license": "ISC",
+  "license": "MIT",
+  "homepage": "https://github.com/joachimdalen/azext/blob/master/README.md",
+  "bugs":{
+    "url" : "https://github.com/joachimdalen/azext/issues"
+  },
+  "repository": "github:joachimdalen/azext",
   "devDependencies": {
     "@types/command-line-args": "^5.2.0",
     "@types/command-line-usage": "^5.0.2",
