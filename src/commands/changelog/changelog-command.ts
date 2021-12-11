@@ -1,4 +1,4 @@
-import commandLineArgs from 'command-line-args';
+import commandLineArgs, { OptionDefinition } from 'command-line-args';
 import commandLineUsage, { Section } from 'command-line-usage';
 import {
   helpCommand,
@@ -10,6 +10,7 @@ import {
 import ICommand from '../i-command';
 import GenerateChangelogCommand from './sub-commands/generate-changelog-command';
 import GenerateChangelogConfigCommand from './sub-commands/generate-changelog-config-command';
+import NewChangelogCommand from './sub-commands/new-changelog-command';
 
 const sections: Section[] = [
   ...introSections,
@@ -18,6 +19,7 @@ const sections: Section[] = [
     content: [
       { name: 'generate', summary: 'Generate changelog markdown file' },
       { name: 'config', summary: 'Generate default config file' },
+      { name: 'new', summary: 'Generate default changelog' },
       helpCommand
     ]
   },
@@ -28,12 +30,12 @@ const sections: Section[] = [
 ];
 
 type Options = IOptionWithHelp & {
-  changelogcommand: 'help' | 'generate' | 'config';
+  changelogcommand: any;//'help' | 'generate' | 'config' | 'new';
 };
 
 class ChangelogCommand implements ICommand {
   parse(args: string[]) {
-    const changelogDefinitions = [
+    const changelogDefinitions: OptionDefinition[] = [
       { name: 'changelogcommand', defaultOption: true },
       helpOption
     ];
@@ -45,10 +47,18 @@ class ChangelogCommand implements ICommand {
     console.log(changelogOptions);
     const argv = changelogOptions._unknown || [];
 
-    switch (changelogOptions.changelogcommand) {
+    const command = Array.isArray(changelogOptions.changelogcommand)
+      ? (changelogOptions.changelogcommand as any)[0]
+      : changelogOptions.changelogcommand;
+
+    switch (command) {
       case 'help': {
         const usage = commandLineUsage(sections);
         console.log(usage);
+        break;
+      }
+      case 'new': {
+        new NewChangelogCommand().parse(argv);
         break;
       }
       case 'config': {
