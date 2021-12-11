@@ -1,0 +1,43 @@
+[
+  {
+    "publishDate": "XX-12-2021",
+    "version": "0.0.1",
+    "summary": "Initial release of AzExt",
+    "modules": [
+      {
+        "name": "changelog",
+        "version": "0.0.1",
+        "notes": "d",
+        "summary": "d",
+        "changes": [
+          {
+            "description": "Added changelog command",
+            "type": "feature",
+            "issue": 0,
+            "pullRequest": 0
+          }
+        ]
+      },
+      {
+        "name": "init",
+        "version": "0.0.1",
+        "changes": [
+          {
+            "description": "Added init command",
+            "type": "feature"
+          }
+        ]
+      },
+      {
+        "name": "config",
+        "version": "0.0.1",
+        "changes": [
+          {
+            "description": "Added config command",
+            "type": "feature"
+          }
+        ]
+      }
+    ]
+  }
+]
