@@ -2,7 +2,11 @@
   "name": "@joachimdalen/azext",
   "version": "1.0.0",
   "description": "A collection of utilities to help with extension development for Azure DevOps",
-  "main": "index.js",
+  "main": "dist/azext.js",
+  "bin": {
+    "azext": "dist/azext.js"
+  },
+  "icon": "./docs/images/azext-icon.png",
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "prettify": "prettier --write src"
@@ -10,8 +14,8 @@
   "author": "Joachim Dalen <joachim@dalenapps.no> (https://joachimdalen.no/)",
   "license": "MIT",
   "homepage": "https://github.com/joachimdalen/azext/blob/master/README.md",
-  "bugs":{
-    "url" : "https://github.com/joachimdalen/azext/issues"
+  "bugs": {
+    "url": "https://github.com/joachimdalen/azext/issues"
   },
   "repository": "github:joachimdalen/azext",
   "devDependencies": {

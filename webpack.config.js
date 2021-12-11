@@ -17,7 +17,7 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js"],
   },
   output: {
-    filename: "azext",
+    filename: "azext.js",
     path: path.resolve(__dirname, "dist"),
   },
 };
