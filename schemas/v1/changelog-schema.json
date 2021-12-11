@@ -1,0 +1,122 @@
+{
+  "definitions": {
+    "changelog_definition": {
+      "type": "object",
+      "title": "Changelog definition",
+      "description": "An explanation about the purpose of this instance.",
+      "default": {},
+      "additionalProperties": false,
+      "required": ["publishDate", "version", "notes", "summary", "modules"],
+      "properties": {
+        "publishDate": {
+          "type": "string",
+          "title": "Publish Date",
+          "description": "The date the version was published"
+        },
+        "version": {
+          "type": "string",
+          "title": "Version",
+          "description": "The version of the release"
+        },
+        "notes": {
+          "type": "string",
+          "title": "Notes",
+          "description": "Additional notes for the release"
+        },
+        "summary": {
+          "type": "string",
+          "title": "Summary",
+          "description": "A short summary about the release"
+        },
+        "modules": {
+          "type": "array",
+          "title": "The modules schema",
+          "description": "An explanation about the purpose of this instance.",
+          "default": [],
+          "additionalProperties": false,
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "title": "The first anyOf schema",
+                "description": "An explanation about the purpose of this instance.",
+
+                "required": ["name", "version", "changes"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "title": "The name schema",
+                    "description": "An explanation about the purpose of this instance."
+                  },
+                  "version": {
+                    "type": "string",
+                    "title": "The version schema",
+                    "description": "An explanation about the purpose of this instance."
+                  },
+                  "notes": {
+                    "type": "string",
+                    "title": "The notes schema",
+                    "description": "An explanation about the purpose of this instance."
+                  },
+                  "summary": {
+                    "type": "string",
+                    "title": "The summary schema",
+                    "description": "An explanation about the purpose of this instance."
+                  },
+                  "changes": {
+                    "type": "array",
+                    "title": "The changes schema",
+                    "description": "An explanation about the purpose of this instance.",
+
+                    "items": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "title": "Change entry",
+                          "description": "An explanation about the purpose of this instance.",
+                          "required": ["description", "type"],
+                          "properties": {
+                            "description": {
+                              "type": "string",
+                              "title": "The description schema",
+                              "description": "An explanation about the purpose of this instance."
+                            },
+                            "type": {
+                              "type": "string",
+                              "title": "The type schema",
+                              "description": "An explanation about the purpose of this instance."
+                            },
+                            "issue": {
+                              "type": "integer",
+                              "title": "GitHub issue number",
+                              "description": "The GitHub issue number issue number of a releated GitHub issue"
+                            },
+                            "pullRequest": {
+                              "type": "integer",
+                              "title": "GitHub pull request number",
+                              "description": "The GitHub pull request number issue number of a releated GitHub pull request"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "array",
+  "items": {
+    "allOf": [
+      {
+        "$ref": "#/definitions/changelog_definition"
+      }
+    ]
+  }
+}
