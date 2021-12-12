@@ -88,6 +88,7 @@ stages:
               steps:
                 - download: none
                 - download: current
+                  displayName: "Download Package"
                   artifact: "npm-package"
                 # - download: current
                 #   artifact: "changelog"
@@ -97,15 +98,15 @@ stages:
                 #     archiveFilePatterns: $(Pipeline.Workspace)/npm-package/*.tgz
                 #     destinationFolder: $(Pipeline.Workspace)/npm-package/pkg
                 - task: Bash@3
-                  displayName: 'Configure .npmrc'
+                  displayName: "Configure .npmrc"
                   inputs:
                     targetType: inline
                     script: "echo registry=https://registry.npmjs.com/ > ~/.npmrc"
                 - task: npmAuthenticate@0
-                  displayName: 'NPM Authenticate'
+                  displayName: "NPM Authenticate"
                   inputs:
-                    workingFile: ~/.npmrc
-                    customEndpoint: NPMJS     
+                    workingFile: $(dirname ~/.npmrc)/.npmrc
+                    customEndpoint: NPMJS
                 - task: Bash@3
                   inputs:
                     targetType: inline
