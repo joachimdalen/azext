@@ -3,6 +3,7 @@ import commandLineArgs, { OptionDefinition } from 'command-line-args';
 import commandLineUsage, { Section } from 'command-line-usage';
 import { helpCommand, introSections, IOptionWithHelp } from '../../constants';
 import ConfigProvider from '../../data-providers/config-provider';
+import { CommandContext } from '../command-context';
 import ICommand from '../i-command';
 
 const sections: Section[] = [
@@ -31,7 +32,7 @@ class InitCommand implements ICommand {
   constructor() {
     this._configProvider = new ConfigProvider();
   }
-  parse(args: string[]) {
+  process(args: string[], context: CommandContext) {
     const initDefinitions: OptionDefinition[] = [
       { name: 'initcommand', defaultOption: true },
       { name: 'root', alias: 'r', defaultValue: process.cwd() }

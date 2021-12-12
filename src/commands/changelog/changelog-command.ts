@@ -7,6 +7,8 @@ import {
   introSections,
   IOptionWithHelp
 } from '../../constants';
+import { logInfo } from '../../core/azure-devops-logger';
+import { CommandContext } from '../command-context';
 import ICommand from '../i-command';
 import GenerateChangelogCommand from './sub-commands/generate-changelog-command';
 import GenerateChangelogConfigCommand from './sub-commands/generate-changelog-config-command';
@@ -30,11 +32,11 @@ const sections: Section[] = [
 ];
 
 type Options = IOptionWithHelp & {
-  changelogcommand: any;//'help' | 'generate' | 'config' | 'new';
+  changelogcommand: 'help' | 'generate' | 'config' | 'new';
 };
 
 class ChangelogCommand implements ICommand {
-  parse(args: string[]) {
+  process(args: string[], context: CommandContext) {
     const changelogDefinitions: OptionDefinition[] = [
       { name: 'changelogcommand', defaultOption: true },
       helpOption
@@ -47,26 +49,22 @@ class ChangelogCommand implements ICommand {
     console.log(changelogOptions);
     const argv = changelogOptions._unknown || [];
 
-    const command = Array.isArray(changelogOptions.changelogcommand)
-      ? (changelogOptions.changelogcommand as any)[0]
-      : changelogOptions.changelogcommand;
-
-    switch (command) {
+    switch (changelogOptions.changelogcommand) {
       case 'help': {
         const usage = commandLineUsage(sections);
         console.log(usage);
         break;
       }
       case 'new': {
-        new NewChangelogCommand().parse(argv);
+        new NewChangelogCommand().process(argv, context);
         break;
       }
       case 'config': {
-        new GenerateChangelogConfigCommand().parse(argv);
+        new GenerateChangelogConfigCommand().process(argv, context);
         break;
       }
       case 'generate': {
-        new GenerateChangelogCommand().parse(argv);
+        new GenerateChangelogCommand().process(argv, context);
         break;
       }
     }

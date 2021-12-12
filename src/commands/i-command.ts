@@ -1,3 +1,5 @@
+import { CommandContext } from './command-context';
+
 export default interface ICommand {
-  parse: (argv: string[]) => void;
+  process: (argv: string[], context: CommandContext) => void;
 }

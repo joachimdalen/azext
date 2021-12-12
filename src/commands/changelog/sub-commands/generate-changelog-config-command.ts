@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import commandLineArgs, { OptionDefinition } from 'command-line-args';
 import ConfigProvider from '../../../data-providers/config-provider';
+import { CommandContext } from '../../command-context';
 import ICommand from '../../i-command';
 import ChangelogConfig from '../models/changelog-config';
 
@@ -71,7 +72,7 @@ class GenerateChangelogConfigCommand implements ICommand {
     this._configProvider = new ConfigProvider();
   }
 
-  async parse(argv: string[]) {
+  async process(argv: string[], context: CommandContext) {
     const cliOpts: GenerateChangelogConfigCommandOptions = commandLineArgs(
       options,
       {

@@ -7,6 +7,7 @@ import {
   IOptionWithHelp
 } from '../../../constants';
 import ConfigProvider from '../../../data-providers/config-provider';
+import { CommandContext } from '../../command-context';
 import ICommand from '../../i-command';
 import ChangelogConfig from '../models/changelog-config';
 import ChangelogDefinition from '../models/changelog-definition';
@@ -72,7 +73,7 @@ class NewChangelogCommand implements ICommand {
     this._configProvider = new ConfigProvider();
   }
 
-  async parse(args: string[]) {
+  async process(args: string[], context: CommandContext) {
     const newDefinitions: OptionDefinition[] = [
       { name: 'newcommand', defaultOption: true },
       ...options

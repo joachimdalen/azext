@@ -1,6 +1,7 @@
 import commandLineArgs, { OptionDefinition } from 'command-line-args';
 import commandLineUsage, { Section } from 'command-line-usage';
 import ChangelogCommand from './commands/changelog/changelog-command';
+import { CommandContext, GlobalOptions } from './commands/command-context';
 import InitCommand from './commands/init/init-command';
 import {
   helpCommand,
@@ -10,13 +11,16 @@ import {
   IOptionWithHelp
 } from './constants';
 
+type Options = IOptionWithHelp & GlobalOptions;
+
 const mainDefinitions: OptionDefinition[] = [
   { name: 'command', defaultOption: true },
-  helpOption
+  helpOption,
+  { name: 'ci' }
 ];
-const mainOptions: IOptionWithHelp = commandLineArgs(mainDefinitions, {
+const mainOptions: Options = commandLineArgs(mainDefinitions, {
   stopAtFirstUnknown: true
-}) as IOptionWithHelp;
+}) as Options;
 
 const sections: Section[] = [
   ...introSections,
@@ -30,11 +34,22 @@ const sections: Section[] = [
   },
   {
     header: 'Options',
-    optionList: [helpOptionUsage]
+    optionList: [
+      helpOptionUsage,
+      {
+        name: 'ci',
+        description:
+          'Run in CI mode. Currenctly supported: ado (Azure DevOps) --ci=ado'
+      }
+    ]
   }
 ];
-
 const argv = mainOptions._unknown || [];
+const context: CommandContext = {
+  globalOptions: {
+    ci: mainOptions.ci
+  }
+};
 
 console.log('mainOptions\n===========');
 console.log(mainOptions);
@@ -51,11 +66,11 @@ switch (mainOptions.command) {
     break;
   }
   case 'init': {
-    new InitCommand().parse(argv);
+    new InitCommand().process(argv, context);
     break;
   }
   case 'changelog': {
-    new ChangelogCommand().parse(argv);
+    new ChangelogCommand().process(argv, context);
     break;
   }
 }
