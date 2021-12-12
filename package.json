@@ -1,11 +1,14 @@
 {
   "name": "@joachimdalen/azext",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A collection of utilities to help with extension development for Azure DevOps",
   "main": "dist/azext.js",
   "bin": {
     "azext": "dist/azext.js"
   },
+  "files": [
+    "dist"
+  ],
   "icon": "./docs/images/azext-icon.png",
   "scripts": {
     "build": "tsc",
