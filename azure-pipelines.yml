@@ -101,7 +101,7 @@ stages:
                   displayName: "Configure .npmrc"
                   inputs:
                     targetType: inline
-                    script: "echo registry=https://registry.npmjs.com/ > /home/vsts/.npmrc"
+                    script: "echo registry=https://registry.npmjs.com > /home/vsts/.npmrc"
                 - task: npmAuthenticate@0
                   displayName: "NPM Authenticate"
                   inputs:
