@@ -1,0 +1,103 @@
+trigger:
+  - master
+
+pool:
+  vmImage: ubuntu-latest
+
+parameters:
+  - name: "IS_PREVIEW"
+    type: boolean
+    default: false
+    displayName: "Is Pre-Release"
+
+variables:
+  npm_config_cache: $(Pipeline.Workspace)/.npm
+
+stages:
+  - stage: buildAndTest
+    displayName: Build & Test
+    jobs:
+      - job: 'build'
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: "14.x"
+            displayName: "Install Node.js"
+          - task: Cache@2
+            displayName: Cache npm
+            inputs:
+              key: 'npm | "$(Agent.OS)" | package-lock.json'
+              path: "$(npm_config_cache)"
+              restoreKeys: |
+                npm | "$(Agent.OS)"
+                npm | "$(Agent.OS)" | $(Build.SourcesDirectory)/package-lock.json
+          - task: Npm@1
+            displayName: "Install dependencies"
+            inputs:
+              command: install
+          - task: Npm@1
+            displayName: "Build package"
+            inputs:
+              command: custom
+              customCommand: "run build"
+          - task: Npm@1
+            displayName: "Build package"
+            inputs:
+              command: custom
+              customCommand: "pack"
+          - task: Bash@3
+            displayName: "Get Package Version"
+            name: SetVersion
+            inputs:
+              targetType: inline
+              script: echo "##vso[task.setvariable variable=UPDATED_PACKAGE_VERSION;isoutput=true]$(npm pkg get version | tr -d '"')"
+          - task: PublishPipelineArtifact@1
+            displayName: "Publish NPM Artifact"
+            inputs:
+              targetPath: "$(Build.ArtifactStagingDirectory)/npm"
+              artifact: "npm-package"
+              publishLocation: "pipeline"
+          - task: PublishPipelineArtifact@1
+            displayName: "Publish Changelog"
+            inputs:
+              targetPath: "$(Build.SourcesDirectory)/release-notes/v$(SetVersion.UPDATED_PACKAGE_VERSION).md"
+              artifact: "changelog"
+              publishLocation: "pipeline"
+  - stage: publishPackage
+    displayName: "Publish package"
+    condition: eq(variables.isMaster, true)
+    dependsOn: buildAndTest
+    jobs:
+      - deployment:
+        variables:
+          - name: PACKAGE_VERSION
+            value: $[ stageDependencies.buildAndTest.build.outputs['SetVersion.UPDATED_PACKAGE_VERSION'] ]
+        displayName: "Publish package"
+        environment: "npm-azext"
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: none
+                - download: current
+                  artifact: "npm-package"
+                - download: current
+                  artifact: "changelog"
+                - task: Npm@1
+                  displayName: "Publish to NPM"
+                  inputs:
+                    command: "publish"
+                    workingDir: "$(Build.SourcesDirectory)"
+                    publishEndpoint: "npm-azext"
+                - task: GitHubRelease@1
+                  displayName: "Create GitHub Release"
+                  inputs:
+                    gitHubConnection: github-azext
+                    repositoryName: joachimdalen/azext
+                    tagSource: userSpecifiedTag
+                    tag: v$(PACKAGE_VERSION)
+                    title: "v$(PACKAGE_VERSION): Update"
+                    addChangeLog: false
+                    isPreRelease: $${{ parameters.IS_PREVIEW }}
+                    releaseNotesSource: filePath
+                    releaseNotesFilePath: $(Pipeline.Workspace)/changelog/v$(PACKAGE_VERSION).md
