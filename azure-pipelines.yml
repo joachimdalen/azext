@@ -76,11 +76,11 @@ stages:
     #   condition: eq(variables.isMaster, true)
     dependsOn: buildAndTest
     jobs:
-      - deployment:
+      - deployment: "publish"
+        displayName: "[PROD] Publish package"
         variables:
           - name: PACKAGE_VERSION
             value: $[ stageDependencies.buildAndTest.build.outputs['SetVersion.NPM_PACKAGE_VERSION'] ]
-        displayName: "Publish package"
         environment: "npm-azext"
         strategy:
           runOnce:
