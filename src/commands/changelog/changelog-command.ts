@@ -3,7 +3,6 @@ import commandLineUsage, { Section } from 'command-line-usage';
 import {
   helpCommand,
   helpOption,
-  helpOptionUsage,
   introSections,
   IOptionWithHelp
 } from '../../constants';
@@ -26,7 +25,7 @@ const sections: Section[] = [
   },
   {
     header: 'Options',
-    optionList: [helpOptionUsage]
+    optionList: []
   }
 ];
 
@@ -45,8 +44,6 @@ class ChangelogCommand implements ICommand {
       stopAtFirstUnknown: true
     }) as Options;
 
-    console.log('changelogOptions\n============');
-    console.log(changelogOptions);
     const argv = changelogOptions._unknown || [];
 
     switch (changelogOptions.changelogcommand) {
