@@ -13,7 +13,9 @@
   "scripts": {
     "build": "tsc",
     "build-wp": "webpack --config webpack.config.js",
-    "prettify": "prettier --write src"
+    "prettify": "prettier --write src",
+    "postpack": "mv README.md README.npm.md && mv README.git.md README.md",
+    "prepack": "mv README.md README.git.md && mv README.npm.md README.md"
   },
   "author": "Joachim Dalen <joachim@dalenapps.no> (https://joachimdalen.no/)",
   "license": "MIT",
