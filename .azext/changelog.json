@@ -1,20 +1,16 @@
 [
   {
-    "publishDate": "XX-12-2021",
+    "publishDate": "2021-12-12",
     "version": "0.0.1",
     "summary": "Initial release of AzExt",
     "modules": [
       {
         "name": "changelog",
         "version": "0.0.1",
-        "notes": "d",
-        "summary": "d",
         "changes": [
           {
             "description": "Added changelog command",
-            "type": "feature",
-            "issue": 0,
-            "pullRequest": 0
+            "type": "feature"
           }
         ]
       },
