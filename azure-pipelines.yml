@@ -104,7 +104,7 @@ stages:
                   displayName: "Publish to NPM"
                   inputs:
                     command: custom
-                    customCommand: publish $(Pipeline.Workspace)/npm-package/*.tgz
+                    customCommand: publish $(Pipeline.Workspace)/npm-package/joachimdalen-azext-$(PACKAGE_VERSION).tgz
                     publishEndpoint: "NPMJS"
                 # - task: GitHubRelease@1
                 #   displayName: "Create GitHub Release"
