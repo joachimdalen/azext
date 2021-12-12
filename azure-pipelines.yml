@@ -46,6 +46,13 @@ stages:
               command: custom
               customCommand: "pack"
           - task: Bash@3
+            displayName: "Move files"
+            inputs:
+              targetType: inline
+              script: |
+                mkdir -p $(Build.ArtifactStagingDirectory)/npm
+                mv *.tgz $(Build.ArtifactStagingDirectory)/npm/
+          - task: Bash@3
             displayName: "Get Package Version"
             name: SetVersion
             inputs:
