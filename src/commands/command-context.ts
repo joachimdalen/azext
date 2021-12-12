@@ -1,5 +1,7 @@
+export type ValidCis = 'ado';
+
 export interface GlobalOptions {
-  ci: string;
+  ci: ValidCis;
 }
 
 export interface CommandContext {

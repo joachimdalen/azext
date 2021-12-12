@@ -20,13 +20,11 @@ const options: OptionDefinition[] = [
   },
   {
     name: 'config',
-    alias: 'c',
-    defaultValue: 'changelog-config.json'
+    alias: 'c'
   },
   {
     name: 'log',
-    alias: 'l',
-    defaultValue: 'changelog.json'
+    alias: 'l'
   },
   {
     name: 'no-format',
@@ -44,12 +42,10 @@ const options: OptionDefinition[] = [
     defaultValue: true
   },
   {
-    name: 'cache-output',
-    defaultValue: 'changelog-cache.json'
+    name: 'cache-output'
   },
   {
-    name: 'cache-file',
-    defaultValue: 'changelog-cache.json'
+    name: 'cache-file'
   },
   {
     name: 'version'

@@ -13,13 +13,16 @@ class ConfigProvider {
     }
   }
 
-  private getFullFilePath(fileName: string) {
-    return path.join(process.cwd(), this._defaultFolder, fileName);
+  public getFullFilePath(filePath: string) {
+    if (path.isAbsolute(filePath)) return filePath;
+    if (filePath.startsWith('./')) return filePath;
+    return path.join(process.cwd(), this._defaultFolder, filePath);
   }
 
-  public async getConfig<T>(configName: string) {
+  public async getConfig<T>(filePath: string) {
     try {
-      const fileBuffer = await fs.readFile(this.getFullFilePath(configName));
+      const resolvedPath = this.getFullFilePath(filePath);
+      const fileBuffer = await fs.readFile(resolvedPath);
       const fileContent: T = JSON.parse(fileBuffer.toString());
       return fileContent;
     } catch {
@@ -27,10 +30,11 @@ class ConfigProvider {
     }
   }
 
-  public async writeConfig(configName: string, data: any, asJson = true) {
+  public async writeConfig(filePath: string, data: any, asJson = true) {
     await this.createConfigFolderIfNotExists();
+    const resolvedPath = this.getFullFilePath(filePath);
     await fs.writeFile(
-      this.getFullFilePath(configName),
+      resolvedPath,
       asJson ? JSON.stringify(data, null, 2) : data
     );
   }

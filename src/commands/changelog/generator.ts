@@ -12,15 +12,37 @@ import ChangelogConfig from './models/changelog-config';
 import ChangelogDefinition from './models/changelog-definition';
 import GeneratorContext from './models/generator-context';
 import GitHubIssue from './models/github-issue';
+import ConfigProvider from '../../data-providers/config-provider';
+import { CHANGELOG_CONFIG_NAME, CHANGELOG_NAME } from './changelog-constants';
+
+interface GeneratorResult {
+  latestVersion: string;
+  outputPath: string;
+}
 
 class Generator {
-  async generateChangelog(options: CliOptions) {
+  async generateChangelog(
+    options: CliOptions
+  ): Promise<GeneratorResult | undefined> {
     const metadataLoader = new MetaDataLoader(options);
-    const configString = await fs.readFile(options.config);
-    const logString = await fs.readFile(options.log);
+    const configProvider = new ConfigProvider();
 
-    const config: ChangelogConfig = JSON.parse(configString.toString());
-    const log: ChangelogDefinition[] = JSON.parse(logString.toString());
+    const config = await configProvider.getConfig<ChangelogConfig>(
+      options.config || CHANGELOG_CONFIG_NAME
+    );
+
+    const log = await configProvider.getConfig<ChangelogDefinition[]>(
+      options.log || CHANGELOG_NAME
+    );
+
+    if (config == undefined) {
+      console.log('Failed to load config');
+      return;
+    }
+    if (log === undefined) {
+      console.log('Failed to load changelog');
+      return;
+    }
 
     const context = await metadataLoader.loadMetadata(config, log);
 
@@ -31,7 +53,7 @@ class Generator {
 
     if (filteredLogs.length === 0) {
       console.log(chalk.redBright('No changelog entries found'));
-      return;
+      return undefined;
     }
 
     let fileContent = this.buildFile(context, filteredLogs);
@@ -41,6 +63,18 @@ class Generator {
 
     await fs.writeFile(options.output, fileContent);
     await metadataLoader.writeMetadataCache(context);
+    return {
+      latestVersion: this.getLatestVersion(filteredLogs),
+      outputPath: options.output
+    };
+  }
+
+  getLatestVersion(logs: ChangelogDefinition[]): string {
+    return logs.sort(function (a, b) {
+      return (
+        new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime()
+      );
+    })[0].publishDate;
   }
 
   buildFile(context: GeneratorContext, logs: ChangelogDefinition[]): string {

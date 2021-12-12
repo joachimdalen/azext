@@ -1,7 +1,6 @@
 import chalk from 'chalk';
 import { CliOptions } from './cli-args';
 import GitHub from '../../data-providers/github';
-import fs from 'fs/promises';
 import { isIssue, isPullRequest, isNumber } from '../../core/utils';
 import ChangelogCache from './models/changelog-cache';
 import ChangelogConfig from './models/changelog-config';
@@ -9,22 +8,17 @@ import ChangelogDefinition from './models/changelog-definition';
 import GeneratorContext from './models/generator-context';
 import GitHubIssue from './models/github-issue';
 import GitHubPullRequest from './models/github-pull-request';
+import ConfigProvider from '../../data-providers/config-provider';
+import { CHANGELOG_CACHE_NAME } from './changelog-constants';
 
 export class MetaDataLoader {
   private readonly _github: GitHub;
   private readonly _options: CliOptions;
+  private _configProvider: ConfigProvider;
   constructor(options: CliOptions) {
     this._github = new GitHub();
     this._options = options;
-  }
-
-  async fileExtists(path: string) {
-    try {
-      await fs.stat(path);
-      return true;
-    } catch (error) {
-      return false;
-    }
+    this._configProvider = new ConfigProvider();
   }
 
   async loadMetadata(config: ChangelogConfig, log: ChangelogDefinition[]) {
@@ -32,26 +26,26 @@ export class MetaDataLoader {
     let cachedPullRequests: GitHubPullRequest[] = [];
 
     if (this._options.fromCache) {
-      const exists = await this.fileExtists(this._options.cacheFile);
+      const cache = await this._configProvider.getConfig<ChangelogCache>(
+        this._options.cacheFile || CHANGELOG_CACHE_NAME
+      );
 
-      if (exists) {
-        const cacheString = await fs.readFile(this._options.cacheFile);
-        const parsedCache: ChangelogCache = JSON.parse(cacheString.toString());
-        if (parsedCache.issues !== undefined) {
+      if (cache !== undefined) {
+        if (cache.issues !== undefined) {
           console.log(
             `ℹ️ Loaded ${chalk.cyanBright(
-              parsedCache.issues.length
+              cache.issues.length
             )} from issue cache`
           );
-          cachedIssues = parsedCache.issues;
+          cachedIssues = cache.issues;
         }
-        if (parsedCache.pullRequests !== undefined) {
+        if (cache.pullRequests !== undefined) {
           console.log(
             `ℹ️ Loaded ${chalk.cyanBright(
-              parsedCache.pullRequests.length
+              cache.pullRequests.length
             )} from pull request cache`
           );
-          cachedPullRequests = parsedCache.pullRequests;
+          cachedPullRequests = cache.pullRequests;
         }
       } else {
         console.log(
@@ -117,9 +111,10 @@ export class MetaDataLoader {
         issues: [...context.issues.values()],
         pullRequests: [...context.pullRequests.values()]
       };
-      await fs.writeFile(
-        this._options.cacheOutput,
-        JSON.stringify(cache, null, 2)
+
+      await this._configProvider.writeConfig(
+        this._options.cacheOutput || CHANGELOG_CACHE_NAME,
+        cache
       );
     }
   }
