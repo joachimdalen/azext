@@ -2,7 +2,6 @@ import fs from 'fs/promises';
 
 import { CliOptions } from './cli-args';
 import MarkdownBuilder from './markdown-builder';
-import prettier from 'prettier';
 import { MetaDataLoader } from './metadata';
 
 import chalk from 'chalk';
@@ -14,6 +13,7 @@ import GeneratorContext from './models/generator-context';
 import GitHubIssue from './models/github-issue';
 import ConfigProvider from '../../data-providers/config-provider';
 import { CHANGELOG_CONFIG_NAME, CHANGELOG_NAME } from './changelog-constants';
+import { isModuleInstalled } from '../../core/addons-checker';
 
 interface GeneratorResult {
   latestVersion: string;
@@ -57,8 +57,16 @@ class Generator {
     }
 
     let fileContent = this.buildFile(context, filteredLogs);
-    if (options.noFormat === false) {
-      fileContent = prettier.format(fileContent, { parser: 'markdown' });
+
+    if (options.format) {
+      if (isModuleInstalled('prettier')) {
+        const prettier = require('prettier');
+        fileContent = prettier.format(fileContent, { parser: 'markdown' });
+      } else {
+        throw new Error(
+          'Prettier is not installed. Install module globally to enable formatting'
+        );
+      }
     }
 
     await fs.writeFile(options.output, fileContent);

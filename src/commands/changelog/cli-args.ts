@@ -4,7 +4,7 @@ export interface CliOptions {
   output: string;
   config: string;
   log: string;
-  noFormat: boolean;
+  format: boolean;
   generateCache: boolean;
   fromCache: boolean;
   cacheOutput: string;
@@ -27,7 +27,7 @@ const options: OptionDefinition[] = [
     alias: 'l'
   },
   {
-    name: 'no-format',
+    name: 'format',
     type: Boolean,
     defaultValue: false
   },

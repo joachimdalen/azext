@@ -7,7 +7,6 @@ import {
   introSections,
   IOptionWithHelp
 } from '../../constants';
-import { logInfo } from '../../core/azure-devops-logger';
 import { CommandContext } from '../command-context';
 import ICommand from '../i-command';
 import GenerateChangelogCommand from './sub-commands/generate-changelog-command';
@@ -42,7 +41,8 @@ class ChangelogCommand implements ICommand {
       helpOption
     ];
     const changelogOptions: Options = commandLineArgs(changelogDefinitions, {
-      argv: args
+      argv: args,
+      stopAtFirstUnknown: true
     }) as Options;
 
     console.log('changelogOptions\n============');
