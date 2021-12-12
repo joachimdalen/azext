@@ -95,16 +95,16 @@ stages:
                   displayName: "Unzip sources"
                   inputs:
                     archiveFilePatterns: $(Pipeline.Workspace)/npm-package/*.tgz
-                    destinationFolder: $(Pipeline.Workspace)/npm-package
+                    destinationFolder: $(Pipeline.Workspace)/npm-package/pkg
                 - task: Bash@3
                   inputs:
                     targetType: inline
-                    script: "ls $(Pipeline.Workspace)/npm-package"
+                    script: "ls $(Pipeline.Workspace)/npm-package/pkg"
                 - task: Npm@1
                   displayName: "Publish to NPM"
                   inputs:
                     command: "publish"
-                    workingDir: $(Pipeline.Workspace)/npm-package/package
+                    workingDir: $(Pipeline.Workspace)/npm-package/pkg/package
                     publishEndpoint: "NPMJS"
                 # - task: GitHubRelease@1
                 #   displayName: "Create GitHub Release"
