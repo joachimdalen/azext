@@ -1,4 +1,12 @@
 {
   "issues": [],
-  "pullRequests": []
+  "pullRequests": [
+    {
+      "id": 800887840,
+      "number": 1,
+      "submitter": "joachimdalen",
+      "title": "Setup build and deployment pipeline",
+      "url": "https://github.com/joachimdalen/azext/pull/1"
+    }
+  ]
 }

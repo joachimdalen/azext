@@ -14,13 +14,14 @@
     "fix": ":bug: Fixes",
     "tests": ":test_tube: Tests",
     "other": ":speech_balloon: Other",
-    "docs": ":memo: Documentation"
+    "docs": ":memo: Documentation",
+    "maint": ":hammer_and_wrench: Maintenance"
   },
   "attributionTitleFormat": { "size": "h2", "format": ":star2: Contributors" },
   "attributionSubTitle": {
     "format": "Thank you to the following for contributing to the latest release"
   },
-  "knownAuthors": [],
+  "knownAuthors": ["joachimdalen"],
   "useDescriptiveIssues": true,
   "replaceEmojis": {
     "tags": true,

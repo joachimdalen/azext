@@ -33,6 +33,17 @@
             "type": "feature"
           }
         ]
+      },
+      {
+        "name": "core",
+        "version": "0.0.1",
+        "changes": [
+          {
+            "type": "maint",
+            "description": "Setup CI and CD",
+            "pullRequest": 1
+          }
+        ]
       }
     ]
   }
