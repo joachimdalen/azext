@@ -23,3 +23,6 @@ schemas/
 webpack*
 *tgz
 .prettierrc
+changelog*
+npm.md
+git.md

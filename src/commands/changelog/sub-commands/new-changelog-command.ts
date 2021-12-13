@@ -85,9 +85,6 @@ class NewChangelogCommand implements ICommand {
       }
     ) as NewChangelogCommandOptions;
 
-    console.log('newOptions\n============');
-    console.log(newOptions);
-
     if (newOptions.newcommand === 'help') {
       const usage = commandLineUsage(sections);
       console.log(usage);

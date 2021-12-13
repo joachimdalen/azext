@@ -1,17 +1,21 @@
 {
   "name": "@joachimdalen/azext",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A collection of utilities to help with extension development for Azure DevOps",
   "main": "dist/azext.js",
   "bin": {
     "azext": "dist/azext.js"
   },
+  "files": [
+    "dist"
+  ],
   "icon": "./docs/images/azext-icon.png",
   "scripts": {
     "build": "tsc",
     "build-wp": "webpack --config webpack.config.js",
     "prettify": "prettier --write src",
-    "cost": "cost-of-modules --no-install"
+    "prepack": "mv README.md git.md && mv npm.md README.md",
+    "postpack": "mv README.md npm.md && mv git.md README.md"
   },
   "author": "Joachim Dalen <joachim@dalenapps.no> (https://joachimdalen.no/)",
   "license": "MIT",
@@ -27,7 +31,6 @@
     "@types/node-emoji": "^1.8.1",
     "@types/prettier": "^2.4.2",
     "@types/webpack": "^5.28.0",
-    "cost-of-modules": "^1.0.1",
     "ts-loader": "^9.2.6",
     "typescript": "^4.5.2",
     "webpack": "^5.65.0",

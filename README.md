@@ -21,7 +21,7 @@
     <a href="https://github.com/joachimdalen/azext"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://www.npmjs.com/package/@joachimdalen/github-org-exists">View Package</a>
+    <a href="https://www.npmjs.com/package/@joachimdalen/azext">View Package</a>
     ·
     <a href="https://github.com/joachimdalen/azext/blob/master/docs/CHANGELOG.md">Changelog</a>
     ·

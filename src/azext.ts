@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import commandLineArgs, { OptionDefinition } from 'command-line-args';
 import commandLineUsage, { Section } from 'command-line-usage';
 import ChangelogCommand from './commands/changelog/changelog-command';
@@ -6,7 +7,6 @@ import InitCommand from './commands/init/init-command';
 import {
   helpCommand,
   helpOption,
-  helpOptionUsage,
   introSections,
   IOptionWithHelp
 } from './constants';
@@ -35,7 +35,6 @@ const sections: Section[] = [
   {
     header: 'Options',
     optionList: [
-      helpOptionUsage,
       {
         name: 'ci',
         description:
@@ -50,14 +49,6 @@ const context: CommandContext = {
     ci: mainOptions.ci
   }
 };
-
-console.log('mainOptions\n===========');
-console.log(mainOptions);
-
-/* if (mainOptions.help) {
-  const usage = commandLineUsage(sections);
-  console.log(usage);
-} */
 
 switch (mainOptions.command) {
   case 'help': {
