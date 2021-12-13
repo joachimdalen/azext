@@ -23,6 +23,7 @@
   },
   "knownAuthors": ["joachimdalen"],
   "useDescriptiveIssues": true,
+  "useDescriptivePullRequests": true,
   "replaceEmojis": {
     "tags": true,
     "changelogTitle": true,
