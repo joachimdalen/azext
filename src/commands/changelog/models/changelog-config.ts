@@ -17,6 +17,7 @@ export default interface ChangelogConfig {
   };
   knownAuthors: string[];
   useDescriptiveIssues: boolean;
+  useDescriptivePullRequests: boolean;
   attributionTitleFormat: TitleFormat;
   attributionSubTitle: TitleFormat;
   replaceEmojis: ReplaceEmojiesConfig;

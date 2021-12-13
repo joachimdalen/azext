@@ -67,14 +67,18 @@ export class MetaDataLoader {
     const issues: GitHubIssue[] = issueResponse
       .filter(isIssue)
       .concat(cachedIssues);
+
+    const prIds = log
+      .flatMap((x) =>
+        x.modules.flatMap((x) => x.changes.map((x) => x.pullRequest))
+      )
+      .filter(isNumber)
+      .filter((y) => !cachedPullRequests.some((x) => x.number === y));
+    console.log(
+      `ℹ️ Found ${chalk.cyanBright(prIds.length)} pull requests not in cache`
+    );
     const pullRequestResponse = await Promise.all(
-      log
-        .flatMap((x) =>
-          x.modules.flatMap((x) => x.changes.map((x) => x.pullRequest))
-        )
-        .filter(isNumber)
-        .filter((y) => !cachedIssues.some((x) => x.number === y))
-        .map((x) => this._github.getPullRequests(x, config.repository))
+      prIds.map((x) => this._github.getPullRequests(x, config.repository))
     );
     const pullRequests: GitHubPullRequest[] = pullRequestResponse
       .filter(isPullRequest)

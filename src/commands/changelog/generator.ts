@@ -14,6 +14,7 @@ import GitHubIssue from './models/github-issue';
 import ConfigProvider from '../../data-providers/config-provider';
 import { CHANGELOG_CONFIG_NAME, CHANGELOG_NAME } from './changelog-constants';
 import { isModuleInstalled } from '../../core/addons-checker';
+import GitHubPullRequest from './models/github-pull-request';
 
 interface GeneratorResult {
   latestVersion: string;
@@ -160,27 +161,39 @@ class Generator {
             );
 
             change.forEach((c) => {
+              builder.addListItem(
+                replacer.replaceEmojisIf(
+                  c.description,
+                  cfg.replaceEmojis.githubIssues
+                )
+              );
+
               if (c.issue !== undefined) {
                 const ghIssue = context.issues.get(c.issue);
-                builder.addListItem(
-                  replacer.replaceEmojisIf(
-                    c.description,
-                    cfg.replaceEmojis.githubIssues
-                  )
-                );
 
                 if (ghIssue) {
                   builder.addSubListItem(
                     `Reported in ${getIssueLink(ghIssue, context.config)}`
                   );
                 }
+
+                if (c.pullRequest !== undefined) {
+                  const ghPr = context.pullRequests.get(c.pullRequest);
+                  if (ghPr) {
+                    builder.addSubListItem(
+                      `Fixed in ${getPrLink(ghPr, context.config)}`
+                    );
+                  }
+                }
               } else {
-                builder.addListItem(
-                  replacer.replaceEmojisIf(
-                    c.description,
-                    cfg.replaceEmojis.githubIssues
-                  )
-                );
+                if (c.pullRequest !== undefined) {
+                  const ghPr = context.pullRequests.get(c.pullRequest);
+                  if (ghPr) {
+                    builder.addSubListItem(
+                      `Implemented in ${getPrLink(ghPr, context.config)}`
+                    );
+                  }
+                }
               }
             });
           }
@@ -190,13 +203,25 @@ class Generator {
       const moduleIssues = release.modules
         .flatMap((x) => x.changes.flatMap((y) => y.issue))
         .filter(isNumber);
-      const nonAuthors = [...context.issues.values()]
-        .filter((x) => moduleIssues.includes(x.number))
+      const modulePrs = release.modules
+        .flatMap((x) => x.changes.flatMap((y) => y.pullRequest))
+        .filter(isNumber);
+
+      const nonAuthors = [
+        ...context.issues.values(),
+        ...context.pullRequests.values()
+      ]
+        .filter(
+          (x) => moduleIssues.includes(x.number) || modulePrs.includes(x.number)
+        )
         .filter((x) => {
+          console.log();
           if (x.submitter === undefined) return false;
           return !cfg.knownAuthors.includes(x.submitter);
         });
-
+      console.log(
+        `Found a total of ${nonAuthors.length} contributors for this release`
+      );
       if (nonAuthors.length > 0) {
         builder.addHeader(
           replacer.replaceEmojisIf(
@@ -244,6 +269,23 @@ class Generator {
       if (issue.submitter === undefined) return base;
       if (config.knownAuthors.includes(issue.submitter)) return base;
       const author = `[${issue.submitter}](https://github.com/${issue.submitter})`;
+      return `${base} - Thanks ${author}`;
+    };
+    const getPrLink = (
+      pullRequest: GitHubPullRequest,
+      config: ChangelogConfig
+    ) => {
+      const base = config.useDescriptivePullRequests
+        ? `[${escapeText(
+            replacer.replaceEmojisIf(
+              pullRequest.title,
+              cfg.replaceEmojis.githubPullRequests
+            )
+          )}](${pullRequest.url})`
+        : `[PR#${pullRequest.number}](${pullRequest.url})`;
+      if (pullRequest.submitter === undefined) return base;
+      if (config.knownAuthors.includes(pullRequest.submitter)) return base;
+      const author = `[${pullRequest.submitter}](https://github.com/${pullRequest.submitter})`;
       return `${base} - Thanks ${author}`;
     };
     logs.forEach((l) => getSection(context.tags, l));

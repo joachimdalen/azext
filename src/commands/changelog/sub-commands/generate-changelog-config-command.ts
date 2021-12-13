@@ -38,6 +38,7 @@ const defaultConfig: ChangelogConfig = {
   },
   knownAuthors: [],
   useDescriptiveIssues: true,
+  useDescriptivePullRequests: true,
   replaceEmojis: {
     tags: true,
     changelogTitle: true,
