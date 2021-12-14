@@ -1,6 +1,5 @@
 import fs from 'fs/promises';
 
-import { CliOptions } from './cli-args';
 import MarkdownBuilder from './markdown-builder';
 import { MetaDataLoader } from './metadata';
 
@@ -15,6 +14,7 @@ import ConfigProvider from '../../data-providers/config-provider';
 import { CHANGELOG_CONFIG_NAME, CHANGELOG_NAME } from './changelog-constants';
 import { isModuleInstalled } from '../../core/addons-checker';
 import GitHubPullRequest from './models/github-pull-request';
+import { GenerateChangelogCommandOptions } from './sub-commands/generate-changelog-command';
 
 interface GeneratorResult {
   latestVersion: string;
@@ -23,7 +23,7 @@ interface GeneratorResult {
 
 class Generator {
   async generateChangelog(
-    options: CliOptions
+    options: GenerateChangelogCommandOptions
   ): Promise<GeneratorResult | undefined> {
     const metadataLoader = new MetaDataLoader(options);
     const configProvider = new ConfigProvider();

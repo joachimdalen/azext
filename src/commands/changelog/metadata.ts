@@ -1,5 +1,4 @@
 import chalk from 'chalk';
-import { CliOptions } from './cli-args';
 import GitHub from '../../data-providers/github';
 import { isIssue, isPullRequest, isNumber } from '../../core/utils';
 import ChangelogCache from './models/changelog-cache';
@@ -10,12 +9,13 @@ import GitHubIssue from './models/github-issue';
 import GitHubPullRequest from './models/github-pull-request';
 import ConfigProvider from '../../data-providers/config-provider';
 import { CHANGELOG_CACHE_NAME } from './changelog-constants';
+import { GenerateChangelogCommandOptions } from './sub-commands/generate-changelog-command';
 
 export class MetaDataLoader {
   private readonly _github: GitHub;
-  private readonly _options: CliOptions;
+  private readonly _options: GenerateChangelogCommandOptions;
   private _configProvider: ConfigProvider;
-  constructor(options: CliOptions) {
+  constructor(options: GenerateChangelogCommandOptions) {
     this._github = new GitHub();
     this._options = options;
     this._configProvider = new ConfigProvider();
