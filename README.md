@@ -1,11 +1,5 @@
 <div id="top"></div>
 
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -29,6 +23,22 @@
     ·
     <a href="https://github.com/joachimdalen/azext/issues">Request Feature</a>
   </p>
+</div>
+
+<div align="center">
+  <img alt="Azure DevOps builds" src="https://img.shields.io/azure-devops/build/dalenapps/6531387f-baea-443c-a284-0d0e786e56c3/39?color=0078d7&label=Master%20Build&logo=azure-devops&style=flat-square">
+</div>
+<div align="center">
+<img alt="Issues" src="https://img.shields.io/github/issues/joachimdalen/azext.svg?style=flat-square">
+  <img alt="License" src="https://img.shields.io/github/license/joachimdalen/azext?style=flat-square">
+  <img alt="npm bundle size (scoped)" src="https://img.shields.io/bundlephobia/min/@joachimdalen/azext?style=flat-square">
+  <img alt="npm (scoped)" src="https://img.shields.io/npm/v/@joachimdalen/azext?logo=npm&style=flat-square">
+</div>
+
+<div align="center">
+  <img alt="Dependent repos (via libraries.io), scoped npm package" src="https://img.shields.io/librariesio/dependent-repos/npm/@joachimdalen/azext?style=flat-square">
+  <img alt="Libraries.io dependency status for latest release, scoped npm package" src="https://img.shields.io/librariesio/release/npm/@joachimdalen/azext?style=flat-square">
+  <img alt="Snyk Vulnerabilities for npm scoped package" src="https://img.shields.io/snyk/vulnerabilities/npm/@joachimdalen/azext?style=flat-square">
 </div>
 
 <!-- TABLE OF CONTENTS -->
@@ -63,33 +73,47 @@
 
 AzExt provides a set of utilities to help with developing Extensions for Azure DevOps.
 
-
 ## Configuration
 
 ```json
 {
   // Idenfier of repository for issues and pull requests
-  "repository": "joachimdalen/AzureDevOpsExtensions", 
-  // Format of title for main release - Example:  ## 0.0.1 (2020-10-01)
-  "releaseTitleFormat": "## {{version}} ({{publishDate}})", 
-  // Format of title for extension part (e.g task) - Example: #### `BuildTaskOne@2.1.45`
-  "moduleTitleFormat": "#### `{{name}}@{{version}}`", 
+  "repository": "joachimdalen/azext",
+  "changelogTitle": { "size": "h1", "format": "Changelog" },
+  "releaseTitleFormat": {
+    "size": "h2",
+    "format": "{{version}} ({{publishDate}})"
+  },
+  "moduleTitleFormat": { "size": "h4", "format": "`{{name}}@{{version}}`" },
   "taskMapping": {},
   "sectionSplitter": "---",
-  // This maps to the type field and provides headers for specific types
+  "tagSize": "h3",
   "tagMapping": {
-    "feature": "### 🚀 Features",
-    "fix": "### 🐛 Fixes",
-    "tests": "### 🧪 Tests",
-    "other": "### 💬 Other",
-    "docs": "### Documentation"
-  }, 
-  "attributionTitleFormat": "## 🌟 Contributors",
-  "attributionSubTitle": "Thank you to the following for contributing to the latest release",
-  // This is the known authors that should not have their contributions listed in the changelog
-  "knownAuthors": ["joachimdalen"],
-  // Use issue title instead of number in links
-  "useDescriptiveIssues": true 
+    "feature": ":rocket: Features",
+    "fix": ":bug: Fixes",
+    "tests": ":test_tube: Tests",
+    "other": ":speech_balloon: Other",
+    "docs": ":memo: Documentation",
+    "maint": ":hammer_and_wrench: Maintenance"
+  },
+  "attributionTitleFormat": { "size": "h2", "format": ":star2: Contributors" },
+  "attributionSubTitle": {
+    "format": "Thank you to the following for contributing to the latest release"
+  },
+  "knownAuthors": [],
+  "useDescriptiveIssues": true,
+  "replaceEmojis": {
+    "tags": true,
+    "changelogTitle": true,
+    "releaseTitle": true,
+    "moduleTitle": true,
+    "attributionTitle": true,
+    "attributionSubTitle": true,
+    "githubIssues": false,
+    "githubPullRequests": false,
+    "notes": true,
+    "summary": true
+  }
 }
 ```
 
@@ -125,8 +149,6 @@ To get a local copy up and running follow these simple example steps.
 
 ## Usage
 
-
-
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- ROADMAP -->
@@ -135,7 +157,6 @@ To get a local copy up and running follow these simple example steps.
 
 - [ ] README generation from multiple files
 - [ ] Creation of new repository from default template
-
 
 See the [open issues](https://github.com/joachimdalen/azext/issues?q=is%3Aopen+is%3Aissue+label%3A%40type%2Ffeature) for a full list of proposed features.
 
@@ -181,16 +202,4 @@ If you have generic questions about the project or usage you can make contact in
 
 - Submit an issue with the `@type/question` label - [New Issue](https://github.com/joachimdalen/azext/issues/new)
 
-
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-[contributors-shield]: https://img.shields.io/github/contributors/joachimdalen/azext.svg?style=for-the-badge
-[contributors-url]: https://github.com/joachimdalen/azext/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/joachimdalen/azext.svg?style=for-the-badge
-[forks-url]: https://github.com/joachimdalen/azext/network/members
-[stars-shield]: https://img.shields.io/github/stars/joachimdalen/azext.svg?style=for-the-badge
-[stars-url]: https://github.com/joachimdalen/azext/stargazers
-[issues-shield]: https://img.shields.io/github/issues/joachimdalen/azext.svg?style=for-the-badge
-[issues-url]: https://github.com/joachimdalen/azext/issues
-[license-shield]: https://img.shields.io/github/license/joachimdalen/azext?style=for-the-badge
-[license-url]: https://github.com/joachimdalen/azext/blob/master/LICENSE
