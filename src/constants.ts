@@ -11,8 +11,6 @@ export const cliHeader = ` █████╗ ███████╗███�
 
 export const helpCommand = { name: 'help', summary: 'Print this usage guide.' };
 
-export const helpOption: OptionDefinition = { name: 'help', type: Boolean };
-
 export const introSections: Section[] = [
   {
     content: chalk.cyanBright(cliHeader),

@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { introSections, helpCommand, helpOption } from '../../constants';
+import { introSections, helpCommand } from '../../constants';
 import HelpCmdHandler from '../help-cmd-handler';
 import { CommandBase } from '../models';
 import ChangelogGenerateCmdHandler from './handlers/changelog-generate-cmd-handler';
@@ -26,7 +26,7 @@ const changelogCommands: CommandBase = {
       optionList: []
     }
   ],
-  options: [helpOption],
+  options: [],
   subCommands: [
     {
       handler: () => new ChangelogGenerateCmdHandler(),
