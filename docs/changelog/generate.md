@@ -8,9 +8,9 @@ Even though this project is not an extension for Azure DevOps, we still use azex
 
 Here are our files that are used for changelog generation.
 
-- [Changelog configuration](./)
-- [Generated changelog](./)
-- [Generated cache](./)
+- [Changelog configuration](../../.azext/changelog-config.json)
+- [Generated changelog](../CHANGELOG.md)
+- [Generated cache](../../.azext/changelog-cache.json)
 
 ## Help
 
@@ -21,7 +21,18 @@ Here are our files that are used for changelog generation.
 ```text
 Command List
 
-  init        Generate default config folder
-  changelog   Tools to manage and generate changelogs
-  help        Print this usage guide.
+  help   Print this usage guide. 
+
+Options
+
+  -o, --output string     Path to output generated markdown file to                                     
+  -c, --config string     Path to changelog-config.json                                                 
+  -l, --log string        Path to changelog.json file                                                   
+  --format                Format generated file. Requires Prettier to be installed                      
+  --generate-cache        Generate changelog-cache.json containing a cache of issues and pull requests  
+  --from-cache            Use changelog-cache.json for cache during generation                          
+  --cache-output string                                                                                 
+  --cache-file string                                                                                   
+  --version string        Generate changelog for only this version. Maps to the version field of        
+                          changelog.json 
 ```
