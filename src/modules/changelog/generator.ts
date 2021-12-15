@@ -15,15 +15,16 @@ import ConfigProvider from '../../data-providers/config-provider';
 import { CHANGELOG_CONFIG_NAME, CHANGELOG_NAME } from './changelog-constants';
 import { isModuleInstalled } from '../../core/addons-checker';
 import GitHubPullRequest from './models/github-pull-request';
+import { GenerateChangelogOptions } from '../../cli/changelog';
 
-interface GeneratorResult {
+export interface GeneratorResult {
   latestVersion: string;
   outputPath: string;
 }
 
 class Generator {
   async generateChangelog(
-    options: CliOptions
+    options: GenerateChangelogOptions
   ): Promise<GeneratorResult | undefined> {
     const metadataLoader = new MetaDataLoader(options);
     const configProvider = new ConfigProvider();

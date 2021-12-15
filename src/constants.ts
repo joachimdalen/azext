@@ -29,6 +29,7 @@ export const introSections: Section[] = [
   }
 ];
 
-export interface IOptionWithHelp extends CommandLineOptions {
-  help: boolean;
+export interface ActionResult {
+  isSuccess: boolean;
+  message?: string;
 }

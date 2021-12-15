@@ -4,13 +4,19 @@ import fs from 'fs/promises';
 class ConfigProvider {
   private readonly _defaultFolder = '.azext';
 
-  public async createConfigFolderIfNotExists(path?: string) {
-    const folderPath = path ?? this._defaultFolder;
+  public async createConfigFolderIfNotExists(inputPath?: string) {
+    console.log('Got path ' + path);
+    const folderPath =
+      inputPath === undefined
+        ? this._defaultFolder
+        : path.join(inputPath, this._defaultFolder);
     try {
       await fs.stat(folderPath);
     } catch {
       await fs.mkdir(folderPath, { recursive: true });
     }
+
+    return folderPath;
   }
 
   public getFullFilePath(filePath: string) {
@@ -30,13 +36,19 @@ class ConfigProvider {
     }
   }
 
-  public async writeConfig(filePath: string, data: any, asJson = true) {
+  public async writeConfig(
+    filePath: string,
+    data: any,
+    asJson = true
+  ): Promise<string> {
     await this.createConfigFolderIfNotExists();
     const resolvedPath = this.getFullFilePath(filePath);
     await fs.writeFile(
       resolvedPath,
       asJson ? JSON.stringify(data, null, 2) : data
     );
+
+    return resolvedPath;
   }
 }
 
