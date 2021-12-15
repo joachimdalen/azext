@@ -1,5 +1,21 @@
 [
   {
+    "publishDate": "2021-12-XX",
+    "version": "0.0.2",
+    "modules": [
+      {
+        "name": "core",
+        "version": "0.0.2",
+        "changes": [
+          {
+            "type": "maint",
+            "description": "Split CLI and implementation in preparation for Node API"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "publishDate": "2021-12-13",
     "version": "0.0.1",
     "summary": "Initial release of AzExt",
