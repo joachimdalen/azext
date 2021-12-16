@@ -18,7 +18,7 @@ export default class ChangelogGenerateCmdHandler extends BaseCommandHandler<Gene
     globalOptions?: GlobalOptions
   ): Promise<void> {
     const result = await this._service.generate(options);
-    if (true) {
+    if (globalOptions?.ci === 'ado') {
       if (result === undefined) {
         logWarning('Failed to generate changelog');
       } else {
