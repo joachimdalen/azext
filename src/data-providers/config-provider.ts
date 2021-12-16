@@ -5,7 +5,6 @@ class ConfigProvider {
   private readonly _defaultFolder = '.azext';
 
   public async createConfigFolderIfNotExists(inputPath?: string) {
-    console.log('Got path ' + path);
     const folderPath =
       inputPath === undefined
         ? this._defaultFolder
