@@ -1,5 +1,6 @@
 import path from 'path';
 import fs from 'fs/promises';
+import { workingDirectory } from '../core/process';
 
 class ConfigProvider {
   private readonly _defaultFolder = '.azext';
@@ -21,7 +22,7 @@ class ConfigProvider {
   public getFullFilePath(filePath: string) {
     if (path.isAbsolute(filePath)) return filePath;
     if (filePath.startsWith('./')) return filePath;
-    return path.join(process.cwd(), this._defaultFolder, filePath);
+    return path.join(workingDirectory(), this._defaultFolder, filePath);
   }
 
   public async getConfig<T>(filePath: string) {
