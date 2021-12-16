@@ -249,15 +249,15 @@ class Generator {
 
     const escapeText = (text: string): string => {
       return text
-        .replaceAll('[', '\\[')
-        .replaceAll(']', '\\]')
-        .replaceAll('<', '\\<')
-        .replaceAll('>', '\\>');
+        .replace(/\[/, '\\[')
+        .replace(/\]/, '\\]')
+        .replace(/</, '\\<')
+        .replace(/>/, '\\>');
     };
 
     const getIssueLink = (issue: GitHubIssue, config: ChangelogConfig) => {
       const base = config.useDescriptiveIssues
-        ? `[${escapeText(
+        ? `[GH#${issue.number} - ${escapeText(
             replacer.replaceEmojisIf(
               issue.title,
               cfg.replaceEmojis.githubIssues
@@ -274,7 +274,7 @@ class Generator {
       config: ChangelogConfig
     ) => {
       const base = config.useDescriptivePullRequests
-        ? `[${escapeText(
+        ? `[GH#${pullRequest.number} - ${escapeText(
             replacer.replaceEmojisIf(
               pullRequest.title,
               cfg.replaceEmojis.githubPullRequests
