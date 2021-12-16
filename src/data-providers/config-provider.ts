@@ -25,7 +25,7 @@ class ConfigProvider {
     return path.join(workingDirectory(), this._defaultFolder, filePath);
   }
 
-  public async getConfig<T>(filePath: string) {
+  public async getConfig<T>(filePath: string): Promise<T | undefined> {
     try {
       const resolvedPath = this.getFullFilePath(filePath);
       const fileBuffer = await fs.readFile(resolvedPath);
