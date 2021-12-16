@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import commandLineArgs, { OptionDefinition } from 'command-line-args';
-import { helpCommand, introSections } from '../constants';
+import { ActionResultWithData, helpCommand, introSections } from '../constants';
 import changelogCommands from './changelog/changelog-definition';
 import HelpCmdHandler from './help-cmd-handler';
 import initCommands from './init/init-definition';
@@ -53,17 +53,18 @@ class AzExtCli {
     defaultOption: true
   };
 
-  parse(): ParseResult | undefined {
-    let parsed = this.getOptions<RootCommand>([this.commandOption]);
+  parse(args?: string[]): ActionResultWithData<ParseResult> {
+    let parsed = this.getOptions<RootCommand>([this.commandOption], args);
     const existingCommand = this.rootCommands.find(
       (x) => x.command === parsed.options.command
     );
-
+    console.log(JSON.stringify(parsed, null, 2));
     if (existingCommand === undefined) {
-      console.log(chalk.redBright(`No such command ${parsed.options.command}`));
-      return;
+      return {
+        isSuccess: false,
+        message: `No such command ${parsed.options.command}`
+      };
     }
-    console.log(chalk.green(`Found command ${existingCommand.command}`));
 
     let cmd: CommandBase | undefined = existingCommand;
     let parentCmd: CommandBase | undefined = undefined;
@@ -82,12 +83,11 @@ class AzExtCli {
       if (foundSubCommand != undefined) {
         parentCmd = cmd;
         cmd = foundSubCommand;
-        console.log('Found sub command ' + cmd.command);
       } else {
-        console.log(
-          chalk.redBright(`No such command ${parsed.options.command}`)
-        );
-        return;
+        return {
+          isSuccess: false,
+          message: `No such command ${parsed.options.command}`
+        };
       }
       level++;
     }
@@ -99,37 +99,36 @@ class AzExtCli {
       parsed.restArgs.length > 0 &&
       !parsed.restArgs[0].startsWith('-')
     ) {
-      console.log(
-        chalk.bgRedBright.black('Unknown sub command ' + parsed.restArgs[0])
-      );
-      return;
+      return {
+        isSuccess: false,
+        message: 'Unknown sub command ' + parsed.restArgs[0]
+      };
     }
 
     return {
-      command: cmd,
-      parent: parentCmd,
-      rest: parsed
+      isSuccess: true,
+      data: {
+        command: cmd,
+        parent: parentCmd,
+        rest: parsed
+      }
     };
   }
 
   async run(): Promise<void> {
-    const parsedCommand = this.parse();
+    const { isSuccess, message, data } = this.parse();
 
-    if (parsedCommand === undefined) {
-      return;
-    }
-
-    if (parsedCommand?.command.handler === undefined) {
-      throw new Error(
-        'No handler defined for command ' + parsedCommand.command?.command
-      );
+    if (isSuccess && data !== undefined) {
+      if (data?.command.handler === undefined) {
+        throw new Error(
+          'No handler defined for command ' + data.command?.command
+        );
+      } else {
+        const handler = data.command.handler(data.parent || data.command);
+        await handler.handleCommand(handler.getOptions(data.rest.options));
+      }
     } else {
-      const handler = parsedCommand.command.handler(
-        parsedCommand.parent || parsedCommand.command
-      );
-      await handler.handleCommand(
-        handler.getOptions(parsedCommand.rest.options)
-      );
+      console.log(chalk.redBright(message));
     }
   }
 
