@@ -30,6 +30,11 @@ const initCommands: CommandBase = {
   options: [{ name: 'root', alias: 'r', defaultValue: process.cwd() }],
   subCommands: [
     {
+      command: 'mapping',
+      sections: [],
+      options: []
+    },
+    {
       command: 'help',
       handler: (options?: CommandBase) => new HelpCmdHandler(options),
       sections: [],
