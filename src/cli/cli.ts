@@ -26,8 +26,7 @@ const root: CommandBase = {
         },
         helpCommand
       ]
-    },
-  
+    }
   ],
   options: []
 };
@@ -62,7 +61,7 @@ class AzExtCli {
       args
     );
 
-    const globalOptions: GlobalOptions = parsed.options as GlobalOptions;
+    const globalOptions: GlobalOptions = { ...parsed.options } as GlobalOptions;
     const existingCommand = this.rootCommands.find(
       (x) => x.command === parsed.options.command
     );
@@ -78,7 +77,7 @@ class AzExtCli {
     let parentCmd: CommandBase | undefined = undefined;
     let level = 0;
 
-    while (this.hasSubCommands(cmd?.subCommands)) {
+    while (this.hasSubCommands(cmd?.subCommands, parsed)) {
       if (level > 5) throw new Error('Level error');
       parsed = this.getOptions<RootCommand>(
         [this.commandOption],
@@ -88,7 +87,7 @@ class AzExtCli {
         (x) => x.command === parsed.options.command
       );
 
-      if (foundSubCommand != undefined) {
+      if (foundSubCommand !== undefined) {
         parentCmd = cmd;
         cmd = foundSubCommand;
       } else {
@@ -140,9 +139,14 @@ class AzExtCli {
     }
   }
 
-  hasSubCommands(commands: CommandBase[] | undefined) {
+  hasSubCommands(
+    commands: CommandBase[] | undefined,
+    parsed: ParsedCommand<RootCommand>
+  ) {
     if (commands === undefined) return false;
     if (commands.length === 0) return false;
+    if (parsed?.restArgs === undefined) return false;
+    if (parsed?.restArgs?.length === 0) return false;
     return true;
   }
   getOptions<T>(

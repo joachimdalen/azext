@@ -2,7 +2,9 @@ import chalk from 'chalk';
 import { introSections, helpCommand } from '../../constants';
 import HelpCmdHandler from '../help-cmd-handler';
 import { CommandBase } from '../models';
+import NewChangelogConfigCmdHandler from './handlers/changelog-config-cmd-handler';
 import ChangelogGenerateCmdHandler from './handlers/changelog-generate-cmd-handler';
+import NewChangelogCmdHandler from './handlers/changelog-new-cmd-handler';
 
 const changelogCommands: CommandBase = {
   command: 'changelog',
@@ -146,6 +148,7 @@ const changelogCommands: CommandBase = {
     },
     {
       command: 'config',
+      handler: () => new NewChangelogConfigCmdHandler(),
       sections: [
         ...introSections,
         {
@@ -186,6 +189,7 @@ const changelogCommands: CommandBase = {
     },
     {
       command: 'new',
+      handler: () => new NewChangelogCmdHandler(),
       sections: [
         ...introSections,
         {
