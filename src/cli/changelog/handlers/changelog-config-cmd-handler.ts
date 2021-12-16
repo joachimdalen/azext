@@ -1,11 +1,6 @@
-import chalk from 'chalk';
-import ChangelogService from '../../../modules/changelog/ChangelogService';
+import ChangelogService from '../../../modules/changelog/changelog-service';
+import { NewChangelogConfigOptions } from '../../../modules/changelog/options';
 import { BaseCommandHandler } from '../../models';
-
-export interface NewChangelogConfigOptions {
-  outputDir: string;
-  force: boolean;
-}
 
 export default class NewChangelogConfigCmdHandler extends BaseCommandHandler<NewChangelogConfigOptions> {
   private _service: ChangelogService;

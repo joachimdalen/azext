@@ -1,5 +1,5 @@
-import { InitOptions } from '../../cli/init/handlers/init-cmd-handler';
 import ConfigProvider from '../../data-providers/config-provider';
+import { InitOptions } from './options';
 
 class InitService {
   private _configProvider: ConfigProvider;

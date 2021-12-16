@@ -1,16 +1,13 @@
 import chalk from 'chalk';
-import InitService from '../../../modules/init/InitService';
+import InitService from '../../../modules/init/init-service';
+import { InitOptions } from '../../../modules/init/options';
 import { BaseCommandHandler } from '../../models';
-
-export interface InitOptions {
-  root: string;
-}
 
 export default class InitCmdHandler extends BaseCommandHandler<InitOptions> {
   private _service: InitService;
   constructor() {
     super();
-    console.log("Creating init service");
+    console.log('Creating init service');
     this._service = new InitService();
   }
   async handleCommand(options: InitOptions): Promise<void> {

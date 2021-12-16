@@ -1,7 +1,3 @@
-import chalk from 'chalk';
-import { GenerateChangelogOptions } from '../../cli/changelog';
-import { NewChangelogConfigOptions } from '../../cli/changelog/handlers/changelog-config-cmd-handler';
-import { NewChangelogOptions } from '../../cli/changelog/handlers/changelog-new-cmd-handler';
 import {
   CHANGELOG_CONFIG_NAME,
   CHANGELOG_DEFAULT_CONFIG,
@@ -9,7 +5,11 @@ import {
 } from './changelog-constants';
 import Generator, { GeneratorResult } from './generator';
 import ChangelogConfig from './models/changelog-config';
-
+import {
+  GenerateChangelogOptions,
+  NewChangelogConfigOptions,
+  NewChangelogOptions
+} from './options';
 import { ActionResult } from '../../constants';
 import ConfigProvider from '../../data-providers/config-provider';
 

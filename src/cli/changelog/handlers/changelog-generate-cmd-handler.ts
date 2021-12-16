@@ -3,20 +3,9 @@ import {
   ADO_OUTPUT_PATH
 } from '../../../modules/changelog/changelog-constants';
 import { logWarning, setVariable } from '../../../core/azure-devops-logger';
-import ChangelogService from '../../../modules/changelog/ChangelogService';
+import ChangelogService from '../../../modules/changelog/changelog-service';
 import { BaseCommandHandler } from '../../models';
-
-export interface GenerateChangelogOptions {
-  output: string;
-  config: string;
-  log: string;
-  format: boolean;
-  generateCache: boolean;
-  fromCache: boolean;
-  cacheOutput: string;
-  cacheFile: string;
-  version?: string;
-}
+import { GenerateChangelogOptions } from '../../../modules/changelog/options';
 
 export default class ChangelogGenerateCmdHandler extends BaseCommandHandler<GenerateChangelogOptions> {
   private _service: ChangelogService;

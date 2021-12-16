@@ -1,10 +1,6 @@
-import chalk from 'chalk';
-import ChangelogService from '../../../modules/changelog/ChangelogService';
+import ChangelogService from '../../../modules/changelog/changelog-service';
+import { NewChangelogOptions } from '../../../modules/changelog/options';
 import { BaseCommandHandler } from '../../models';
-
-export interface NewChangelogOptions {
-  output: string;
-}
 
 export default class NewChangelogCmdHandler extends BaseCommandHandler<NewChangelogOptions> {
   private _service: ChangelogService;
@@ -13,7 +9,7 @@ export default class NewChangelogCmdHandler extends BaseCommandHandler<NewChange
     this._service = new ChangelogService();
   }
   async handleCommand(options: NewChangelogOptions): Promise<void> {
-    const result = await this._service.createNewFile(options);    
-    this.writeResult(result)
+    const result = await this._service.createNewFile(options);
+    this.writeResult(result);
   }
 }

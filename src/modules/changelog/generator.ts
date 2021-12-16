@@ -1,21 +1,18 @@
-import fs from 'fs/promises';
-
-import { CliOptions } from './cli-args';
-import MarkdownBuilder from './markdown-builder';
-import { MetaDataLoader } from './metadata';
-
 import chalk from 'chalk';
+import fs from 'fs/promises';
+import { isModuleInstalled } from '../../core/addons-checker';
 import Replacer from '../../core/replacer';
 import { isNumber } from '../../core/utils';
+import ConfigProvider from '../../data-providers/config-provider';
+import { CHANGELOG_CONFIG_NAME, CHANGELOG_NAME } from './changelog-constants';
+import MarkdownBuilder from './markdown-builder';
+import { MetaDataLoader } from './metadata';
 import ChangelogConfig from './models/changelog-config';
 import ChangelogDefinition from './models/changelog-definition';
 import GeneratorContext from './models/generator-context';
 import GitHubIssue from './models/github-issue';
-import ConfigProvider from '../../data-providers/config-provider';
-import { CHANGELOG_CONFIG_NAME, CHANGELOG_NAME } from './changelog-constants';
-import { isModuleInstalled } from '../../core/addons-checker';
 import GitHubPullRequest from './models/github-pull-request';
-import { GenerateChangelogOptions } from '../../cli/changelog';
+import { GenerateChangelogOptions } from './options';
 
 export interface GeneratorResult {
   latestVersion: string;
