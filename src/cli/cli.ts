@@ -36,6 +36,12 @@ const root: CommandBase = {
   options: []
 };
 
+interface ParseResult {
+  command: CommandBase;
+  parent?: CommandBase;
+  rest: ParsedCommand<RootCommand>;
+}
+
 class AzExtCli {
   private readonly rootCommands: CommandBase[] = [
     root,
@@ -46,7 +52,8 @@ class AzExtCli {
     name: 'command',
     defaultOption: true
   };
-  async run(): Promise<void> {
+
+  parse(): ParseResult | undefined {
     let parsed = this.getOptions<RootCommand>([this.commandOption]);
     const existingCommand = this.rootCommands.find(
       (x) => x.command === parsed.options.command
@@ -98,11 +105,31 @@ class AzExtCli {
       return;
     }
 
-    if (cmd?.handler === undefined) {
-      throw new Error('No handler defined for command ' + cmd?.command);
+    return {
+      command: cmd,
+      parent: parentCmd,
+      rest: parsed
+    };
+  }
+
+  async run(): Promise<void> {
+    const parsedCommand = this.parse();
+
+    if (parsedCommand === undefined) {
+      return;
+    }
+
+    if (parsedCommand?.command.handler === undefined) {
+      throw new Error(
+        'No handler defined for command ' + parsedCommand.command?.command
+      );
     } else {
-      const handler = cmd.handler(parentCmd || cmd);
-      await handler.handleCommand(handler.getOptions(options.options));
+      const handler = parsedCommand.command.handler(
+        parsedCommand.parent || parsedCommand.command
+      );
+      await handler.handleCommand(
+        handler.getOptions(parsedCommand.rest.options)
+      );
     }
   }
 
