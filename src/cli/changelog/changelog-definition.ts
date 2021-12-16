@@ -2,7 +2,9 @@ import chalk from 'chalk';
 import { introSections, helpCommand } from '../../constants';
 import HelpCmdHandler from '../help-cmd-handler';
 import { CommandBase } from '../models';
+import NewChangelogConfigCmdHandler from './handlers/changelog-config-cmd-handler';
 import ChangelogGenerateCmdHandler from './handlers/changelog-generate-cmd-handler';
+import NewChangelogCmdHandler from './handlers/changelog-new-cmd-handler';
 
 const changelogCommands: CommandBase = {
   command: 'changelog',
@@ -134,21 +136,60 @@ const changelogCommands: CommandBase = {
         {
           name: 'version'
         }
+      ],
+      subCommands: [
+        {
+          command: 'help',
+          handler: (options?: CommandBase) => new HelpCmdHandler(options),
+          sections: [],
+          options: []
+        }
       ]
     },
     {
       command: 'config',
-      sections: [],
+      handler: () => new NewChangelogConfigCmdHandler(),
+      sections: [
+        ...introSections,
+        {
+          header: 'Config',
+          content: chalk.magentaBright('Generate default config file')
+        },
+        {
+          header: 'Command List',
+          content: [helpCommand]
+        },
+        {
+          header: 'Options',
+          optionList: [
+            {
+              name: 'force',
+              description: 'Overwrite file if it exists',
+              defaultValue: false,
+              type: Boolean
+            }
+          ]
+        }
+      ],
       options: [
         {
           name: 'force',
           type: Boolean,
           defaultValue: false
         }
+      ],
+      subCommands: [
+        {
+          command: 'help',
+          handler: (options?: CommandBase) => new HelpCmdHandler(options),
+          sections: [],
+          options: []
+        }
       ]
     },
     {
       command: 'new',
+      handler: () => new NewChangelogCmdHandler(),
       sections: [
         ...introSections,
         {
@@ -185,6 +226,12 @@ const changelogCommands: CommandBase = {
           options: []
         }
       ]
+    },
+    {
+      command: 'help',
+      handler: (options?: CommandBase) => new HelpCmdHandler(options),
+      sections: [],
+      options: []
     }
   ]
 };

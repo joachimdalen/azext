@@ -7,6 +7,11 @@ export const isNumber = (item: number | undefined): item is number => {
 export const isIssue = (item: GitHubIssue | undefined): item is GitHubIssue => {
   return !!item;
 };
+
+export const distinct = (value: any, index: number, self: any[]) => {
+  return self.indexOf(value) === index;
+};
+
 export const isPullRequest = (
   item: GitHubPullRequest | undefined
 ): item is GitHubPullRequest => {

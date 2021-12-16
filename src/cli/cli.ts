@@ -4,7 +4,12 @@ import { ActionResultWithData, helpCommand, introSections } from '../constants';
 import changelogCommands from './changelog/changelog-definition';
 import HelpCmdHandler from './help-cmd-handler';
 import initCommands from './init/init-definition';
-import { CommandBase, ParsedCommand, RootCommand } from './models';
+import {
+  CommandBase,
+  GlobalOptions,
+  ParsedCommand,
+  RootCommand
+} from './models';
 
 const root: CommandBase = {
   command: 'help',
@@ -21,16 +26,6 @@ const root: CommandBase = {
         },
         helpCommand
       ]
-    },
-    {
-      header: 'Options',
-      optionList: [
-        {
-          name: 'ci',
-          description:
-            'Run in CI mode. Currenctly supported: ado (Azure DevOps) --ci=ado'
-        }
-      ]
     }
   ],
   options: []
@@ -40,6 +35,7 @@ interface ParseResult {
   command: CommandBase;
   parent?: CommandBase;
   rest?: ParsedCommand<any>;
+  globalOptions?: GlobalOptions;
 }
 
 class AzExtCli {
@@ -53,8 +49,18 @@ class AzExtCli {
     defaultOption: true
   };
 
+  private readonly globalOptions: OptionDefinition[] = [
+    {
+      name: 'ci'
+    }
+  ];
+
   parse(args?: string[]): ActionResultWithData<ParseResult> {
-    let parsed = this.getOptions<RootCommand>([this.commandOption], args);
+    let parsed = this.getOptions<RootCommand>(
+      [this.commandOption, ...this.globalOptions],
+      args
+    );
+    const globalOptions: GlobalOptions = { ...parsed.options } as GlobalOptions;
     const existingCommand = this.rootCommands.find(
       (x) => x.command === parsed.options.command
     );
@@ -70,25 +76,31 @@ class AzExtCli {
     let parentCmd: CommandBase | undefined = undefined;
     let level = 0;
 
-    while (this.hasSubCommands(cmd?.subCommands)) {
+    while (this.hasSubCommands(cmd?.subCommands, parsed)) {
       if (level > 5) throw new Error('Level error');
       parsed = this.getOptions<RootCommand>(
         [this.commandOption],
         parsed.restArgs
       );
-      const foundSubCommand: CommandBase | undefined = cmd?.subCommands?.find(
-        (x) => x.command === parsed.options.command
-      );
 
-      if (foundSubCommand != undefined) {
-        parentCmd = cmd;
-        cmd = foundSubCommand;
+      if (parsed.options.command) {
+        const foundSubCommand: CommandBase | undefined = cmd?.subCommands?.find(
+          (x) => x.command === parsed.options.command
+        );
+
+        if (foundSubCommand !== undefined) {
+          parentCmd = cmd;
+          cmd = foundSubCommand;
+        } else {
+          return {
+            isSuccess: false,
+            message: `No such sub command ${parsed.options.command}`
+          };
+        }
       } else {
-        return {
-          isSuccess: false,
-          message: `No such sub command ${parsed.options.command}`
-        };
+        break;
       }
+
       level++;
     }
 
@@ -109,7 +121,8 @@ class AzExtCli {
       data: {
         command: cmd,
         parent: parentCmd,
-        rest: options
+        rest: options,
+        globalOptions: globalOptions
       }
     };
   }
@@ -124,16 +137,24 @@ class AzExtCli {
         );
       } else {
         const handler = data.command.handler(data.parent || data.command);
-        await handler.handleCommand(handler.getOptions(data.rest?.options));
+        await handler.handleCommand(
+          handler.getOptions(data.rest?.options),
+          data.globalOptions
+        );
       }
     } else {
       console.log(chalk.redBright(message));
     }
   }
 
-  hasSubCommands(commands: CommandBase[] | undefined) {
+  hasSubCommands(
+    commands: CommandBase[] | undefined,
+    parsed: ParsedCommand<RootCommand>
+  ) {
     if (commands === undefined) return false;
     if (commands.length === 0) return false;
+    if (parsed?.restArgs === undefined) return false;
+    if (parsed?.restArgs?.length === 0) return false;
     return true;
   }
   getOptions<T>(

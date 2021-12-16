@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import GitHub from '../../data-providers/github';
-import { isIssue, isPullRequest, isNumber } from '../../core/utils';
+import { isIssue, isPullRequest, isNumber, distinct } from '../../core/utils';
 import ChangelogCache from './models/changelog-cache';
 import ChangelogConfig from './models/changelog-config';
 import ChangelogDefinition from './models/changelog-definition';
@@ -57,6 +57,7 @@ export class MetaDataLoader {
     const issueIds = log
       .flatMap((x) => x.modules.flatMap((x) => x.changes.map((x) => x.issue)))
       .filter(isNumber)
+      .filter(distinct)
       .filter((y) => !cachedIssues.some((x) => x.number === y));
     console.log(
       `ℹ️ Found ${chalk.cyanBright(issueIds.length)} issues not in cache`
@@ -73,6 +74,7 @@ export class MetaDataLoader {
         x.modules.flatMap((x) => x.changes.map((x) => x.pullRequest))
       )
       .filter(isNumber)
+      .filter(distinct)
       .filter((y) => !cachedPullRequests.some((x) => x.number === y));
     console.log(
       `ℹ️ Found ${chalk.cyanBright(prIds.length)} pull requests not in cache`

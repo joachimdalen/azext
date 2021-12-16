@@ -18,7 +18,8 @@
     "prepack": "mv README.md git.md && mv npm.md README.md",
     "postpack": "mv README.md npm.md && mv git.md README.md",
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "build:docs": "cd scripts && ts-node readme-generation.ts && cd .."
   },
   "author": "Joachim Dalen <joachim@dalenapps.no> (https://joachimdalen.no/)",
   "license": "MIT",
@@ -30,11 +31,13 @@
   "devDependencies": {
     "@types/command-line-args": "^5.2.0",
     "@types/command-line-usage": "^5.0.2",
+    "@types/glob": "^7.2.0",
     "@types/jest": "^27.0.3",
     "@types/node": "^16.11.11",
     "@types/node-emoji": "^1.8.1",
     "@types/prettier": "^2.4.2",
     "@types/webpack": "^5.28.0",
+    "glob": "^7.2.0",
     "jest": "^27.4.5",
     "jest-junit": "^13.0.0",
     "ts-jest": "^27.1.1",
