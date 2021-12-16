@@ -2,6 +2,13 @@
   "issues": [],
   "pullRequests": [
     {
+      "id": 804203087,
+      "number": 6,
+      "submitter": "joachimdalen",
+      "title": "Refactor to support for usage from node",
+      "url": "https://github.com/joachimdalen/azext/pull/6"
+    },
+    {
       "id": 800887840,
       "number": 1,
       "submitter": "joachimdalen",
