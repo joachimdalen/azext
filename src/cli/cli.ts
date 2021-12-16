@@ -39,7 +39,7 @@ const root: CommandBase = {
 interface ParseResult {
   command: CommandBase;
   parent?: CommandBase;
-  rest: ParsedCommand<RootCommand>;
+  rest?: ParsedCommand<any>;
 }
 
 class AzExtCli {
@@ -58,11 +58,11 @@ class AzExtCli {
     const existingCommand = this.rootCommands.find(
       (x) => x.command === parsed.options.command
     );
-    console.log(JSON.stringify(parsed, null, 2));
+
     if (existingCommand === undefined) {
       return {
         isSuccess: false,
-        message: `No such command ${parsed.options.command}`
+        message: `No such root command ${parsed.options.command}`
       };
     }
 
@@ -86,14 +86,13 @@ class AzExtCli {
       } else {
         return {
           isSuccess: false,
-          message: `No such command ${parsed.options.command}`
+          message: `No such sub command ${parsed.options.command}`
         };
       }
       level++;
     }
 
     const options = this.getOptions<any>(cmd.options, parsed.restArgs);
-    console.log(options);
     if (
       parsed.restArgs &&
       parsed.restArgs.length > 0 &&
@@ -110,7 +109,7 @@ class AzExtCli {
       data: {
         command: cmd,
         parent: parentCmd,
-        rest: parsed
+        rest: options
       }
     };
   }
@@ -125,7 +124,7 @@ class AzExtCli {
         );
       } else {
         const handler = data.command.handler(data.parent || data.command);
-        await handler.handleCommand(handler.getOptions(data.rest.options));
+        await handler.handleCommand(handler.getOptions(data.rest?.options));
       }
     } else {
       console.log(chalk.redBright(message));
