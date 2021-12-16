@@ -8,6 +8,9 @@ const config: Config.InitialOptions = {
   collectCoverageFrom: ['src/**/*.ts', '!src/azext.ts'],
   testEnvironment: 'node',
   testRegex: '(/__tests__/.*|\\.(test|spec))\\.(ts)$',
-  coveragePathIgnorePatterns: ['<rootDir>/node_modules']
+  coveragePathIgnorePatterns: ['<rootDir>/node_modules'],
+  reporters: [
+    ['jest-junit', { suiteName: 'AzExt Tests', outputName: 'test-results.xml' }]
+  ]
 };
 export default config;

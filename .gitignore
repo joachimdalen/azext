@@ -119,3 +119,4 @@ dist
 
 changelog*.md
 CHANGELOG*.md
+test-results.xml
