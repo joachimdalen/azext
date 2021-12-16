@@ -134,6 +134,14 @@ const changelogCommands: CommandBase = {
         {
           name: 'version'
         }
+      ],
+      subCommands: [
+        {
+          command: 'help',
+          handler: (options?: CommandBase) => new HelpCmdHandler(options),
+          sections: [],
+          options: []
+        }
       ]
     },
     {
