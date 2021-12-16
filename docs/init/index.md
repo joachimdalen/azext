@@ -1,33 +1,5 @@
 # Init
 
-## Help
+The changelog commands allows you to manage changelogs
 
-Help for the `init` command can be listed by issuing the following command
-
-```text
-> azext init help
-```
-
-[//]: # "#help-definition[command=init,help]"
-
-```text
-
-Command List
-
-  help   Print this usage guide.
-
-Init
-
-  Generate default config folder
-
-Options
-
-  --root string   Root folder to initialize in
-
-Global Options
-
-  --ci string   Run in CI mode. Currenctly supported: ado (Azure DevOps) --ci=ado
-
-```
-
-[//]: # "#help-definition[end]"
+- [Generate config folder](./init.md)

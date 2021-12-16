@@ -62,7 +62,7 @@ The `changelog config` command generates a new changelog configuration file.
 > azext changelog config help
 ```
 
-[//]: # '#help-definition[command=changelog,config,help]'
+[//]: # "#help-definition[command=changelog,config,help]"
 
 ```text
 
@@ -84,7 +84,7 @@ Global Options
 
 ```
 
-[//]: # '#help-definition[end]'
+[//]: # "#help-definition[end]"
 
 ## Formatted title
 

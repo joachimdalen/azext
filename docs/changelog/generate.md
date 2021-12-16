@@ -50,5 +50,3 @@ Global Options
 ```
 
 [//]: # "#help-definition[end]"
-
-some more text here

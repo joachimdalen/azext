@@ -19,7 +19,7 @@
     "postpack": "mv README.md npm.md && mv git.md README.md",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "build:readme": "cd scripts && ts-node readme-generation.ts && cd .."
+    "build:docs": "cd scripts && ts-node readme-generation.ts && cd .."
   },
   "author": "Joachim Dalen <joachim@dalenapps.no> (https://joachimdalen.no/)",
   "license": "MIT",
