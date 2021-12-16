@@ -1,45 +1,66 @@
+import chalk from 'chalk';
+import commandLineUsage from 'command-line-usage';
 import fs from 'fs/promises';
-import AzExtCli from '../src/'
-const validIdentifiers = ['help-definition'];
+import { EOL } from 'os';
+import AzExtCli from '../src/cli/cli';
+import { introSections } from '../src/constants';
 
-const start = /\[\/\/\]\:\s#\s'#(?<identifier>.+)\[command=(?<command>.+)\]'/gm;
-const end = /\[\/\/\]\:\s#\s'#(?<identifier>.+)\[(?<command>.+)\]'/gm;
+const pattern = [
+  '[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)',
+  '(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-nq-uy=><~]))'
+].join('|');
+
 const fullMatch =
   /(?<fullcontent>(?<start>\[\/\/\]\:\s#\s'#(?<startidentifier>.+)\[command=(?<startcommand>.+)\]')(?<content>[\S\s]+)(?<end>\[\/\/\]\:\s#\s'#(?<endidentifier>.+)\[end\]'))/gm;
 
-const files = ['../docs/changelog/generate.md'];
+const files = ['../docs/changelog/generate.md', '../docs/changelog/config.md'];
 
 const replaceDefinitions = async () => {
-  const fileBytes = await fs.readFile(files[0]);
-  const fileString = fileBytes.toString();
-  const matches = fileString.matchAll(fullMatch);
   const cli = new AzExtCli();
 
-  for (const match of matches) {
-    console.log('--------------------');
-    console.log(match);
-    console.log('start > ' + match.index);
-    console.log('end > ' + match.length);
+  for (const file of files) {
+    const fileBytes = await fs.readFile(file);
+    const fileString = fileBytes.toString();
+    const matches = fileString.matchAll(fullMatch);
 
-    const fullContent = match.groups.fullcontent;
-    const startContent = match.groups.start;
-    const endContent = match.groups.end;
-    const command = match.groups.startcommand.split(',');
+    for (const match of matches) {
+      const fullContent = match.groups?.fullcontent;
+      const startContent = match.groups?.start;
+      const endContent = match.groups?.end;
+      const command = match.groups?.startcommand.split(',');
+
+      if (command && fullContent) {
+        const result = cli.parse(command);
+
+        if (result.data?.parent?.sections) {
+          const dt = [...result.data.parent.sections];
+          dt.splice(0, introSections.length);
+          const usage = commandLineUsage(dt);
+
+          const contentParts = [
+            startContent,
+            EOL,
+            EOL,
+            '```text',
+            EOL,
+            usage.replace(new RegExp(pattern, 'g'), ''),
+            EOL,
+            '```',
+            EOL,
+            EOL,
+            endContent
+          ].join('');
+          const newString = fileString.replace(fullContent, contentParts);
+          await fs.writeFile(file, newString);
+          console.log(`Updated ${chalk.greenBright(file)}`);
+        } else {
+          console.log('Nope');
+        }
+      } else {
+        console.log('Nope2');
+      }
+    }
   }
-
-  //   let m;
-
-  //   while ((m = fullMatch.exec(fileString)) !== null) {
-  //     // This is necessary to avoid infinite loops with zero-width matches
-  //     if (m.index === fullMatch.lastIndex) {
-  //       fullMatch.lastIndex++;
-  //     }
-
-  //     // The result can be accessed through the `m`-variable.
-  //     m.forEach((match, groupIndex) => {
-  //       console.log(`Found match, group ${groupIndex}: ${match}`);
-  //     });
-  //   }
 };
 
 replaceDefinitions().then(() => console.log('ok'));
