@@ -2,6 +2,8 @@
 
 The `changelog config` command generates a new changelog configuration file.
 
+## Default file
+
 ```json
 {
   // Idenfier of repository for issues and pull requests
@@ -60,7 +62,7 @@ The `changelog config` command generates a new changelog configuration file.
 > azext changelog config help
 ```
 
-[//]: # "#help-definition[command=changelog,config,help]"
+[//]: # '#help-definition[command=changelog,config,help]'
 
 ```text
 
@@ -82,7 +84,7 @@ Global Options
 
 ```
 
-[//]: # "#help-definition[end]"
+[//]: # '#help-definition[end]'
 
 ## Formatted title
 
@@ -96,6 +98,8 @@ The configuration uses a title format consisting of two properties:
 - `format`: Text with format variables
 
 ## Example
+
+**Raw**
 
 ```json
 {
@@ -114,6 +118,22 @@ The configuration uses a title format consisting of two properties:
     }
   ]
 }
+```
+
+**Generated content**
+
+```md
+# Changelog
+
+## 0.0.2 (2021-12-12)
+
+### 🚀 Features
+
+#### `my-module@0.1.2`
+
+- Added this
+
+---
 ```
 
 ## Repository
