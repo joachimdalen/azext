@@ -55,7 +55,7 @@ stages:
               targetType: "inline"
               script: |
                 mkdir $(Build.ArtifactStagingDirectory)/reports
-                cp $(Build.SourcesDirectory)/test-report.xml $(Build.ArtifactStagingDirectory)/reports/test-results.xml
+                cp $(Build.SourcesDirectory)/test-results.xml $(Build.ArtifactStagingDirectory)/reports/test-results.xml
           - task: Npm@1
             displayName: "Build package"
             inputs:
