@@ -146,12 +146,41 @@ const changelogCommands: CommandBase = {
     },
     {
       command: 'config',
-      sections: [],
+      sections: [
+        ...introSections,
+        {
+          header: 'Config',
+          content: chalk.magentaBright('Generate default config file')
+        },
+        {
+          header: 'Command List',
+          content: [helpCommand]
+        },
+        {
+          header: 'Options',
+          optionList: [
+            {
+              name: 'force',
+              description: 'Overwrite file if it exists',
+              defaultValue: false,
+              type: Boolean
+            }
+          ]
+        }
+      ],
       options: [
         {
           name: 'force',
           type: Boolean,
           defaultValue: false
+        }
+      ],
+      subCommands: [
+        {
+          command: 'help',
+          handler: (options?: CommandBase) => new HelpCmdHandler(options),
+          sections: [],
+          options: []
         }
       ]
     },
