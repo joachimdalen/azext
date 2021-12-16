@@ -1,6 +1,6 @@
 import chalk from 'chalk';
-import { CommandLineOptions, OptionDefinition } from 'command-line-args';
 import { Section } from 'command-line-usage';
+import { LIB_VERSION } from './version';
 
 export const cliHeader = ` █████╗ ███████╗███████╗██╗  ██╗████████╗
 ██╔══██╗╚══███╔╝██╔════╝╚██╗██╔╝╚══██╔══╝
@@ -11,15 +11,13 @@ export const cliHeader = ` █████╗ ███████╗███�
 
 export const helpCommand = { name: 'help', summary: 'Print this usage guide.' };
 
-export const helpOption: OptionDefinition = { name: 'help', type: Boolean };
-
 export const introSections: Section[] = [
   {
     content: chalk.cyanBright(cliHeader),
     raw: true
   },
   {
-    content: `Version: ${chalk.redBright(require('../package.json').version)}`
+    content: `Version: ${chalk.redBright(LIB_VERSION)}`
   },
   {
     header: 'Azure DevOps Extension Tools',
@@ -29,6 +27,11 @@ export const introSections: Section[] = [
   }
 ];
 
-export interface IOptionWithHelp extends CommandLineOptions {
-  help: boolean;
+export interface ActionResult {
+  isSuccess: boolean;
+  message?: string;
+}
+
+export interface ActionResultWithData<T> extends ActionResult {
+  data?: T;
 }

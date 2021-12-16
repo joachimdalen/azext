@@ -1,5 +1,36 @@
 [
   {
+    "publishDate": "2021-12-XX",
+    "version": "0.0.2",
+    "modules": [
+      {
+        "name": "core",
+        "version": "0.0.2",
+        "changes": [
+          {
+            "type": "maint",
+            "description": "Split CLI and implementation in preparation for Node API",
+            "pullRequest": 6
+          }
+        ]
+      },
+      {
+        "name": "changelog",
+        "version": "0.0.2",
+        "changes": [
+          {
+            "type": "feature",
+            "description": "Include issue number and pull request issue when using descriptive titles"
+          },
+          {
+            "type": "fix",
+            "description": "Fixed an issue with escaping characters for issue and pull request titles"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "publishDate": "2021-12-13",
     "version": "0.0.1",
     "summary": "Initial release of AzExt",
