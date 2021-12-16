@@ -19,7 +19,8 @@
           },
           {
             "description": "Added help command for changelog generation",
-            "type": "feature"
+            "type": "feature",
+            "pullRequest": 7
           }
         ]
       },
@@ -34,11 +35,25 @@
           },
           {
             "description": "Added more detailed documentation",
-            "type": "documentation"
+            "type": "docs",
+            "pullRequest": 7
           },
           {
             "type": "feature",
-            "description": "Add support for global options"
+            "description": "Add support for global options",
+            "pullRequest": 7
+          }
+        ]
+      },
+      {
+        "name": "init",
+        "version": "0.0.2",
+        "changes": [
+          {
+            "description": "Fixed init command not respecting `--root` option",
+            "type": "fix",
+            "issue": 2,
+            "pullRequest": 6
           }
         ]
       }

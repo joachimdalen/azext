@@ -1,6 +1,21 @@
 {
-  "issues": [],
+  "issues": [
+    {
+      "id": 1078928336,
+      "number": 2,
+      "submitter": "joachimdalen",
+      "title": "Init command does not respect --root option",
+      "url": "https://github.com/joachimdalen/azext/issues/2"
+    }
+  ],
   "pullRequests": [
+    {
+      "id": 804609629,
+      "number": 7,
+      "submitter": "joachimdalen",
+      "title": "Update documentation",
+      "url": "https://github.com/joachimdalen/azext/pull/7"
+    },
     {
       "id": 804203087,
       "number": 6,
