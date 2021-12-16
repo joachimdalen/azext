@@ -6,6 +6,7 @@ import AzExtCli from '../src/cli/cli';
 import { introSections } from '../src/constants';
 import glob from 'glob';
 import { isModuleInstalled } from '../src/core/addons-checker';
+import { globalOptionsSection } from '../src/cli/models';
 
 const filePattern = '../docs/**/*.md';
 
@@ -68,7 +69,7 @@ const replaceDefinitions = async () => {
         const result = cli.parse(command);
 
         if (result.data?.parent?.sections) {
-          const dt = [...result.data.parent.sections];
+          const dt = [...result.data.parent.sections, globalOptionsSection];
           dt.splice(0, introSections.length);
           const usage = commandLineUsage(dt);
 

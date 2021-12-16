@@ -52,3 +52,14 @@ export const helpCommand: CommandBase = {
 export interface GlobalOptions {
   ci?: 'ado';
 }
+
+export const globalOptionsSection: Section = {
+  header: 'Global Options',
+  optionList: [
+    {
+      name: 'ci',
+      description:
+        'Run in CI mode. Currenctly supported: ado (Azure DevOps) --ci=ado'
+    }
+  ]
+};

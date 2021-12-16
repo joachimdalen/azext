@@ -76,6 +76,10 @@ Options
 
   --force    Overwrite file if it exists
 
+Global Options
+
+  --ci string   Run in CI mode. Currenctly supported: ado (Azure DevOps) --ci=ado
+
 ```
 
 [//]: # "#help-definition[end]"

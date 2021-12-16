@@ -32,6 +32,10 @@ Command List
 Options
 
 
+Global Options
+
+  --ci string   Run in CI mode. Currenctly supported: ado (Azure DevOps) --ci=ado
+
 ```
 
 [//]: # "#help-definition[end]"

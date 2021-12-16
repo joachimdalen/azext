@@ -27,16 +27,7 @@ const root: CommandBase = {
         helpCommand
       ]
     },
-    {
-      header: 'Options',
-      optionList: [
-        {
-          name: 'ci',
-          description:
-            'Run in CI mode. Currenctly supported: ado (Azure DevOps) --ci=ado'
-        }
-      ]
-    }
+  
   ],
   options: []
 };

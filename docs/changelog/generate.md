@@ -43,6 +43,10 @@ Options
   --version string        Generate changelog for only this version. Maps to the version field of
                           changelog.json
 
+Global Options
+
+  --ci string   Run in CI mode. Currenctly supported: ado (Azure DevOps) --ci=ado
+
 ```
 
 [//]: # "#help-definition[end]"
