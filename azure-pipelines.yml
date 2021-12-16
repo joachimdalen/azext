@@ -39,6 +39,24 @@ stages:
             inputs:
               command: install
           - task: Npm@1
+            displayName: "Run tests"
+            inputs:
+              command: "custom"
+              customCommand: "run test:ci"
+          - task: Bash@3
+            displayName: "Move cover files"
+            inputs:
+              targetType: "inline"
+              script: |
+                cp -r $(Build.SourcesDirectory)/coverage $(Build.ArtifactStagingDirectory)
+          - task: Bash@3
+            displayName: "Move report"
+            inputs:
+              targetType: "inline"
+              script: |
+                mkdir $(Build.ArtifactStagingDirectory)/reports
+                cp $(Build.SourcesDirectory)/test-results.xml $(Build.ArtifactStagingDirectory)/reports/test-results.xml
+          - task: Npm@1
             displayName: "Build package"
             inputs:
               command: custom
@@ -68,12 +86,29 @@ stages:
               artifact: "npm-package"
               publishLocation: "pipeline"
           - script: "echo v$(SetVersion.NPM_PACKAGE_VERSION)"
-          # - task: PublishPipelineArtifact@1
-          #   displayName: "Publish Changelog"
-          #   inputs:
-          #     targetPath: "$(Build.SourcesDirectory)/release-notes/v$(SetVersion.NPM_PACKAGE_VERSION).md"
-          #     artifact: "changelog"
-          #     publishLocation: "pipeline"
+          - task: PublishTestResults@2
+            displayName: "Publish test results"
+            inputs:
+              testResultsFormat: "JUnit"
+              testResultsFiles: "$(Build.ArtifactStagingDirectory)/reports/test-results.xml"
+          - task: PublishCodeCoverageResults@1
+            displayName: "Publish coverage"
+            inputs:
+              codeCoverageTool: "Cobertura"
+              summaryFileLocation: "$(Build.ArtifactStagingDirectory)/coverage/cobertura-coverage.xml"
+              pathToSources: "$(Build.SourcesDirectory)/src"
+          - task: Bash@3
+            displayName: 'Generate changelog'
+            inputs:
+              workingDirectory: $(Build.SourcesDirectory)
+              targetType: inline
+              script:  node ./dist/azext.js changelog generate --version $(SetVersion.NPM_PACKAGE_VERSION) --format --output v$(SetVersion.NPM_PACKAGE_VERSION).md
+          - task: PublishPipelineArtifact@1
+            displayName: "Publish Changelog"
+            inputs:
+              targetPath: "$(Build.SourcesDirectory)/v$(SetVersion.NPM_PACKAGE_VERSION).md"
+              artifact: "changelog"
+              publishLocation: "pipeline"
   - stage: publishPackage
     displayName: "Publish package"
     condition: eq(variables.isMaster, true)

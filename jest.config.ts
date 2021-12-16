@@ -9,7 +9,9 @@ const config: Config.InitialOptions = {
   testEnvironment: 'node',
   testRegex: '(/__tests__/.*|\\.(test|spec))\\.(ts)$',
   coveragePathIgnorePatterns: ['<rootDir>/node_modules'],
+  coverageReporters: ['text', 'cobertura'],
   reporters: [
+    'default',
     ['jest-junit', { suiteName: 'AzExt Tests', outputName: 'test-results.xml' }]
   ]
 };

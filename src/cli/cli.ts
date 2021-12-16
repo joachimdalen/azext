@@ -116,6 +116,13 @@ class AzExtCli {
       };
     }
 
+    if (!cmd.handler) {
+      return {
+        isSuccess: false,
+        message: 'No such sub command undefined'
+      };
+    }
+
     return {
       isSuccess: true,
       data: {
