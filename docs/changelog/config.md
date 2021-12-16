@@ -58,25 +58,25 @@
 > azext changelog config help
 ```
 
-[//]: # '#help-definition[command=changelog,config,help]'
+[//]: # "#help-definition[command=changelog,config,help]"
 
 ```text
 
 Config
 
-  Generate default config file 
+  Generate default config file
 
 Command List
 
-  help   Print this usage guide. 
+  help   Print this usage guide.
 
 Options
 
-  --force    Overwrite file if it exists 
+  --force    Overwrite file if it exists
 
 ```
 
-[//]: # '#help-definition[end]'
+[//]: # "#help-definition[end]"
 
 ## Formatted title
 
