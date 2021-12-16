@@ -52,6 +52,32 @@
 }
 ```
 
+## Help
+
+```text
+> azext changelog config help
+```
+
+[//]: # '#help-definition[command=changelog,config,help]'
+
+```text
+
+Config
+
+  Generate default config file 
+
+Command List
+
+  help   Print this usage guide. 
+
+Options
+
+  --force    Overwrite file if it exists 
+
+```
+
+[//]: # '#help-definition[end]'
+
 ## Formatted title
 
 The configuration uses a title format consisting of two properties:
