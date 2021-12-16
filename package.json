@@ -11,6 +11,7 @@
   ],
   "icon": "./docs/images/azext-icon.png",
   "scripts": {
+    "prebuild": "node -p \"'export const LIB_VERSION = ' + JSON.stringify(require('./package.json').version) + ';'\" > src/version.ts",
     "build": "tsc",
     "build-wp": "webpack --config webpack.config.js",
     "prettify": "prettier --write src",
