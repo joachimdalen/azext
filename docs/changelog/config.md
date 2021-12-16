@@ -1,5 +1,7 @@
 # Changelog Config
 
+The `changelog config` command generates a new changelog configuration file.
+
 ```json
 {
   // Idenfier of repository for issues and pull requests
@@ -89,6 +91,27 @@ The configuration uses a title format consisting of two properties:
 - `size`: One of `h1`, `h2`, `h3`, `h4` and defines the size of the text
 - `format`: Text with format variables
 
+## Example
+
+```json
+{
+  "publishDate": "2021-12-12",
+  "version": "0.0.2",
+  "modules": [
+    {
+      "name": "my-module",
+      "version": "0.1.2",
+      "changes": [
+        {
+          "type": "feature",
+          "description": "Added this"
+        }
+      ]
+    }
+  ]
+}
+```
+
 ## Repository
 
 The repository field identifies the repository that the changelog is generated for. We use this to know where to fetch issues and pull requests from. Should be of the format `username/repository`
@@ -109,7 +132,18 @@ The release title is the title for the individual release
 
 ### Supported Variables
 
-| Variable      | Description |
-| ------------- | ----------- |
-| `version`     |             |
-| `publishDate` |             |
+| Variable      | Description                                        |
+| ------------- | -------------------------------------------------- |
+| `version`     | The version of the individual release. E.g `0.0.2` |
+| `publishDate` | The date of the release. E.g `2021-12-12`          |
+
+## Module Title
+
+This is the title for the individual modules/sections
+
+### Supported Variables
+
+| Variable  | Description                             |
+| --------- | --------------------------------------- |
+| `name`    | The name of the module. E.g `my-module` |
+| `version` | The version of the module. E.g `0.1.2`  |

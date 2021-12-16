@@ -222,6 +222,12 @@ const changelogCommands: CommandBase = {
           options: []
         }
       ]
+    },
+    {
+      command: 'help',
+      handler: (options?: CommandBase) => new HelpCmdHandler(options),
+      sections: [],
+      options: []
     }
   ]
 };

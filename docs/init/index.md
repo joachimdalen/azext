@@ -8,7 +8,10 @@ Help for the `init` command can be listed by issuing the following command
 > azext init help
 ```
 
+[//]: # "#help-definition[command=init,help]"
+
 ```text
+
 Command List
 
   help   Print this usage guide.
@@ -20,4 +23,7 @@ Init
 Options
 
   --root string   Root folder to initialize in
+
 ```
+
+[//]: # "#help-definition[end]"

@@ -1,6 +1,6 @@
 # Changelog Generation
 
-The `changelog generate` command generates a new changelog file.
+The `changelog generate` command generates a new changelog markdown file.
 
 ## Example
 

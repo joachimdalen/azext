@@ -23,7 +23,7 @@ const pattern = [
 ].join('|');
 
 const fullMatch =
-  /(?<fullcontent>(?<start>\[\/\/\]\:\s#\s"#(?<startidentifier>.+)\[command=(?<startcommand>.+)\]")(?<content>[\S\s]+)(?<end>\[\/\/\]\:\s#\s"#(?<endidentifier>.+)\[end\]"))/gm;
+  /(?<fullcontent>(?<start>\[\/\/\]\:\s#\s["']#(?<startidentifier>.+)\[command=(?<startcommand>.+)\]["'])(?<content>[\S\s]+)(?<end>\[\/\/\]\:\s#\s["']#(?<endidentifier>.+)\[end\]["']))/gm;
 
 //const files = ['../docs/changelog/generate.md', '../docs/changelog/config.md'];
 

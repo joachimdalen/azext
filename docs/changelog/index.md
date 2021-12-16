@@ -14,11 +14,24 @@ Help for the `changelog` command can be listed by issuing the following command
 > azext changelog help
 ```
 
+[//]: # "#help-definition[command=changelog,help]"
+
 ```text
+
+Changelog
+
+  Tools to manage and generate changelogs
+
 Command List
 
   generate   Generate changelog markdown file
   config     Generate default config file
   new        Generate default changelog
   help       Print this usage guide.
+
+Options
+
+
 ```
+
+[//]: # "#help-definition[end]"
