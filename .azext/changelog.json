@@ -8,15 +8,31 @@
         "version": "0.0.2",
         "changes": [
           {
+            "type": "feature",
+            "description": "Include issue number and pull request issue when using descriptive titles",
+            "pullRequest": 6
+          },
+          {
+            "type": "fix",
+            "description": "Fixed an issue with escaping characters for issue and pull request titles",
+            "pullRequest": 6
+          },
+          {
             "description": "Added help command for changelog generation",
             "type": "feature"
           }
         ]
       },
+
       {
         "name": "core",
-        "version": "0.0.1",
+        "version": "0.0.2",
         "changes": [
+          {
+            "type": "maint",
+            "description": "Split CLI and implementation in preparation for Node API",
+            "pullRequest": 6
+          },
           {
             "description": "Added more detailed documentation",
             "type": "documentation"

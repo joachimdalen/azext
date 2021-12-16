@@ -1,5 +1,5 @@
-import GitHubIssue from '../commands/changelog/models/github-issue';
-import GitHubPullRequest from '../commands/changelog/models/github-pull-request';
+import GitHubIssue from '../modules/changelog/models/github-issue';
+import GitHubPullRequest from '../modules/changelog/models/github-pull-request';
 
 export const isNumber = (item: number | undefined): item is number => {
   return !!item;

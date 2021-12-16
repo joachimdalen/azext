@@ -9,13 +9,13 @@ import GitHubIssue from './models/github-issue';
 import GitHubPullRequest from './models/github-pull-request';
 import ConfigProvider from '../../data-providers/config-provider';
 import { CHANGELOG_CACHE_NAME } from './changelog-constants';
-import { GenerateChangelogCommandOptions } from './sub-commands/generate-changelog-command';
+import { GenerateChangelogOptions } from './options';
 
 export class MetaDataLoader {
   private readonly _github: GitHub;
-  private readonly _options: GenerateChangelogCommandOptions;
+  private readonly _options: GenerateChangelogOptions;
   private _configProvider: ConfigProvider;
-  constructor(options: GenerateChangelogCommandOptions) {
+  constructor(options: GenerateChangelogOptions) {
     this._github = new GitHub();
     this._options = options;
     this._configProvider = new ConfigProvider();

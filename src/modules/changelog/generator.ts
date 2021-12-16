@@ -1,29 +1,27 @@
-import fs from 'fs/promises';
-
-import MarkdownBuilder from './markdown-builder';
-import { MetaDataLoader } from './metadata';
-
 import chalk from 'chalk';
+import fs from 'fs/promises';
+import { isModuleInstalled } from '../../core/addons-checker';
 import Replacer from '../../core/replacer';
 import { isNumber } from '../../core/utils';
+import ConfigProvider from '../../data-providers/config-provider';
+import { CHANGELOG_CONFIG_NAME, CHANGELOG_NAME } from './changelog-constants';
+import MarkdownBuilder from './markdown-builder';
+import { MetaDataLoader } from './metadata';
 import ChangelogConfig from './models/changelog-config';
 import ChangelogDefinition from './models/changelog-definition';
 import GeneratorContext from './models/generator-context';
 import GitHubIssue from './models/github-issue';
-import ConfigProvider from '../../data-providers/config-provider';
-import { CHANGELOG_CONFIG_NAME, CHANGELOG_NAME } from './changelog-constants';
-import { isModuleInstalled } from '../../core/addons-checker';
 import GitHubPullRequest from './models/github-pull-request';
-import { GenerateChangelogCommandOptions } from './sub-commands/generate-changelog-command';
+import { GenerateChangelogOptions } from './options';
 
-interface GeneratorResult {
+export interface GeneratorResult {
   latestVersion: string;
   outputPath: string;
 }
 
 class Generator {
   async generateChangelog(
-    options: GenerateChangelogCommandOptions
+    options: GenerateChangelogOptions
   ): Promise<GeneratorResult | undefined> {
     const metadataLoader = new MetaDataLoader(options);
     const configProvider = new ConfigProvider();
@@ -251,15 +249,15 @@ class Generator {
 
     const escapeText = (text: string): string => {
       return text
-        .replaceAll('[', '\\[')
-        .replaceAll(']', '\\]')
-        .replaceAll('<', '\\<')
-        .replaceAll('>', '\\>');
+        .replace(/\[/, '\\[')
+        .replace(/\]/, '\\]')
+        .replace(/</, '\\<')
+        .replace(/>/, '\\>');
     };
 
     const getIssueLink = (issue: GitHubIssue, config: ChangelogConfig) => {
       const base = config.useDescriptiveIssues
-        ? `[${escapeText(
+        ? `[GH#${issue.number} - ${escapeText(
             replacer.replaceEmojisIf(
               issue.title,
               cfg.replaceEmojis.githubIssues
@@ -276,7 +274,7 @@ class Generator {
       config: ChangelogConfig
     ) => {
       const base = config.useDescriptivePullRequests
-        ? `[${escapeText(
+        ? `[GH#${pullRequest.number} - ${escapeText(
             replacer.replaceEmojisIf(
               pullRequest.title,
               cfg.replaceEmojis.githubPullRequests
