@@ -18,21 +18,27 @@ Here are our files that are used for changelog generation.
 > azext changelog generate help
 ```
 
+[//]: # '#help-definition[command=changelog,help]'
+
 ```text
 Command List
 
-  help   Print this usage guide. 
+  help   Print this usage guide.
 
 Options
 
-  -o, --output string     Path to output generated markdown file to                                     
-  -c, --config string     Path to changelog-config.json                                                 
-  -l, --log string        Path to changelog.json file                                                   
-  --format                Format generated file. Requires Prettier to be installed                      
-  --generate-cache        Generate changelog-cache.json containing a cache of issues and pull requests  
-  --from-cache            Use changelog-cache.json for cache during generation                          
-  --cache-output string                                                                                 
-  --cache-file string                                                                                   
-  --version string        Generate changelog for only this version. Maps to the version field of        
-                          changelog.json 
+  -o, --output string     Path to output generated markdown file to
+  -c, --config string     Path to changelog-config.json
+  -l, --log string        Path to changelog.json file
+  --format                Format generated file. Requires Prettier to be installed
+  --generate-cache        Generate changelog-cache.json containing a cache of issues and pull requests
+  --from-cache            Use changelog-cache.json for cache during generation
+  --cache-output string
+  --cache-file string
+  --version string        Generate changelog for only this version. Maps to the version field of
+                          changelog.json
 ```
+
+[//]: # '#help-definition[end]'
+
+some more text here

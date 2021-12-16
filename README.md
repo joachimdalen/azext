@@ -45,25 +45,19 @@
 <details>
   <summary>Table of Contents</summary>
   <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#limitations">Limitations</a></li>
-      </ul>
-    </li>
+    <li><a href="#about-the-project">About The Project</a></li>
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
+        <li><a href="#developing">Developing</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <li><a href="#workboard">Workboard</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#license">License</a></li>  
   </ol>
 </details>
 
@@ -72,50 +66,6 @@
 ## About The Project
 
 AzExt provides a set of utilities to help with developing Extensions for Azure DevOps.
-
-## Configuration
-
-```json
-{
-  // Idenfier of repository for issues and pull requests
-  "repository": "joachimdalen/azext",
-  "changelogTitle": { "size": "h1", "format": "Changelog" },
-  "releaseTitleFormat": {
-    "size": "h2",
-    "format": "{{version}} ({{publishDate}})"
-  },
-  "moduleTitleFormat": { "size": "h4", "format": "`{{name}}@{{version}}`" },
-  "taskMapping": {},
-  "sectionSplitter": "---",
-  "tagSize": "h3",
-  "tagMapping": {
-    "feature": ":rocket: Features",
-    "fix": ":bug: Fixes",
-    "tests": ":test_tube: Tests",
-    "other": ":speech_balloon: Other",
-    "docs": ":memo: Documentation",
-    "maint": ":hammer_and_wrench: Maintenance"
-  },
-  "attributionTitleFormat": { "size": "h2", "format": ":star2: Contributors" },
-  "attributionSubTitle": {
-    "format": "Thank you to the following for contributing to the latest release"
-  },
-  "knownAuthors": [],
-  "useDescriptiveIssues": true,
-  "replaceEmojis": {
-    "tags": true,
-    "changelogTitle": true,
-    "releaseTitle": true,
-    "moduleTitle": true,
-    "attributionTitle": true,
-    "attributionSubTitle": true,
-    "githubIssues": false,
-    "githubPullRequests": false,
-    "notes": true,
-    "summary": true
-  }
-}
-```
 
 ## Getting Started
 
@@ -145,24 +95,23 @@ To get a local copy up and running follow these simple example steps.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-<!-- USAGE EXAMPLES -->
+## Workboard
 
-## Usage
+All issues are manged under the [Workboard](https://github.com/joachimdalen/azext/projects/1) project
+
+- **Triage:** These issues and pull requests still needs to be reviewed
+- **Planned:** These are planned features and bugfixes
+- **Specification:** These needs additional planning before starting the implementation
+- **In Progress:** We are working on these
+- **Done:** There are completed :rocket:
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-<!-- ROADMAP -->
 
 ## Roadmap
 
-- [ ] README generation from multiple files
-- [ ] Creation of new repository from default template
-
-See the [open issues](https://github.com/joachimdalen/azext/issues?q=is%3Aopen+is%3Aissue+label%3A%40type%2Ffeature) for a full list of proposed features.
+See [Workboard - Planned (@type/feature)](https://github.com/joachimdalen/azext/projects/1#column-17249551) for a full list of proposed features.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-<!-- CONTRIBUTING -->
 
 ## Contributing
 
@@ -186,20 +135,17 @@ If you want to contribute code, I ask that you follow some guidelines.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-<!-- LICENSE -->
-
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-<!-- CONTACT -->
-
 ## Contact
 
 If you have generic questions about the project or usage you can make contact in the following ways:
 
 - Submit an issue with the `@type/question` label - [New Issue](https://github.com/joachimdalen/azext/issues/new)
+- Start a new [discussion](https://github.com/joachimdalen/azext/discussions/categories/q-a)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
