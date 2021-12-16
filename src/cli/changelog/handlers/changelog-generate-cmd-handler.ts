@@ -4,7 +4,7 @@ import {
 } from '../../../modules/changelog/changelog-constants';
 import { logWarning, setVariable } from '../../../core/azure-devops-logger';
 import ChangelogService from '../../../modules/changelog/changelog-service';
-import { BaseCommandHandler } from '../../models';
+import { BaseCommandHandler, GlobalOptions } from '../../models';
 import { GenerateChangelogOptions } from '../../../modules/changelog/options';
 
 export default class ChangelogGenerateCmdHandler extends BaseCommandHandler<GenerateChangelogOptions> {
@@ -13,7 +13,10 @@ export default class ChangelogGenerateCmdHandler extends BaseCommandHandler<Gene
     super();
     this._service = new ChangelogService();
   }
-  async handleCommand(options: GenerateChangelogOptions): Promise<void> {
+  async handleCommand(
+    options: GenerateChangelogOptions,
+    globalOptions?: GlobalOptions
+  ): Promise<void> {
     const result = await this._service.generate(options);
     if (true) {
       if (result === undefined) {

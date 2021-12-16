@@ -23,7 +23,10 @@ export abstract class BaseCommandHandler<T> {
       console.log(chalk.redBright(result.message));
     }
   }
-  abstract handleCommand(options: T): Promise<void>;
+  abstract handleCommand(
+    options: T,
+    globalOptions?: GlobalOptions
+  ): Promise<void>;
 }
 export interface ParsedCommand<T> {
   restArgs?: string[];
@@ -45,3 +48,7 @@ export const helpCommand: CommandBase = {
   sections: [],
   options: []
 };
+
+export interface GlobalOptions {
+  ci?: 'ado';
+}

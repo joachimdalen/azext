@@ -4,7 +4,12 @@ import { ActionResultWithData, helpCommand, introSections } from '../constants';
 import changelogCommands from './changelog/changelog-definition';
 import HelpCmdHandler from './help-cmd-handler';
 import initCommands from './init/init-definition';
-import { CommandBase, ParsedCommand, RootCommand } from './models';
+import {
+  CommandBase,
+  GlobalOptions,
+  ParsedCommand,
+  RootCommand
+} from './models';
 
 const root: CommandBase = {
   command: 'help',
@@ -40,6 +45,7 @@ interface ParseResult {
   command: CommandBase;
   parent?: CommandBase;
   rest?: ParsedCommand<any>;
+  globalOptions?: GlobalOptions;
 }
 
 class AzExtCli {
@@ -53,8 +59,19 @@ class AzExtCli {
     defaultOption: true
   };
 
+  private readonly globalOptions: OptionDefinition[] = [
+    {
+      name: 'ci'
+    }
+  ];
+
   parse(args?: string[]): ActionResultWithData<ParseResult> {
-    let parsed = this.getOptions<RootCommand>([this.commandOption], args);
+    let parsed = this.getOptions<RootCommand>(
+      [this.commandOption, ...this.globalOptions],
+      args
+    );
+
+    const globalOptions: GlobalOptions = parsed.options as GlobalOptions;
     const existingCommand = this.rootCommands.find(
       (x) => x.command === parsed.options.command
     );
@@ -109,7 +126,8 @@ class AzExtCli {
       data: {
         command: cmd,
         parent: parentCmd,
-        rest: options
+        rest: options,
+        globalOptions: globalOptions
       }
     };
   }

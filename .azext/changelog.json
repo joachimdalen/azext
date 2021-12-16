@@ -23,7 +23,6 @@
           }
         ]
       },
-
       {
         "name": "core",
         "version": "0.0.2",
@@ -36,6 +35,10 @@
           {
             "description": "Added more detailed documentation",
             "type": "documentation"
+          },
+          {
+            "type": "feature",
+            "description": "Add support for global options"
           }
         ]
       }
