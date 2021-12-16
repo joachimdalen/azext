@@ -12,8 +12,6 @@ export interface RootCommand {
 export abstract class BaseCommandHandler<T> {
   constructor(protected readonly commandOptions?: CommandBase) {}
   getOptions(options: any) {
-    console.log('Converting options');
-    console.log(options);
     return options as T;
   }
   writeResult(result: ActionResult) {

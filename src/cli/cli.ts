@@ -132,7 +132,10 @@ class AzExtCli {
         );
       } else {
         const handler = data.command.handler(data.parent || data.command);
-        await handler.handleCommand(handler.getOptions(data.rest?.options));
+        await handler.handleCommand(
+          handler.getOptions(data.rest?.options),
+          data.globalOptions
+        );
       }
     } else {
       console.log(chalk.redBright(message));
