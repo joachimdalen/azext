@@ -97,12 +97,18 @@ stages:
               codeCoverageTool: "Cobertura"
               summaryFileLocation: "$(Build.ArtifactStagingDirectory)/coverage/cobertura-coverage.xml"
               pathToSources: "$(Build.SourcesDirectory)/src"
-          # - task: PublishPipelineArtifact@1
-          #   displayName: "Publish Changelog"
-          #   inputs:
-          #     targetPath: "$(Build.SourcesDirectory)/release-notes/v$(SetVersion.NPM_PACKAGE_VERSION).md"
-          #     artifact: "changelog"
-          #     publishLocation: "pipeline"
+          - task: Bash@3
+            displayName: 'Generate changelog'
+            inputs:
+              workingDirectory: $(Build.SourcesDirectory)
+              targetType: inline
+              script:  node ./dist/azext.js changelog generate --version $(SetVersion.NPM_PACKAGE_VERSION) --format --output v$(SetVersion.NPM_PACKAGE_VERSION).md
+          - task: PublishPipelineArtifact@1
+            displayName: "Publish Changelog"
+            inputs:
+              targetPath: "$(Build.SourcesDirectory)/v$(SetVersion.NPM_PACKAGE_VERSION).md"
+              artifact: "changelog"
+              publishLocation: "pipeline"
   - stage: publishPackage
     displayName: "Publish package"
     condition: eq(variables.isMaster, true)
