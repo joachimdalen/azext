@@ -1,5 +1,5 @@
-import ConfigProvider from '../../src/data-providers/config-provider';
 import path from 'path';
+import ConfigProvider from '../../data-providers/config-provider';
 const fs = require('fs').promises;
 
 describe('ConfigProvider', () => {

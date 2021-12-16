@@ -5,7 +5,7 @@ const config: Config.InitialOptions = {
   transform: {
     '^.+\\.ts?$': 'ts-jest'
   },
-  collectCoverageFrom: ['src/**/*.ts', '!src/azext.ts'],
+  collectCoverageFrom: ['src/**/*.ts', '!src/azext.ts', '!src/tests/**'],
   testEnvironment: 'node',
   testRegex: '(/__tests__/.*|\\.(test|spec))\\.(ts)$',
   coveragePathIgnorePatterns: ['<rootDir>/node_modules'],
