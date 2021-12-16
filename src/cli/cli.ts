@@ -60,7 +60,6 @@ class AzExtCli {
       [this.commandOption, ...this.globalOptions],
       args
     );
-
     const globalOptions: GlobalOptions = { ...parsed.options } as GlobalOptions;
     const existingCommand = this.rootCommands.find(
       (x) => x.command === parsed.options.command
@@ -83,19 +82,25 @@ class AzExtCli {
         [this.commandOption],
         parsed.restArgs
       );
-      const foundSubCommand: CommandBase | undefined = cmd?.subCommands?.find(
-        (x) => x.command === parsed.options.command
-      );
 
-      if (foundSubCommand !== undefined) {
-        parentCmd = cmd;
-        cmd = foundSubCommand;
+      if (parsed.options.command) {
+        const foundSubCommand: CommandBase | undefined = cmd?.subCommands?.find(
+          (x) => x.command === parsed.options.command
+        );
+
+        if (foundSubCommand !== undefined) {
+          parentCmd = cmd;
+          cmd = foundSubCommand;
+        } else {
+          return {
+            isSuccess: false,
+            message: `No such sub command ${parsed.options.command}`
+          };
+        }
       } else {
-        return {
-          isSuccess: false,
-          message: `No such sub command ${parsed.options.command}`
-        };
+        break;
       }
+
       level++;
     }
 
