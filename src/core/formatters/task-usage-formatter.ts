@@ -1,12 +1,13 @@
-import ReplacementCommandFormatter from '../models/replacement-command-formatter';
 import { EOL } from 'os';
-import { isModuleInstalled } from '..';
-import TaskService from '../../modules/readme/task-service';
+
 import {
   TaskDefinition,
   TaskInputDefinition
 } from '../../modules/readme/models';
-import path from 'path/posix';
+import TaskService from '../../modules/readme/task-service';
+import { isModuleInstalled } from '..';
+import ReplacementCommandFormatter from '../models/replacement-command-formatter';
+import Replacer from '../replacer';
 
 export interface TaskUsageFormatterOptions {
   task: string;
@@ -17,12 +18,15 @@ interface Table {
   headers: Record<string, string>;
   rows: TaskInputDefinition[];
 }
-
+type TT = keyof TaskInputDefinition;
 export default class TaskUsageFormatter extends ReplacementCommandFormatter<TaskUsageFormatterOptions> {
   private _service: TaskService;
+  private _replacer: Replacer;
+  private readonly codeFields: TT[] = ['name', 'defaultValue'];
   constructor() {
     super();
     this._service = new TaskService();
+    this._replacer = new Replacer();
   }
   async getFormatted(options: TaskUsageFormatterOptions): Promise<string> {
     const task = await this._service.getTaskDefinition(options.task);
@@ -31,14 +35,7 @@ export default class TaskUsageFormatter extends ReplacementCommandFormatter<Task
     if (task.inputs === undefined) return '';
 
     if (options.type === 'table') {
-      return this.formatTable({
-        headers: {
-          label: 'Label',
-          defaultValue: 'Default Value',
-          required: 'Required'
-        },
-        rows: task.inputs
-      });
+      return this.formatTable(task);
     }
     return this.formatExample(task);
   }
@@ -50,7 +47,7 @@ export default class TaskUsageFormatter extends ReplacementCommandFormatter<Task
       const prettier = require('prettier');
       tbl = prettier.format(tbl, { parser: 'yaml' });
     }
-    return tbl;
+    return '```yaml' + EOL + tbl + EOL + '```';
   }
 
   private generateExample(task: TaskDefinition) {
@@ -60,14 +57,24 @@ export default class TaskUsageFormatter extends ReplacementCommandFormatter<Task
     );
     parts.push(`  inputs:`);
     task.inputs.forEach((ip) => {
-      parts.push(`     ${ip.name}: ${ip.defaultValue}`);
+      let base = `     ${ip.name}:`;
+
+      if (ip.defaultValue !== undefined) {
+        base = `${base} ${ip.defaultValue}`;
+      }
+
+      if (ip.helpMarkDown) {
+        base = `${base} #${ip.helpMarkDown}`;
+      }
+
+      parts.push(base);
     });
 
     return parts.join(EOL);
   }
 
-  private formatTable(table: Table) {
-    let tbl = this.generateTable(table);
+  private async formatTable(task: TaskDefinition) {
+    let tbl = await this.generateTable(task);
 
     if (isModuleInstalled('prettier')) {
       const prettier = require('prettier');
@@ -76,18 +83,69 @@ export default class TaskUsageFormatter extends ReplacementCommandFormatter<Task
     return tbl;
   }
 
-  private generateTable(table: Table) {
-    const rows: string[] = [];
+  private async generateTable(task: TaskDefinition) {
+    const config = await this._service.getReadMeConfig();
+    const table: Table = {
+      headers: {
+        name: 'Option',
+        defaultValue: 'Default Value',
+        required: 'Required',
+        helpMarkDown: 'Help'
+      },
+      rows: task.inputs
+    };
 
+    console.log(config);
+    const rows: string[] = [];
     const headers = Object.keys(table.headers);
     const wrap = (s: string) => `|${s}|`;
+    const align = (a: 'left' | 'center' | 'right') => {
+      switch (a) {
+        case 'left':
+          return ':---';
+        case 'center':
+          return ':---:';
+        case 'right':
+          return '---:';
+      }
+    };
     rows.push(wrap(headers.map((h) => table.headers[h]).join('|')));
-    rows.push(wrap(headers.map((_) => '---').join('|')));
 
-    const rws = table.rows.map((row, idx) => {
+    rows.push(
+      wrap(
+        headers
+          .map((h) =>
+            align(
+              config?.includeOptionsFields?.find((x) => x.field === h)?.align ||
+                'left'
+            )
+          )
+          .join('|')
+      )
+    );
+
+    const rws = table.rows.map((row) => {
       const b: any[] = [];
       headers.map((rowKey: any) => {
-        b.push(row[rowKey as keyof TaskInputDefinition]);
+        const key = rowKey as keyof TaskInputDefinition;
+        const val = row[key];
+        let inVal = '--';
+        if (val !== undefined) {
+          if (this.codeFields.includes(key)) {
+            inVal = '`' + row[key] + '`';
+          } else {
+            inVal = row[key];
+          }
+        }
+
+        if (rowKey === 'required') {
+          inVal = this._replacer.replaceEmojisIf(
+            config?.requiredOptions.true || inVal,
+            true
+          );
+        }
+
+        b.push(inVal);
       });
       return wrap(b.join('|'));
     });

@@ -6,6 +6,8 @@ import ConfigProvider from '../../data-providers/config-provider';
 import { MAPPING_NAME } from '../init/init-constants';
 import { DefaultMapping } from '../init/models';
 import { TaskDefinition } from './models';
+import { ReadmeConfig } from './models/readme-config';
+import { README_NAME } from './readme-constats';
 
 export default class TaskService {
   private _configProvider: ConfigProvider;
@@ -61,6 +63,24 @@ export default class TaskService {
       const fileContent: TaskDefinition = JSON.parse(fileBuffer.toString());
       return fileContent;
     } catch {
+      return undefined;
+    }
+  }
+  async getReadMeConfig(): Promise<ReadmeConfig | undefined> {
+    const s: any = undefined;
+    let fullPath = this._configProvider.getFullFilePath(s);
+
+    if (fullPath && path.extname(fullPath) !== undefined) {
+      fullPath = path.join(fullPath, README_NAME);
+    }
+
+    console.log(fullPath);
+    try {
+      const fileBuffer = await fs.readFile(fullPath);
+      const fileContent: ReadmeConfig = JSON.parse(fileBuffer.toString());
+      return fileContent;
+    } catch {
+      console.error('err');
       return undefined;
     }
   }
