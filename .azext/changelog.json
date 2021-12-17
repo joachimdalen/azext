@@ -54,6 +54,11 @@
             "type": "fix",
             "issue": 2,
             "pullRequest": 6
+          },
+          {
+            "description": "Add new command to create mapping file",
+            "type": "feature",
+            "issue": 3
           }
         ]
       }
