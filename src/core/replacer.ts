@@ -70,8 +70,18 @@ class Replacer {
 
   getCommandExpression(cmd: ReplacementCommand): string {
     const optionExp = (name: string) => `${name}=(?<${name}>([a-zA-Z-]+.))`;
-    const options = cmd.options.map((o) => optionExp(o.name));
-    const exp = `#(?<command>[a-zA-Z-]+.)\\[${options.join(';')}\\]`;
+    const optionalWrapper = (exp: string) => `(?:;${exp.replace(';', '')})?`;
+
+    const required = cmd.options
+      .filter((x) => x.optional === undefined)
+      .map((x) => optionExp(x.name) + ';');
+    const optional = cmd.options
+      .filter((x) => x.optional === true)
+      .map((x) => optionalWrapper(optionExp(x.name)));
+
+    const req = required.join('');
+    const str = [req.substring(0, req.length - 1), optional.join('')].join('');
+    const exp = `#(?<command>[a-zA-Z-]+.)\\[${str}\\]`;
     return exp;
   }
 
