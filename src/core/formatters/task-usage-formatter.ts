@@ -2,7 +2,11 @@ import ReplacementCommandFormatter from '../models/replacement-command-formatter
 import { EOL } from 'os';
 import { isModuleInstalled } from '..';
 import TaskService from '../../modules/readme/task-service';
-import { TaskInputDefinition } from '../../modules/readme/models';
+import {
+  TaskDefinition,
+  TaskInputDefinition
+} from '../../modules/readme/models';
+import path from 'path/posix';
 
 export interface TaskUsageFormatterOptions {
   task: string;
@@ -26,14 +30,40 @@ export default class TaskUsageFormatter extends ReplacementCommandFormatter<Task
     if (task === undefined) return '';
     if (task.inputs === undefined) return '';
 
-    return this.formatTable({
-      headers: {
-        label: 'Label',
-        defaultValue: 'Default Value',
-        required: 'Required'
-      },
-      rows: task.inputs
+    if (options.type === 'table') {
+      return this.formatTable({
+        headers: {
+          label: 'Label',
+          defaultValue: 'Default Value',
+          required: 'Required'
+        },
+        rows: task.inputs
+      });
+    }
+    return this.formatExample(task);
+  }
+
+  private formatExample(task: TaskDefinition) {
+    let tbl = this.generateExample(task);
+
+    if (isModuleInstalled('prettier')) {
+      const prettier = require('prettier');
+      tbl = prettier.format(tbl, { parser: 'yaml' });
+    }
+    return tbl;
+  }
+
+  private generateExample(task: TaskDefinition) {
+    const parts = [];
+    parts.push(
+      `- task: ${task.friendlyName}@${task.version.Major}.${task.version.Minor}.${task.version.Patch}`
+    );
+    parts.push(`  inputs:`);
+    task.inputs.forEach((ip) => {
+      parts.push(`     ${ip.name}: ${ip.defaultValue}`);
     });
+
+    return parts.join(EOL);
   }
 
   private formatTable(table: Table) {
