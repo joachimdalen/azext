@@ -20,7 +20,8 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:ci": "jest --coverage --ci",
-    "build:docs": "cd scripts && ts-node readme-generation.ts && cd .."
+    "build:docs": "cd scripts && ts-node readme-generation.ts && cd ..",
+    "lint": "eslint src --ignore-path .eslintignore --ext ts"
   },
   "author": "Joachim Dalen <joachim@dalenapps.no> (https://joachimdalen.no/)",
   "license": "MIT",
@@ -38,6 +39,11 @@
     "@types/node-emoji": "^1.8.1",
     "@types/prettier": "^2.4.2",
     "@types/webpack": "^5.28.0",
+    "@typescript-eslint/eslint-plugin": "^5.7.0",
+    "eslint": "^8.4.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
     "glob": "^7.2.0",
     "jest": "^27.4.5",
     "jest-junit": "^13.0.0",
