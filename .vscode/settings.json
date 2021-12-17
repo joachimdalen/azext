@@ -5,6 +5,12 @@
                 "/.azext/changelog.json"
             ],
             "url": "./schemas/v1/changelog-schema.json"
+        },
+        {
+            "fileMatch": [
+                "/.azext/mappings.json"
+            ],
+            "url": "./schemas/v1/mappings-schema.json"
         }
     ],
     "[azure-pipelines]": {
