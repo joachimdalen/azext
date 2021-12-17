@@ -1,1 +1,4 @@
-export interface ReadmeOptions {}
+export interface ReadmeOptions {
+  input: string;
+  output: string;
+}

@@ -13,14 +13,9 @@ export default class ReadmeCmdHandler extends BaseCommandHandler<ReadmeOptions> 
     options: ReadmeOptions,
     globalOptions?: GlobalOptions
   ): Promise<void> {
-    const res = await this._service.processReadMe(
-      ''
-    );
+    const res = await this._service.processReadMe(options.input);
 
-    await fs.writeFile(
-      '',
-      res
-    );
+    await fs.writeFile(options.output, res);
 
     console.log('res', res);
   }

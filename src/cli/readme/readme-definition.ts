@@ -22,8 +22,34 @@ const readmeCommands: CommandBase = {
     {
       command: 'task',
       handler: () => new ReadmeCmdHandler(),
-      sections: [],
-      options: [],
+      sections: [
+        ...introSections,
+        {
+          header: 'Task',
+          content: chalk.magentaBright('')
+        },
+        {
+          header: 'Command List',
+          content: [helpCommand]
+        },
+        {
+          header: 'Options',
+          optionList: [
+            {
+              name: 'input',
+              description: 'Input file containing the template'
+            },
+            {
+              name: 'output',
+              description: 'Output file to write replaced value to'
+            }
+          ]
+        }
+      ],
+      options: [
+        { name: 'input', alias: 'i' },
+        { name: 'output', alias: 'o' }
+      ],
       subCommands: [defaultHelpCommand]
     },
     defaultHelpCommand
