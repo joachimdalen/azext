@@ -2,6 +2,7 @@ import chalk from 'chalk';
 import { OptionDefinition } from 'command-line-args';
 import { Section } from 'command-line-usage';
 import { ActionResult } from '../constants';
+import { logError, logInfo } from '../core';
 import HelpCmdHandler from './help-cmd-handler';
 
 export interface RootCommand {
@@ -14,11 +15,19 @@ export abstract class BaseCommandHandler<T> {
   getOptions(options: any) {
     return options as T;
   }
-  writeResult(result: ActionResult) {
-    if (result.isSuccess) {
-      console.log(chalk.greenBright(result.message));
+  writeResult(result: ActionResult, globalOptions?: GlobalOptions) {
+    if (globalOptions?.ci === 'ado') {
+      if (result.isSuccess) {
+        logInfo(result.message || '');
+      } else {
+        logError(result.message || '');
+      }
     } else {
-      console.log(chalk.redBright(result.message));
+      if (result.isSuccess) {
+        console.log(chalk.greenBright(result.message));
+      } else {
+        console.log(chalk.redBright(result.message));
+      }
     }
   }
   abstract handleCommand(
