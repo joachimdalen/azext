@@ -1,5 +1,6 @@
 import chalk from 'chalk';
-import { introSections, helpCommand } from '../../constants';
+
+import { helpCommand, introSections } from '../../constants';
 import { defaultHelpCommand } from '../cli-constants';
 import { CommandBase } from '../models';
 import InitCmdHandler from './handlers/init-cmd-handler';
@@ -11,15 +12,15 @@ const initCommands: CommandBase = {
   sections: [
     ...introSections,
     {
+      header: 'Init',
+      content: chalk.magentaBright('Generate default config folder')
+    },
+    {
       header: 'Command List',
       content: [
         { name: 'mapping', summary: 'Generate a new default mapping file' },
         helpCommand
       ]
-    },
-    {
-      header: 'Init',
-      content: chalk.magentaBright('Generate default config folder')
     },
     {
       header: 'Options',

@@ -1,5 +1,6 @@
 import chalk from 'chalk';
-import { introSections, helpCommand } from '../../constants';
+
+import { helpCommand, introSections } from '../../constants';
 import { defaultHelpCommand } from '../cli-constants';
 import { CommandBase } from '../models';
 import ReadmeCmdHandler from './handlers/readme-cmd-handler';
@@ -9,24 +10,32 @@ const readmeCommands: CommandBase = {
   sections: [
     ...introSections,
     {
-      header: 'Command List',
-      content: [{ name: 'task', summary: 'Task' }, helpCommand]
+      header: 'Readme',
+      content: chalk.magentaBright(
+        'Tools to manage and generate partial documentation'
+      )
     },
     {
-      header: 'Task',
-      content: chalk.magentaBright('Task')
+      header: 'Command List',
+      content: [
+        {
+          name: 'task-usage',
+          summary: 'Add task inputs to documentation files'
+        },
+        helpCommand
+      ]
     }
   ],
   options: [],
   subCommands: [
     {
-      command: 'task',
+      command: 'task-usage',
       handler: () => new ReadmeCmdHandler(),
       sections: [
         ...introSections,
         {
-          header: 'Task',
-          content: chalk.magentaBright('')
+          header: 'Task Usage',
+          content: chalk.magentaBright('Add task inputs to documentation files')
         },
         {
           header: 'Command List',

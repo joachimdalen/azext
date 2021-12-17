@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import commandLineArgs, { OptionDefinition } from 'command-line-args';
+
 import { ActionResultWithData, helpCommand, introSections } from '../constants';
 import changelogCommands from './changelog/changelog-definition';
 import HelpCmdHandler from './help-cmd-handler';
@@ -24,6 +25,10 @@ const root: CommandBase = {
         {
           name: 'changelog',
           summary: 'Tools to manage and generate changelogs'
+        },
+        {
+          name: 'readme',
+          summary: 'Tools to manage and generate partial documentation'
         },
         helpCommand
       ]
