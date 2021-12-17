@@ -26,7 +26,7 @@ class ConfigProvider {
 
     if (path.isAbsolute(filePath)) return filePath;
     if (filePath.startsWith('./')) return filePath;
-    return path.join(workingDirectory(), this._defaultFolder, filePath);
+    return path.resolve(workingDirectory(), this._defaultFolder, filePath);
   }
 
   public async getConfig<T>(filePath: string): Promise<T | undefined> {

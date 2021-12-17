@@ -1,7 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
-import Replacer from '../../core/replacer';
 
+import Replacer from '../../core/replacer';
 import ConfigProvider from '../../data-providers/config-provider';
 import { MAPPING_NAME } from '../init/init-constants';
 import { DefaultMapping } from '../init/models';
@@ -58,13 +58,11 @@ export default class TaskService {
 
     const taskNameMapped = mapping.tasks[taskName];
 
-    try {
-      const fileBuffer = await fs.readFile(taskNameMapped);
-      const fileContent: TaskDefinition = JSON.parse(fileBuffer.toString());
-      return fileContent;
-    } catch {
-      return undefined;
-    }
+    const taskPath = this._configProvider.getFullFilePath(taskNameMapped);
+
+    const fileBuffer = await fs.readFile(taskPath);
+    const fileContent: TaskDefinition = JSON.parse(fileBuffer.toString());
+    return fileContent;
   }
   async getReadMeConfig(): Promise<ReadmeConfig | undefined> {
     const s: any = undefined;

@@ -1,6 +1,7 @@
-import path from 'path';
-import ConfigProvider from '../../data-providers/config-provider';
 import fs from 'fs/promises';
+import path from 'path';
+
+import ConfigProvider from '../../data-providers/config-provider';
 
 describe('ConfigProvider', () => {
   describe('createConfigFolderIfNotExists', () => {
