@@ -14,13 +14,14 @@ Help for the `init` command can be listed by issuing the following command
 
 ```text
 
-Command List
-
-  help   Print this usage guide.
-
 Init
 
   Generate default config folder
+
+Command List
+
+  mapping   Generate a new default mapping file
+  help      Print this usage guide.
 
 Options
 

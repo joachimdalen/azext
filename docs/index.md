@@ -4,6 +4,7 @@ Welcome to the documentation for AzExt.
 
 - [Initialize AzExt](./init/index.md)
 - [Manage Changelogs](./changelog/index.md)
+- [Manage Changelogs](./readme/index.md)
 
 ## Help
 
