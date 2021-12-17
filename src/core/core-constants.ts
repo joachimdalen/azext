@@ -1,10 +1,10 @@
-import TaskUsageFormatter from './formatters/task-usage-formatter';
+import TaskInputFormatter from './formatters/task-input-formatter';
 import { ReplacementCommand } from './models/replacement-command';
 
 export const replacementCommands: ReplacementCommand[] = [
   {
-    command: 'task-usage',
-    formatter: () => new TaskUsageFormatter(),
+    command: 'task-input',
+    formatter: () => new TaskInputFormatter(),
     options: [{ name: 'task' }, { name: 'type' }]
   }
 ];

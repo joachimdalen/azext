@@ -4,8 +4,8 @@
 
 # Example
 
-{{ #task-usage[task=demo-task;type=example] }}
+{{ #task-input[task=demo-task;type=example] }}
 
 # Table
 
-{{ #task-usage[task=demo-task;type=table] }}
+{{ #task-input[task=demo-task;type=table] }}

@@ -9,7 +9,7 @@ import { isModuleInstalled } from '..';
 import ReplacementCommandFormatter from '../models/replacement-command-formatter';
 import Replacer from '../replacer';
 
-export interface TaskUsageFormatterOptions {
+export interface TaskInputFormatterOptions {
   task: string;
   type: 'table' | 'example';
 }
@@ -19,7 +19,7 @@ interface Table {
   rows: TaskInputDefinition[];
 }
 type TT = keyof TaskInputDefinition;
-export default class TaskUsageFormatter extends ReplacementCommandFormatter<TaskUsageFormatterOptions> {
+export default class TaskInputFormatter extends ReplacementCommandFormatter<TaskInputFormatterOptions> {
   private _service: TaskService;
   private _replacer: Replacer;
   private readonly codeFields: TT[] = ['name', 'defaultValue'];
@@ -28,7 +28,7 @@ export default class TaskUsageFormatter extends ReplacementCommandFormatter<Task
     this._service = new TaskService();
     this._replacer = new Replacer();
   }
-  async getFormatted(options: TaskUsageFormatterOptions): Promise<string> {
+  async getFormatted(options: TaskInputFormatterOptions): Promise<string> {
     const task = await this._service.getTaskDefinition(options.task);
 
     if (task === undefined) return '';
@@ -99,6 +99,7 @@ export default class TaskUsageFormatter extends ReplacementCommandFormatter<Task
     const rows: string[] = [];
     const headers = Object.keys(table.headers);
     const wrap = (s: string) => `|${s}|`;
+    const getBool = (s: any) => s as boolean;
     const align = (a: 'left' | 'center' | 'right') => {
       switch (a) {
         case 'left':
@@ -140,7 +141,9 @@ export default class TaskUsageFormatter extends ReplacementCommandFormatter<Task
 
         if (rowKey === 'required') {
           inVal = this._replacer.replaceEmojisIf(
-            config?.requiredOptions.true || inVal,
+            (getBool(inVal)
+              ? config?.requiredOptions.true
+              : config?.requiredOptions.false) || inVal,
             true
           );
         }
