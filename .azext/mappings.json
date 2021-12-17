@@ -1,5 +1,5 @@
 {
   "tasks": {
-    "task-name": "/some/file/path"
+    "demo-task": "../testdata/task.json"
   }
 }
