@@ -20,7 +20,6 @@ export const CHANGELOG_DEFAULT_CONFIG: ChangelogConfig = {
     size: 'h4',
     format: '`{{name}}@{{version}}`'
   },
-  taskMapping: {},
   sectionSplitter: '---',
   tagSize: 'h3',
   tagMapping: {

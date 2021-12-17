@@ -8,9 +8,6 @@ export default interface ChangelogConfig {
   releaseTitleFormat: TitleFormat;
   moduleTitleFormat: TitleFormat;
   tagSize: HeaderSizes;
-  taskMapping: {
-    [key: string]: string;
-  };
   sectionSplitter: string;
   tagMapping: {
     [key: string]: string;
