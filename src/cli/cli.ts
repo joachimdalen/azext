@@ -10,6 +10,7 @@ import {
   ParsedCommand,
   RootCommand
 } from './models';
+import readmeCommands from './readme/readme-definition';
 
 const root: CommandBase = {
   command: 'help',
@@ -42,7 +43,8 @@ class AzExtCli {
   private readonly rootCommands: CommandBase[] = [
     root,
     changelogCommands,
-    initCommands
+    initCommands,
+    readmeCommands
   ];
   private readonly commandOption: OptionDefinition = {
     name: 'command',
