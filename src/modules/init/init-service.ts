@@ -1,8 +1,9 @@
 import ConfigProvider from '../../data-providers/config-provider';
 import { MAPPING_DEFAULT_FILE, MAPPING_NAME } from './init-constants';
-import { TaskMapping } from './models';
 import { InitOptions } from './options';
 import path from 'path';
+import { DefaultMapping } from './models';
+import { ActionResult } from '../../constants';
 class InitService {
   private _configProvider: ConfigProvider;
   constructor() {
@@ -20,12 +21,34 @@ class InitService {
     return filePath;
   }
 
-  public async initTaskMapping(options: InitOptions): Promise<string> {
-    const filePath = this._configProvider.writeConfig(
-      path.join(options.root, MAPPING_NAME),
+  public async initMappingConfiguration(
+    options: InitOptions
+  ): Promise<ActionResult> {
+    let fullPath = this._configProvider.getFullFilePath(options.root);
+
+    if (fullPath && path.extname(fullPath) !== undefined) {
+      fullPath = path.join(fullPath, MAPPING_NAME);
+    }
+
+    const exists = await this._configProvider.getConfig<DefaultMapping>(
+      fullPath
+    );
+
+    if (exists !== undefined) {
+      return {
+        isSuccess: false,
+        message: 'Mapping file already exists'
+      };
+    }
+
+    const filePath = await this._configProvider.writeConfig(
+      fullPath,
       MAPPING_DEFAULT_FILE
     );
-    return filePath;
+    return {
+      isSuccess: true,
+      message: `Created new mapping configuration file at: ${filePath}`
+    };
   }
 }
 

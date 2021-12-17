@@ -1,3 +1,3 @@
-export interface TaskMapping {
-  [key: string]: string;
+export interface DefaultMapping {
+  tasks: { [key: string]: string };
 }

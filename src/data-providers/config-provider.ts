@@ -20,6 +20,10 @@ class ConfigProvider {
   }
 
   public getFullFilePath(filePath: string) {
+    if (filePath === undefined) {
+      return path.join(workingDirectory(), this._defaultFolder);
+    }
+
     if (path.isAbsolute(filePath)) return filePath;
     if (filePath.startsWith('./')) return filePath;
     return path.join(workingDirectory(), this._defaultFolder, filePath);
@@ -43,6 +47,13 @@ class ConfigProvider {
   ): Promise<string> {
     await this.createConfigFolderIfNotExists();
     const resolvedPath = this.getFullFilePath(filePath);
+
+    if (path.extname(resolvedPath) === undefined) {
+      throw new Error(
+        'Recieved folder path, but expected file path ' + resolvedPath
+      );
+    }
+
     await fs.writeFile(
       resolvedPath,
       asJson ? JSON.stringify(data, null, 2) : data

@@ -1,8 +1,9 @@
 import chalk from 'chalk';
 import { introSections, helpCommand } from '../../constants';
-import HelpCmdHandler from '../help-cmd-handler';
+import { defaultHelpCommand } from '../cli-constants';
 import { CommandBase } from '../models';
 import InitCmdHandler from './handlers/init-cmd-handler';
+import InitMappingCmdHandler from './handlers/init-mapping-cmd-handler';
 
 const initCommands: CommandBase = {
   command: 'init',
@@ -11,7 +12,10 @@ const initCommands: CommandBase = {
     ...introSections,
     {
       header: 'Command List',
-      content: [helpCommand]
+      content: [
+        { name: 'mapping', summary: 'Generate a new default mapping file' },
+        helpCommand
+      ]
     },
     {
       header: 'Init',
@@ -31,15 +35,31 @@ const initCommands: CommandBase = {
   subCommands: [
     {
       command: 'mapping',
-      sections: [],
-      options: []
+      handler: () => new InitMappingCmdHandler(),
+      sections: [
+        ...introSections,
+        {
+          header: 'Mapping',
+          content: chalk.magentaBright('Generate a new default mapping file')
+        },
+        {
+          header: 'Command List',
+          content: [helpCommand]
+        },
+        {
+          header: 'Options',
+          optionList: [
+            {
+              name: 'root',
+              description: 'Root folder to initialize in'
+            }
+          ]
+        }
+      ],
+      options: [{ name: 'root', alias: 'r' }],
+      subCommands: [defaultHelpCommand]
     },
-    {
-      command: 'help',
-      handler: (options?: CommandBase) => new HelpCmdHandler(options),
-      sections: [],
-      options: []
-    }
+    defaultHelpCommand
   ]
 };
 
