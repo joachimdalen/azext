@@ -97,7 +97,7 @@ To get a local copy up and running follow these simple example steps.
 
 ## Workboard
 
-All issues are manged under the [Workboard](https://github.com/joachimdalen/azext/projects/1) project
+All issues are manged under the [AzExt - Workboard](https://github.com/users/joachimdalen/projects/5) project
 
 - **Triage:** These issues and pull requests still needs to be reviewed
 - **Planned:** These are planned features and bugfixes
@@ -109,7 +109,7 @@ All issues are manged under the [Workboard](https://github.com/joachimdalen/azex
 
 ## Roadmap
 
-See [Workboard - Planned (@type/feature)](https://github.com/joachimdalen/azext/projects/1#column-17249551) for a full list of proposed features.
+See [Workboard - Planned (@type/feature)](https://github.com/users/joachimdalen/projects/5/views/4) for a full list of proposed features.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
