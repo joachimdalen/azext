@@ -4,6 +4,7 @@ import { helpCommand, introSections } from '../../constants';
 import { defaultHelpCommand } from '../cli-constants';
 import { CommandBase } from '../models';
 import ReadmeCmdHandler from './handlers/readme-cmd-handler';
+import ReadmeInitCmdHandler from './handlers/readme-init-cmd-handler';
 
 const readmeCommands: CommandBase = {
   command: 'readme',
@@ -21,6 +22,10 @@ const readmeCommands: CommandBase = {
         {
           name: 'task-usage',
           summary: 'Add task inputs to documentation files'
+        },
+        {
+          name: 'init',
+          summary: 'Create a new readme configuration file'
         },
         helpCommand
       ]
@@ -59,6 +64,23 @@ const readmeCommands: CommandBase = {
         { name: 'input', alias: 'i' },
         { name: 'output', alias: 'o' }
       ],
+      subCommands: [defaultHelpCommand]
+    },
+    {
+      command: 'init',
+      handler: () => new ReadmeInitCmdHandler(),
+      sections: [
+        ...introSections,
+        {
+          header: 'Init',
+          content: chalk.magentaBright('Create a new readme configuration file')
+        },
+        {
+          header: 'Command List',
+          content: [helpCommand]
+        }
+      ],
+      options: [],
       subCommands: [defaultHelpCommand]
     },
     defaultHelpCommand
