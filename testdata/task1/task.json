@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
   "id": "057845f0-8352-446f-a666-cb0e1f1055e3",
-  "name": "DemoTask",
+  "name": "Task1",
   "friendlyName": "Demo Task",
   "description": "A task to to demo",
   "helpMarkDown": "[Learn more about this task](http://example.com)",

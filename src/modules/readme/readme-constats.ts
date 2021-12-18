@@ -37,6 +37,6 @@ export const replacementCommands: ReplacementCommand[] = [
   {
     command: 'include-partial',
     formatter: () => new IncludeFileFormatter(),
-    options: [{ name: 'file' }]
+    options: [{ name: 'file' }, { name: 'wrap' }]
   }
 ];

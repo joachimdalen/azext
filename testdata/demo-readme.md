@@ -32,4 +32,4 @@ _Will be pretty in the markdown file, but not in rendered markup_
 
 # Partial Include
 
-{{ #include-partial[file=env-usage-one] }}
+{{ #include-partial[file=env-usage-one;wrap=yaml] }}

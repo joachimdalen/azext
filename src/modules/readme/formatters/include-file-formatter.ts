@@ -8,6 +8,7 @@ import TaskService from '../task-service';
 
 export interface IncludeFileFormatterOptions {
   file: string;
+  wrap?: string;
 }
 
 export default class IncludeFileFormatter extends ReplacementCommandFormatter<IncludeFileFormatterOptions> {
@@ -26,22 +27,25 @@ export default class IncludeFileFormatter extends ReplacementCommandFormatter<In
     const config = await this._service.getReadMeConfig();
 
     if (config) {
-      const partialContent = await this.getPartialContent(config, options.file);
+      const partialContent = await this.getPartialContent(config, options);
       return partialContent;
     }
 
     return undefined;
   }
 
-  async getPartialContent(config: ReadmeConfig, partialName: string) {
+  async getPartialContent(
+    config: ReadmeConfig,
+    options: IncludeFileFormatterOptions
+  ) {
     if (config.partials === undefined) {
-      throw new Error('Failed to readme partials');
+      throw new Error('Failed to find readme partials');
     }
 
-    const partialPath = config.partials[partialName];
+    const partialPath = config.partials[options.file];
 
     if (partialPath === undefined) {
-      throw new Error('No such partial ' + partialName);
+      throw new Error('No such partial ' + options.file);
     }
 
     const taskPath = this._configProvider.getFullFilePath(partialPath.file);
@@ -49,8 +53,8 @@ export default class IncludeFileFormatter extends ReplacementCommandFormatter<In
     const fileBuffer = await fs.readFile(taskPath);
     const fileContent: string = fileBuffer.toString();
 
-    if (partialPath.wrap) {
-      return '```' + partialPath.wrap + EOL + fileContent + EOL + '```';
+    if (options.wrap) {
+      return '```' + options.wrap + EOL + fileContent + EOL + '```';
     }
 
     return fileContent;

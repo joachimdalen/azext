@@ -6,7 +6,7 @@ describe('TaskService', () => {
       const taskService = new TaskService();
       const rule = 'targetType == inline && run = true';
       const parsed = taskService.parseVisibleRule(rule);
-      expect(parsed).toEqual('targetType IS inline AND run IS true');
+      expect(parsed).toEqual('`targetType` IS `inline` AND `run` IS `true`');
     });
   });
 });

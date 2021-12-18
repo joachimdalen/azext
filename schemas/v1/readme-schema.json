@@ -47,10 +47,9 @@
         "^[a-zA-Z0-9_-]+$": {
           "type": "object",
           "properties": {
-            "file": { "type": "string" },
-            "wrap": { "type": "string" }
+            "file": { "type": "string" }
           },
-          "required": ["file", "wrap"]
+          "required": ["file"]
         }
       }
     }
