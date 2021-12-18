@@ -1,3 +1,4 @@
+import { CommandExpression } from './models';
 import { ReplaceMatch } from './models/replace-match';
 import { ReplacementCommand } from './models/replacement-command';
 import { replacementCommands } from './readme-constats';
@@ -18,30 +19,17 @@ export default class CommandService {
 
     return data;
   }
-  getCommandId(cmd: string): string | undefined {
-    const expression = /#(?<command>[a-zA-Z-]+.)\[.+\]/;
-    let m;
 
-    while ((m = expression.exec(cmd)) !== null) {
-      if (m.index === expression.lastIndex) {
-        expression.lastIndex++;
-      }
-      return m.groups?.command;
-    }
-  }
   getCommand(content: string) {
-    const commandId = this.getCommandId(content);
+    const commandId = this.parseCommand(content);
     if (commandId === undefined) return undefined;
 
-    const command = replacementCommands.find((x) => x.command === commandId);
+    const command = replacementCommands.find(
+      (x) => x.command === commandId.command
+    );
     if (command === undefined) return undefined;
 
-    const optionsExpression = this.getCommandExpression(command);
-    const optionGroups = this.getOptionGroups(content, optionsExpression);
-
-    if (optionGroups === undefined) return undefined;
-
-    const options = this.mapGroupsToOptions(command, optionGroups);
+    const options = this.getCommandParameters(commandId.parameters, command);
 
     return {
       command: command,
@@ -49,46 +37,57 @@ export default class CommandService {
     };
   }
 
-  /// WORKS: #(?<command>[a-zA-Z-]+.)\[task=(?<task>([a-zA-Z-]+.));field=(?<field>([a-zA-Z-]+.))(?:;objectHandle=(?<objectHandle>([a-zA-Z-]+.))?)(?:;codeFormat=(?<codeFormat>([a-zA-Z-]+.)))?\]
-  getCommandExpression(cmd: ReplacementCommand): string {
-    const optionExp = (name: string) => `${name}=(?<${name}>([a-zA-Z-]+.))`;
-    const optionalWrapper = (exp: string) => `(?:;${exp.replace(';', '')})?`;
-
-    const required = cmd.options
-      .filter((x) => x.optional === undefined)
-      .map((x) => optionExp(x.name) + ';');
-    const optional = cmd.options
-      .filter((x) => x.optional === true)
-      .map((x) => optionalWrapper(optionExp(x.name)));
-
-    const req = required.join('');
-    const str = [req.substring(0, req.length - 1), optional.join('')].join('');
-    const exp = `#(?<command>[a-zA-Z-]+.)\\[${str}\\]`;
-    return exp;
-  }
-
-  getOptionGroups(comd: string, exp: string) {
-    let expression = new RegExp(exp);
+  parseCommand(cmd: string): CommandExpression | undefined {
+    //const expression = /#(?<command>[a-zA-Z-]+.)\[.+\]/;
+    const expression = /#(?<command>[a-zA-Z-]+.)\[(?<parameters>.+)\]/;
     let m;
 
-    while ((m = expression.exec(comd)) !== null) {
+    while ((m = expression.exec(cmd)) !== null) {
       if (m.index === expression.lastIndex) {
         expression.lastIndex++;
       }
-      return m.groups;
+
+      if (m.groups?.command && m.groups?.parameters) {
+        return {
+          command: m.groups?.command,
+          parameters: m.groups?.parameters
+        };
+      }
+      return undefined;
     }
+    return undefined;
   }
 
-  mapGroupsToOptions(
-    command: ReplacementCommand,
-    groups: { [key: string]: string }
-  ) {
-    let opt: { [key: string]: string | undefined } = {};
+  getCommandParameters(parameters: string, command: ReplacementCommand) {
+    const exp = /(?<param>[a-zA-Z0-9-_]+.)=(?<val>[a-zA-Z0-9-_]+.)/g;
+    let m;
 
-    command.options.forEach((o) => {
-      opt[o.name] = groups && groups[o.name];
-    });
+    const parsedGroups: { [key: string]: string }[] = [];
 
-    return opt;
+    while ((m = exp.exec(parameters)) !== null) {
+      if (m.index === exp.lastIndex) {
+        exp.lastIndex++;
+      }
+      if (m.groups !== undefined) {
+        parsedGroups.push(m.groups);
+      }
+    }
+
+    let options: { [key: string]: string | undefined } = {};
+
+    for (const opt of command.options) {
+      const param = parsedGroups.find((p) => p.param === opt.name);
+
+      if (param === undefined) {
+        if (opt.optional === undefined || opt.optional === false) {
+          throw new Error('Missing required parameter ' + opt.name);
+        } else {
+          continue;
+        }
+      }
+      options[opt.name] = param.val?.replace(';', '');
+    }
+
+    return options;
   }
 }

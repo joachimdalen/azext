@@ -1,5 +1,6 @@
-import path from 'path';
 import fs from 'fs/promises';
+import path from 'path';
+
 import { workingDirectory } from '../core/process';
 
 class ConfigProvider {
@@ -26,7 +27,13 @@ class ConfigProvider {
 
     if (path.isAbsolute(filePath)) return filePath;
     if (filePath.startsWith('./')) return filePath;
-    return path.resolve(workingDirectory(), this._defaultFolder, filePath);
+    const resolved = path.resolve(
+      workingDirectory(),
+      this._defaultFolder,
+      filePath
+    );
+
+    return resolved;
   }
 
   public async getConfig<T>(filePath: string): Promise<T | undefined> {

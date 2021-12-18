@@ -1,3 +1,4 @@
+import IncludeFileFormatter from './formatters/include-file-formatter';
 import TaskFieldFormatter from './formatters/task-field-formatter';
 import TaskInputFormatter from './formatters/task-input-formatter';
 import { ReadmeConfig } from './models/readme-config';
@@ -32,5 +33,10 @@ export const replacementCommands: ReplacementCommand[] = [
       { name: 'objectHandle', optional: true },
       { name: 'codeFormat', optional: true }
     ]
+  },
+  {
+    command: 'include-partial',
+    formatter: () => new IncludeFileFormatter(),
+    options: [{ name: 'file' }]
   }
 ];

@@ -1,4 +1,5 @@
 import fs from 'fs/promises';
+
 import CommandService from './command-service';
 
 export default class ReadmeService {
@@ -19,8 +20,10 @@ export default class ReadmeService {
           const formatter = commandResult.command.formatter();
           const dd = formatter.getOptions(commandResult.options);
           const res = await formatter.getFormatted(dd);
-          console.log(res);
-          content = content.replace(match.full, res);
+
+          if (res !== undefined) {
+            content = content.replace(match.full, res);
+          }
         }
       }
     }

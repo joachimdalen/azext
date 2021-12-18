@@ -1,6 +1,7 @@
 # Demo Task
 
 {{ #task-field[task=demo-task;field=description] }}
+
 Current version: {{ #task-field[task=demo-task;field=version] }}
 
 # Example
@@ -9,8 +10,22 @@ Current version: {{ #task-field[task=demo-task;field=version] }}
 
 # Table
 
+## Demo Task - Table
+
 {{ #task-input[task=demo-task;type=table] }}
 
+## Demo Task - Field - Handle Json
+
 {{ #task-field[task=demo-task;field=inputs;objectHandle=json] }}
+
+## Demo Task - Field - Handle Json-Pretty
+
 {{ #task-field[task=demo-task;field=inputs;objectHandle=json-pretty] }}
-{{ #task-field[task=demo-task;field=inputs;objectHandle=json-pretty;codeFormat=json] }}
+
+## Demo Task - Field - Handle Json-Pretty - Code Format
+
+{{ #task-field[task=demo-task;field=inputs;codeFormat=json;objectHandle=json-pretty] }}
+
+# Partial Include
+
+{{ #include-partial[file=env-usage-one] }}

@@ -19,6 +19,7 @@ export default class TaskService {
     taskName: string
   ): Promise<TaskDefinition | undefined> {
     const s: any = undefined;
+
     let fullPath = this._configProvider.getFullFilePath(s);
 
     if (fullPath && path.extname(fullPath) !== undefined) {
@@ -49,7 +50,6 @@ export default class TaskService {
       fullPath = path.join(fullPath, README_NAME);
     }
 
-    console.log(fullPath);
     try {
       const fileBuffer = await fs.readFile(fullPath);
       const fileContent: ReadmeConfig = JSON.parse(fileBuffer.toString());

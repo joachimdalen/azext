@@ -45,14 +45,6 @@ describe('CommandService', () => {
     });
   });
 
-  describe('getCommandId', () => {
-    it('should return command id when matched', () => {
-      const cmdService = new CommandService();
-      const raw: string = '#task-input[task=some-task;type=table]';
-      const commandId = cmdService.getCommandId(raw);
-      expect(commandId).toEqual('task-input');
-    });
-  });
   describe('getCommand', () => {
     it('should return correct command', () => {
       const cmdService = new CommandService();
@@ -69,56 +61,81 @@ describe('CommandService', () => {
     });
   });
 
-  describe('getCommandExpression', () => {
-    it('should return correct expression for command', () => {
+  describe('parseCommand', () => {
+    it('should return correct command', () => {
       const cmdService = new CommandService();
-      const cmd: ReplacementCommand = {
-        command: 'some-command',
-        options: [{ name: 'optone' }, { name: 'opttwo' }],
-        formatter: () => ({} as any)
-      };
-
-      const exp = cmdService.getCommandExpression(cmd);
-      expect(exp).toEqual(
-        '#(?<command>[a-zA-Z-]+.)\\[optone=(?<optone>([a-zA-Z-]+.));opttwo=(?<opttwo>([a-zA-Z-]+.))\\]'
-      );
+      const raw: string = '#task-input[task=some-task;type=table]';
+      const commandResult = cmdService.parseCommand(raw);
+      expect(commandResult).toBeDefined();
+      expect(commandResult?.command).toEqual('task-input');
+      expect(commandResult?.parameters).toEqual('task=some-task;type=table');
     });
   });
 
-  describe('getOptionGroups', () => {
-    it('should return correct options groups', () => {
+  describe('getCommandParameters', () => {
+    it('should return correct parameters when only required', () => {
       const cmdService = new CommandService();
-      const raw: string = '#task-input[optone=one;opttwo=two]';
-
-      const exp = cmdService.getOptionGroups(
-        raw,
-        '#(?<command>[a-zA-Z-]+.)\\[optone=(?<optone>([a-zA-Z-]+.));opttwo=(?<opttwo>([a-zA-Z-]+.))\\]'
-      );
-      expect(exp).toEqual({
-        command: 'task-input',
-        optone: 'one',
-        opttwo: 'two'
-      });
-    });
-  });
-  describe('mapGroupsToOptions', () => {
-    it('should return correct options', () => {
-      const cmdService = new CommandService();
-      const groups = {
-        command: 'task-input',
-        optone: 'one',
-        opttwo: 'two'
-      };
+      const raw: string = 'task=some-task;type=table';
       const cmd: ReplacementCommand = {
         command: 'some-command',
-        options: [{ name: 'optone' }, { name: 'opttwo' }],
+        options: [{ name: 'task' }, { name: 'type' }],
         formatter: () => ({} as any)
       };
-      const mapped = cmdService.mapGroupsToOptions(cmd, groups);
-      expect(mapped).toEqual({
-        optone: 'one',
-        opttwo: 'two'
+      const commandResult = cmdService.getCommandParameters(raw, cmd);
+      expect(commandResult).toEqual({
+        task: 'some-task',
+        type: 'table'
       });
+    });
+    it('should ignore optional parameters if not defined', () => {
+      const cmdService = new CommandService();
+      const raw: string = 'task=some-task;type=table';
+      const cmd: ReplacementCommand = {
+        command: 'some-command',
+        options: [
+          { name: 'task' },
+          { name: 'type' },
+          { name: 'opt', optional: true }
+        ],
+        formatter: () => ({} as any)
+      };
+      const commandResult = cmdService.getCommandParameters(raw, cmd);
+      expect(commandResult).toEqual({
+        task: 'some-task',
+        type: 'table'
+      });
+    });
+    it('should parse optional parameters if defined', () => {
+      const cmdService = new CommandService();
+      const raw: string = 'task=some-task;type=table;opt=hello';
+      const cmd: ReplacementCommand = {
+        command: 'some-command',
+        options: [
+          { name: 'task' },
+          { name: 'type' },
+          { name: 'opt', optional: true }
+        ],
+        formatter: () => ({} as any)
+      };
+      const commandResult = cmdService.getCommandParameters(raw, cmd);
+      expect(commandResult).toEqual({
+        task: 'some-task',
+        type: 'table',
+        opt: 'hello'
+      });
+    });
+    it('should throw if missing required parameter', () => {
+      const cmdService = new CommandService();
+      const raw: string = 'task=some-task;type=table';
+      const cmd: ReplacementCommand = {
+        command: 'some-command',
+        options: [{ name: 'task' }, { name: 'type' }, { name: 'opt' }],
+        formatter: () => ({} as any)
+      };
+
+      expect(() => {
+        cmdService.getCommandParameters(raw, cmd);
+      }).toThrow();
     });
   });
 });

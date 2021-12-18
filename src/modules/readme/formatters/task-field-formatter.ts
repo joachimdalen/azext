@@ -36,11 +36,11 @@ export default class TaskFieldFormatter extends ReplacementCommandFormatter<Task
     }
 
     if (typeof field === 'object' && options.objectHandle !== undefined) {
-      const jsonResult =
-        options.objectHandle === 'json-pretty'
-          ? JSON.stringify(field, null, 2)
-          : JSON.stringify(field);
-      return this.wrapCode(options, jsonResult);
+      if (options.objectHandle === 'json') {
+        return this.wrapCode(options, JSON.stringify(field));
+      } else if (options.objectHandle === 'json-pretty') {
+        return this.wrapCode(options, JSON.stringify(field, null, 2));
+      }
     }
 
     if (typeof field === 'object' && options.objectHandle === undefined) {

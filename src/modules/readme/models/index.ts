@@ -6,3 +6,4 @@ export * from './required-options';
 export * from './include-options-field';
 export * from './readme-partial';
 export * from './readme-partial-root';
+export * from './command-expression';

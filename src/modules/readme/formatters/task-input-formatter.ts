@@ -92,7 +92,6 @@ export default class TaskInputFormatter extends ReplacementCommandFormatter<Task
       rows: task.inputs
     };
 
-    console.log(config);
     const rows: string[] = [];
     const headers = Object.keys(table.headers);
     const wrap = (s: string) => `|${s}|`;
