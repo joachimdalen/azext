@@ -8,5 +8,11 @@
   "requiredOptions": {
     "false": ":x:",
     "true": ":white_check_mark:"
+  },
+  "partials": {
+    "env-usage-one": {
+      "file": "../testdata/examples/exp1.yml",
+      "wrap": "yaml"
+    }
   }
 }

@@ -1,14 +1,14 @@
 import fs from 'fs/promises';
 
 import { ReadmeOptions } from '../../../modules/readme/options';
-import TaskService from '../../../modules/readme/task-service';
+import ReadmeService from '../../../modules/readme/readme-service';
 import { BaseCommandHandler } from '../../models';
 
 export default class ReadmeCmdHandler extends BaseCommandHandler<ReadmeOptions> {
-  private _service: TaskService;
+  private _service: ReadmeService;
   constructor() {
     super();
-    this._service = new TaskService();
+    this._service = new ReadmeService();
   }
   async handleCommand(options: ReadmeOptions): Promise<void> {
     const res = await this._service.processReadMe(options.input);

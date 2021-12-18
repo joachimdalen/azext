@@ -1,13 +1,13 @@
-import { TaskInputDefinition } from '.';
+import { IncludeOptionsField } from '.';
+import { RequiredOptions } from './required-options';
 
 export interface ReadmeConfig {
-  includeOptionsFields: {
-    field: keyof TaskInputDefinition;
-    title: string;
-    align?: 'left' | 'center' | 'right';
-  }[];
-  requiredOptions: {
-    true: string;
-    false: string;
+  includeOptionsFields: IncludeOptionsField[];
+  requiredOptions: RequiredOptions;
+  partials?: {
+    [key: string]: {
+      file: string;
+      format?: string;
+    };
   };
 }

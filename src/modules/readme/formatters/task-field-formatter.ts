@@ -1,9 +1,9 @@
 import { EOL } from 'os';
 
-import { TaskDefinition } from '../../modules/readme/models';
-import TaskService from '../../modules/readme/task-service';
+import Replacer from '../../../core/replacer';
+import { TaskDefinition } from '../models';
 import ReplacementCommandFormatter from '../models/replacement-command-formatter';
-import Replacer from '../replacer';
+import TaskService from '../task-service';
 
 export interface TaskFieldFormatterOptions {
   task: string;
@@ -31,20 +31,23 @@ export default class TaskFieldFormatter extends ReplacementCommandFormatter<Task
 
     const field = task[options.field];
 
-    if (field !== undefined && typeof field === 'object') {
-      if (options.objectHandle?.startsWith('json')) {
-        return this.wrapCode(
-          options,
-          options.objectHandle === 'json-pretty'
-            ? JSON.stringify(field, null, 2)
-            : JSON.stringify(field)
-        );
-      } else {
-        throw new Error(
-          `${options.field} is object, do not know how to handle`
-        );
-      }
+    if (field === undefined) {
+      throw new Error(`Failed to find a value for field ${options.field}`);
     }
+
+    if (typeof field === 'object' && options.objectHandle !== undefined) {
+      const jsonResult =
+        options.objectHandle === 'json-pretty'
+          ? JSON.stringify(field, null, 2)
+          : JSON.stringify(field);
+      return this.wrapCode(options, jsonResult);
+    }
+
+    if (typeof field === 'object' && options.objectHandle === undefined) {
+      throw new Error(`${options.field} is object, do not know how to handle`);
+    }
+
+    return field;
   }
 
   wrapCode(options: TaskFieldFormatterOptions, value: any) {

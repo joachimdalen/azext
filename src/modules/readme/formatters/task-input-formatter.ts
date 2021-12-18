@@ -1,13 +1,10 @@
 import { EOL } from 'os';
 
-import {
-  TaskDefinition,
-  TaskInputDefinition
-} from '../../modules/readme/models';
-import TaskService from '../../modules/readme/task-service';
-import { isModuleInstalled } from '..';
+import { isModuleInstalled } from '../../../core';
+import Replacer from '../../../core/replacer';
+import { TaskDefinition, TaskInputDefinition } from '../models';
 import ReplacementCommandFormatter from '../models/replacement-command-formatter';
-import Replacer from '../replacer';
+import TaskService from '../task-service';
 
 export interface TaskInputFormatterOptions {
   task: string;
