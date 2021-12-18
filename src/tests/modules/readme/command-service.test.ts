@@ -5,7 +5,7 @@ describe('CommandService', () => {
   describe('getMatches', () => {
     it('should return matches when found', () => {
       const cmdService = new CommandService();
-      const raw: string = `# Some title
+      const raw = `# Some title
     
           {{ task_description }}
           
@@ -17,7 +17,7 @@ describe('CommandService', () => {
 
     it('should return correct content', () => {
       const cmdService = new CommandService();
-      const raw: string = `# Some title
+      const raw = `# Some title
     
           {{ task_description }}
           
@@ -36,7 +36,7 @@ describe('CommandService', () => {
 
     it('should return empty when no matches are found', () => {
       const cmdService = new CommandService();
-      const raw: string = `# Some title
+      const raw = `# Some title
     
           Hello there
           `;
@@ -48,14 +48,14 @@ describe('CommandService', () => {
   describe('getCommand', () => {
     it('should return correct command', () => {
       const cmdService = new CommandService();
-      const raw: string = '#task-input[task=some-task;type=table]';
+      const raw = '#task-input[task=some-task;type=table]';
       const commandResult = cmdService.getCommand(raw);
       expect(commandResult).toBeDefined();
       expect(commandResult?.command.command).toEqual('task-input');
     });
     it('should return undefined when unknown command', () => {
       const cmdService = new CommandService();
-      const raw: string = '#blerg[task=some-task;type=table]';
+      const raw = '#blerg[task=some-task;type=table]';
       const commandResult = cmdService.getCommand(raw);
       expect(commandResult).toBeUndefined();
     });
@@ -64,7 +64,7 @@ describe('CommandService', () => {
   describe('parseCommand', () => {
     it('should return correct command', () => {
       const cmdService = new CommandService();
-      const raw: string = '#task-input[task=some-task;type=table]';
+      const raw = '#task-input[task=some-task;type=table]';
       const commandResult = cmdService.parseCommand(raw);
       expect(commandResult).toBeDefined();
       expect(commandResult?.command).toEqual('task-input');
@@ -75,7 +75,7 @@ describe('CommandService', () => {
   describe('getCommandParameters', () => {
     it('should return correct parameters when only required', () => {
       const cmdService = new CommandService();
-      const raw: string = 'task=some-task;type=table';
+      const raw = 'task=some-task;type=table';
       const cmd: ReplacementCommand = {
         command: 'some-command',
         options: [{ name: 'task' }, { name: 'type' }],
@@ -89,7 +89,7 @@ describe('CommandService', () => {
     });
     it('should ignore optional parameters if not defined', () => {
       const cmdService = new CommandService();
-      const raw: string = 'task=some-task;type=table';
+      const raw = 'task=some-task;type=table';
       const cmd: ReplacementCommand = {
         command: 'some-command',
         options: [
@@ -107,7 +107,7 @@ describe('CommandService', () => {
     });
     it('should parse optional parameters if defined', () => {
       const cmdService = new CommandService();
-      const raw: string = 'task=some-task;type=table;opt=hello';
+      const raw = 'task=some-task;type=table;opt=hello';
       const cmd: ReplacementCommand = {
         command: 'some-command',
         options: [
@@ -126,7 +126,7 @@ describe('CommandService', () => {
     });
     it('should throw if missing required parameter', () => {
       const cmdService = new CommandService();
-      const raw: string = 'task=some-task;type=table';
+      const raw = 'task=some-task;type=table';
       const cmd: ReplacementCommand = {
         command: 'some-command',
         options: [{ name: 'task' }, { name: 'type' }, { name: 'opt' }],

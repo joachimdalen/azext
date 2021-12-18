@@ -73,7 +73,7 @@ export default class CommandService {
       }
     }
 
-    let options: { [key: string]: string | undefined } = {};
+    const options: { [key: string]: string | undefined } = {};
 
     for (const opt of command.options) {
       const param = parsedGroups.find((p) => p.param === opt.name);

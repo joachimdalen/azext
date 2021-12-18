@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import { OptionDefinition } from 'command-line-args';
 import { Section } from 'command-line-usage';
+
 import { ActionResult } from '../constants';
 import { logError, logInfo } from '../core';
 import HelpCmdHandler from './help-cmd-handler';
@@ -15,7 +16,7 @@ export abstract class BaseCommandHandler<T> {
   getOptions(options: any) {
     return options as T;
   }
-  writeResult(result: ActionResult, globalOptions?: GlobalOptions) {
+  protected writeResult(result: ActionResult, globalOptions?: GlobalOptions) {
     if (globalOptions?.ci === 'ado') {
       if (result.isSuccess) {
         logInfo(result.message || '');

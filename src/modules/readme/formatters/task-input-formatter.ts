@@ -41,6 +41,7 @@ export default class TaskInputFormatter extends ReplacementCommandFormatter<Task
     let tbl = this.generateExample(task);
 
     if (isModuleInstalled('prettier')) {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const prettier = require('prettier');
       tbl = prettier.format(tbl, { parser: 'yaml' });
     }
@@ -74,6 +75,7 @@ export default class TaskInputFormatter extends ReplacementCommandFormatter<Task
     let tbl = await this.generateTable(task);
 
     if (isModuleInstalled('prettier')) {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const prettier = require('prettier');
       tbl = prettier.format(tbl, { parser: 'markdown' });
     }
