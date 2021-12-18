@@ -13,8 +13,13 @@
   },
   "partials": {
     "env-usage-one": {
-      "file": "../testdata/examples/exp1.yml",
-      "wrap": "yaml"
+      "file": "../testdata/examples/exp1.yml"
+    },
+    "task-one-readme": {
+      "file": "../testdata/task1/README.md"
+    },
+    "task-two-readme": {
+      "file": "../testdata/task2/README.md"
     }
   }
 }

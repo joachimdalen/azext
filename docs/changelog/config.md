@@ -75,7 +75,8 @@ Command List
 
 Options
 
-  --force    Overwrite file if it exists
+  --force                Overwrite file if it exists
+  --config-name string   File name of configuration file
 
 Global Options
 

@@ -19,7 +19,7 @@
       "label": "Mode",
       "defaultValue": "replace",
       "required": false,
-      "helpMarkDown": "Some additional help with [markdown link](#)",
+      "helpMarkDown": "Replace mode replces variables based on the key while subsitute only replaces Azure Pipelines variable syntax values `$(Pipeline.Workdir)`. Accepts `replace` (Replace by keys) and `substitute` (Replace by values) ",
       "options": {
         "replace": "Replace by keys",
         "substitute": "Replace by values"
@@ -34,13 +34,15 @@
       "options": {
         "file": "File",
         "inline": "Inline"
-      }
+      },
+      "helpMarkDown": "Input type to read initial values from. `file` will read from a file in the repo. `inline` will add to the file content directly"
     },
     {
       "name": "content",
       "type": "multiLine",
       "label": "Content",
-      "visibleRule": "inputType = inline"
+      "visibleRule": "inputType = inline",
+      "helpMarkDown": "String content containing the variables "
     },
     {
       "name": "inputFile",
@@ -63,7 +65,8 @@
       "name": "preserveComments",
       "type": "boolean",
       "label": "Preserve Comments",
-      "defaultValue": false
+      "defaultValue": false,
+      "helpMarkDown": "If `true`, comments from input are preserved when file is written"
     }
   ],
   "execution": {
