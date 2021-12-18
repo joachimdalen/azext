@@ -4,11 +4,9 @@
 
 Current version: {{ #task-field[task=demo-task;field=version] }}
 
-# Example
+## Demo Task - Example
 
 {{ #task-input[task=demo-task;type=example] }}
-
-# Table
 
 ## Demo Task - Table
 
@@ -19,6 +17,8 @@ Current version: {{ #task-field[task=demo-task;field=version] }}
 {{ #task-field[task=demo-task;field=inputs;objectHandle=json] }}
 
 ## Demo Task - Field - Handle Json-Pretty
+
+_Will be pretty in the markdown file, but not in rendered markup_
 
 {{ #task-field[task=demo-task;field=inputs;objectHandle=json-pretty] }}
 

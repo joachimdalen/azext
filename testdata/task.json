@@ -19,6 +19,7 @@
         "label": "Mode",
         "defaultValue": "replace",
         "required": false,
+        "helpMarkDown": "Some additional help with [markdown link](#)",
         "options": {
           "replace": "Replace by keys",
           "substitute": "Replace by values"

@@ -6,13 +6,10 @@ Commnds are on the format: `#command[option1=option1-value;option2=option2-value
 
 Supported commands:
 
-- [Task Usage](#task-usage)
+- [Task Input](#task-input)
 - [Task Field](#task-field)
 
-| **NOTE: Parameters must be added in the same order as they appear in the parameter table** |
-| ------------------------------------------------------------------------------------------ |
-
-## Task Usage
+## Task Input
 
 The task usage command parses your `task.json` and generates examples of how to use your task.
 
@@ -20,7 +17,7 @@ The task usage command parses your `task.json` and generates examples of how to 
 
 | Parameter | Description                                                                    |
 | --------- | ------------------------------------------------------------------------------ |
-| task      | Key of task defined in `mapping.json`                                          |
+| task      | Key of task defined in `.azext/mapping.json`                                   |
 | type      | The type of usage example to generate. Valid options are `table` and `example` |
 
 ### Example
@@ -41,6 +38,14 @@ The task usage command parses your `task.json` and generates examples of how to 
 ```
 
 ### Table
+
+Columns can be configured in `.azext/readme.json`. By default the following columns are included
+
+- name
+- defaultValue
+- required
+- helpMarkDown
+- visibleRule
 
 > {{ #task-input[task=demo-task;type=table] }}
 
