@@ -1,9 +1,8 @@
+import { ActionResult } from '../../constants';
 import ConfigProvider from '../../data-providers/config-provider';
 import { MAPPING_DEFAULT_FILE, MAPPING_NAME } from './init-constants';
-import { InitOptions } from './options';
-import path from 'path';
 import { DefaultMapping } from './models';
-import { ActionResult } from '../../constants';
+import { InitOptions } from './options';
 class InitService {
   private _configProvider: ConfigProvider;
   constructor() {
@@ -21,17 +20,9 @@ class InitService {
     return filePath;
   }
 
-  public async initMappingConfiguration(
-    options: InitOptions
-  ): Promise<ActionResult> {
-    let fullPath = this._configProvider.getFullFilePath(options.root);
-
-    if (fullPath && path.extname(fullPath) !== undefined) {
-      fullPath = path.join(fullPath, MAPPING_NAME);
-    }
-
+  public async initMappingConfiguration(): Promise<ActionResult> {
     const exists = await this._configProvider.getConfig<DefaultMapping>(
-      fullPath
+      MAPPING_NAME
     );
 
     if (exists !== undefined) {
@@ -42,7 +33,7 @@ class InitService {
     }
 
     const filePath = await this._configProvider.writeConfig(
-      fullPath,
+      MAPPING_NAME,
       MAPPING_DEFAULT_FILE
     );
     return {

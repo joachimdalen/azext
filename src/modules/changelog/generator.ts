@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import fs from 'fs/promises';
+
 import { isModuleInstalled } from '../../core/addons-checker';
 import Replacer from '../../core/replacer';
 import { isNumber } from '../../core/utils';
@@ -27,11 +28,11 @@ class Generator {
     const configProvider = new ConfigProvider();
 
     const config = await configProvider.getConfig<ChangelogConfig>(
-      options.config || CHANGELOG_CONFIG_NAME
+      options.configName || CHANGELOG_CONFIG_NAME
     );
 
     const log = await configProvider.getConfig<ChangelogDefinition[]>(
-      options.log || CHANGELOG_NAME
+      options.logName || CHANGELOG_NAME
     );
 
     if (config == undefined) {
@@ -59,6 +60,7 @@ class Generator {
 
     if (options.format) {
       if (isModuleInstalled('prettier')) {
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
         const prettier = require('prettier');
         fileContent = prettier.format(fileContent, { parser: 'markdown' });
       } else {
@@ -85,8 +87,8 @@ class Generator {
   }
 
   buildFile(context: GeneratorContext, logs: ChangelogDefinition[]): string {
-    var builder = new MarkdownBuilder();
-    var replacer = new Replacer();
+    const builder = new MarkdownBuilder();
+    const replacer = new Replacer();
     const cfg = context.config;
     builder.addHeader(
       replacer.replaceEmojisIf(

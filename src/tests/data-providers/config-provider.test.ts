@@ -58,6 +58,23 @@ describe('ConfigProvider', () => {
       expect(mkDirSpy).toBeCalledTimes(0);
     });
   });
+  describe('getConfigPath', () => {
+    const processSpy = jest.spyOn(process, 'cwd');
+    it('should return path when given file name', () => {
+      processSpy.mockReturnValue('/base/dir');
+      const cp = new ConfigProvider();
+      const createdPath = cp.getConfigPath('file.json');
+
+      expect(createdPath).toEqual('/base/dir/.azext/file.json');
+    });
+    it('should throw if given file path', () => {
+      const cp = new ConfigProvider();
+
+      expect(() => {
+        cp.getConfigPath('./some/path/file.json');
+      }).toThrow();
+    });
+  });
   describe('getFullFilePath', () => {
     const processSpy = jest.spyOn(process, 'cwd');
     it('should return user path if absolute', () => {
@@ -67,17 +84,18 @@ describe('ConfigProvider', () => {
       expect(createdPath).toEqual('/some/path/file.json');
     });
     it('should return user path if relative', () => {
+      processSpy.mockReturnValue('/base/dir');
       const cp = new ConfigProvider();
       const createdPath = cp.getFullFilePath('./some/path/file.json');
 
-      expect(createdPath).toEqual('./some/path/file.json');
+      expect(createdPath).toEqual('/base/dir/some/path/file.json');
     });
     it('should return default path if user path not given', () => {
       processSpy.mockReturnValue('/base/dir');
       const cp = new ConfigProvider();
       const createdPath = cp.getFullFilePath('file.json');
 
-      expect(createdPath).toEqual('/base/dir/.azext/file.json');
+      expect(createdPath).toEqual('/base/dir/file.json');
     });
   });
   describe('getConfig<T>', () => {

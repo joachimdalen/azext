@@ -1,3 +1,5 @@
+import { ActionResult } from '../../constants';
+import ConfigProvider from '../../data-providers/config-provider';
 import {
   CHANGELOG_CONFIG_NAME,
   CHANGELOG_DEFAULT_CONFIG,
@@ -10,8 +12,6 @@ import {
   NewChangelogConfigOptions,
   NewChangelogOptions
 } from './options';
-import { ActionResult } from '../../constants';
-import ConfigProvider from '../../data-providers/config-provider';
 
 class ChangelogService {
   private readonly _configProvider: ConfigProvider;
@@ -53,7 +53,7 @@ class ChangelogService {
   }
   async createNewFile(options: NewChangelogOptions): Promise<ActionResult> {
     const exists = await this._configProvider.getConfig<ChangelogConfig>(
-      options.output
+      options.outputName
     );
 
     if (exists !== undefined) {
@@ -63,9 +63,10 @@ class ChangelogService {
       };
     }
 
-    const writtenPath = await this._configProvider.writeConfig(options.output, [
-      CHANGELOG_DEFAULT_FILE
-    ]);
+    const writtenPath = await this._configProvider.writeConfig(
+      options.outputName,
+      [CHANGELOG_DEFAULT_FILE]
+    );
 
     return {
       isSuccess: true,

@@ -1,19 +1,17 @@
-import chalk from 'chalk';
 import InitService from '../../../modules/init/init-service';
-import { InitOptions } from '../../../modules/init/options';
 import { BaseCommandHandler, GlobalOptions } from '../../models';
 
-export default class InitMappingCmdHandler extends BaseCommandHandler<InitOptions> {
+export default class InitMappingCmdHandler extends BaseCommandHandler<unknown> {
   private _service: InitService;
   constructor() {
     super();
     this._service = new InitService();
   }
   async handleCommand(
-    options: InitOptions,
+    options: unknown,
     globalOptions?: GlobalOptions
   ): Promise<void> {
-    const result = await this._service.initMappingConfiguration(options);
+    const result = await this._service.initMappingConfiguration();
 
     this.writeResult(result, globalOptions);
   }

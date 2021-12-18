@@ -21,24 +21,22 @@ class ConfigProvider {
   }
 
   public getFullFilePath(filePath: string) {
-    if (filePath === undefined) {
-      return path.join(workingDirectory(), this._defaultFolder);
-    }
-
-    if (path.isAbsolute(filePath)) return filePath;
-    if (filePath.startsWith('./')) return filePath;
-    const resolved = path.resolve(
-      workingDirectory(),
-      this._defaultFolder,
-      filePath
-    );
-
-    return resolved;
+    return path.resolve(workingDirectory(), filePath);
   }
 
-  public async getConfig<T>(filePath: string): Promise<T | undefined> {
+  public getConfigPath(fileName: string) {
+    if (fileName.includes(path.sep)) {
+      throw new Error(
+        'Expected file name, but got file path (' + fileName + ')'
+      );
+    }
+
+    return path.join(workingDirectory(), this._defaultFolder, fileName);
+  }
+
+  public async getConfig<T>(fileName: string): Promise<T | undefined> {
     try {
-      const resolvedPath = this.getFullFilePath(filePath);
+      const resolvedPath = this.getConfigPath(fileName);
       const fileBuffer = await fs.readFile(resolvedPath);
       const fileContent: T = JSON.parse(fileBuffer.toString());
       return fileContent;
@@ -48,12 +46,12 @@ class ConfigProvider {
   }
 
   public async writeConfig(
-    filePath: string,
+    fileName: string,
     data: any,
     asJson = true
   ): Promise<string> {
     await this.createConfigFolderIfNotExists();
-    const resolvedPath = this.getFullFilePath(filePath);
+    const resolvedPath = this.getConfigPath(fileName);
 
     if (path.extname(resolvedPath) === undefined) {
       throw new Error(
