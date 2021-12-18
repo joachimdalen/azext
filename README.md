@@ -12,7 +12,7 @@
   <p align="center">
     A collection of tools to help with developing extensions for Azure DevOps.
     <br />
-    <a href="https://github.com/joachimdalen/azext"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/joachimdalen/azext/blob/master/docs/index.md"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://www.npmjs.com/package/@joachimdalen/azext">View Package</a>
