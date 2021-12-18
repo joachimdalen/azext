@@ -130,11 +130,13 @@ class Generator {
         );
 
         if (change.length > 0) {
+          const mappedTag = cfg.tagMapping[tag];
+          if (mappedTag === undefined) {
+            console.warn('No mapping found for module-name ' + tag);
+          }
+
           builder.addHeader(
-            replacer.replaceEmojisIf(
-              cfg.tagMapping[tag],
-              cfg.replaceEmojis.tags
-            ),
+            replacer.replaceEmojisIf(mappedTag, cfg.replaceEmojis.tags),
             cfg.tagSize
           );
         }
@@ -239,7 +241,7 @@ class Generator {
 
         nonAuthors.forEach((x) =>
           builder.addListItem(
-            `[${x.submitter}](https://github.com/${x.submitter})`
+            `[@${x.submitter}](https://github.com/${x.submitter})`
           )
         );
       }
@@ -256,7 +258,7 @@ class Generator {
     };
 
     const getIssueLink = (issue: GitHubIssue, config: ChangelogConfig) => {
-      const base = config.useDescriptiveIssues
+      return config.useDescriptiveIssues
         ? `[GH#${issue.number} - ${escapeText(
             replacer.replaceEmojisIf(
               issue.title,
@@ -264,16 +266,12 @@ class Generator {
             )
           )}](${issue.url})`
         : `[GH#${issue.number}](${issue.url})`;
-      if (issue.submitter === undefined) return base;
-      if (config.knownAuthors.includes(issue.submitter)) return base;
-      const author = `[${issue.submitter}](https://github.com/${issue.submitter})`;
-      return `${base} - Thanks ${author}`;
     };
     const getPrLink = (
       pullRequest: GitHubPullRequest,
       config: ChangelogConfig
     ) => {
-      const base = config.useDescriptivePullRequests
+      return config.useDescriptivePullRequests
         ? `[GH#${pullRequest.number} - ${escapeText(
             replacer.replaceEmojisIf(
               pullRequest.title,
@@ -281,10 +279,6 @@ class Generator {
             )
           )}](${pullRequest.url})`
         : `[PR#${pullRequest.number}](${pullRequest.url})`;
-      if (pullRequest.submitter === undefined) return base;
-      if (config.knownAuthors.includes(pullRequest.submitter)) return base;
-      const author = `[${pullRequest.submitter}](https://github.com/${pullRequest.submitter})`;
-      return `${base} - Thanks ${author}`;
     };
     logs.forEach((l) => getSection(context.tags, l));
     return builder.get();
