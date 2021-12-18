@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import fs from 'fs/promises';
 
 import { ReadmeOptions } from '../../../modules/readme/options';
@@ -15,6 +16,8 @@ export default class ReadmeCmdHandler extends BaseCommandHandler<ReadmeOptions> 
 
     await fs.writeFile(options.output, res);
 
-    console.log('res', res);
+    console.log(
+      `Wrote updated README file to ${chalk.greenBright(options.output)}`
+    );
   }
 }

@@ -22,14 +22,14 @@ Current version: 0.3.3
 
 ## Demo Task - Table
 
-| Option             | Default Value | Required | Help                                    |
-| :----------------- | :------------ | :------: | :-------------------------------------- |
-| `mode`             | `replace`     |    ❌    | --                                      |
-| `inputType`        | `file`        |    ✅    | --                                      |
-| `content`          | --            |    ✅    | --                                      |
-| `inputFile`        | `.env`        |    ❌    | Input file to perform transformation on |
-| `outputFile`       | `.env`        |    ❌    | File to write transformed values to     |
-| `preserveComments` | `false`       |    ✅    | --                                      |
+| Option             | Default Value | Required | Help                                    | Visible                 |
+| :----------------- | :------------ | :------: | :-------------------------------------- | :---------------------- |
+| `mode`             | `replace`     |    ❌    | --                                      | ``                      |
+| `inputType`        | `file`        |    ✅    | --                                      | ``                      |
+| `content`          | --            |    ❌    | --                                      | `inputType` IS `inline` |
+| `inputFile`        | `.env`        |    ❌    | Input file to perform transformation on | `inputType` IS `file`   |
+| `outputFile`       | `.env`        |    ❌    | File to write transformed values to     | ``                      |
+| `preserveComments` | `false`       |    ❌    | --                                      | ``                      |
 
 
 ## Demo Task - Field - Handle Json

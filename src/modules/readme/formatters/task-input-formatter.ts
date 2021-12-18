@@ -11,10 +11,6 @@ export interface TaskInputFormatterOptions {
   type: 'table' | 'example';
 }
 
-interface Table {
-  headers: Record<string, string>;
-  rows: TaskInputDefinition[];
-}
 type TT = keyof TaskInputDefinition;
 export default class TaskInputFormatter extends ReplacementCommandFormatter<TaskInputFormatterOptions> {
   private _service: TaskService;
@@ -84,18 +80,13 @@ export default class TaskInputFormatter extends ReplacementCommandFormatter<Task
 
   private async generateTable(task: TaskDefinition) {
     const config = await this._service.getReadMeConfig();
-    const table: Table = {
-      headers: {
-        name: 'Option',
-        defaultValue: 'Default Value',
-        required: 'Required',
-        helpMarkDown: 'Help'
-      },
-      rows: task.inputs
-    };
+
+    if (config === undefined) {
+      throw new Error('Failed to find readme config');
+    }
 
     const rows: string[] = [];
-    const headers = Object.keys(table.headers);
+    const headers = config.includeOptionsFields.map((x) => x.field);
     const wrap = (s: string) => `|${s}|`;
     const getBool = (s: any) => s as boolean;
     const align = (a: 'left' | 'center' | 'right') => {
@@ -108,7 +99,15 @@ export default class TaskInputFormatter extends ReplacementCommandFormatter<Task
           return '---:';
       }
     };
-    rows.push(wrap(headers.map((h) => table.headers[h]).join('|')));
+    rows.push(
+      wrap(
+        headers
+          .map(
+            (h) => config.includeOptionsFields.find((x) => x.field === h)?.title
+          )
+          .join('|')
+      )
+    );
 
     rows.push(
       wrap(
@@ -123,12 +122,12 @@ export default class TaskInputFormatter extends ReplacementCommandFormatter<Task
       )
     );
 
-    const rws = table.rows.map((row) => {
+    const rws = task.inputs.map((row) => {
       const b: any[] = [];
       headers.map((rowKey: any) => {
         const key = rowKey as keyof TaskInputDefinition;
         const val = row[key];
-        let inVal = '--';
+        let inVal = '';
         if (val !== undefined) {
           if (this.codeFields.includes(key)) {
             inVal = '`' + row[key] + '`';
@@ -145,6 +144,12 @@ export default class TaskInputFormatter extends ReplacementCommandFormatter<Task
             true
           );
         }
+
+        if (rowKey === 'visibleRule') {
+          inVal = this._service.parseVisibleRule(inVal);
+        }
+
+        if (inVal === '') inVal = '--';
 
         b.push(inVal);
       });

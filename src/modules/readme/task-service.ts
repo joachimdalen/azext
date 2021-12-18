@@ -59,4 +59,25 @@ export default class TaskService {
       return undefined;
     }
   }
+
+  parseVisibleRule(rule: string) {
+    const ruleParts = rule.split(' ');
+    const parsed: string[] = [];
+
+    const mapping: { [key: string]: string } = {
+      '=': 'IS',
+      '==': 'IS',
+      '||': 'OR',
+      '&&': 'AND',
+      '!=': 'IS NOT'
+    };
+
+    for (const part of ruleParts) {
+      const id = mapping[part];
+
+      if (id === undefined) parsed.push('`' + part + '`');
+      else parsed.push(id);
+    }
+    return parsed.join(' ');
+  }
 }
