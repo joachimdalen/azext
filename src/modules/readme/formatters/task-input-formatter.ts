@@ -4,6 +4,8 @@ import { isModuleInstalled } from '../../../core';
 import Replacer from '../../../core/replacer';
 import { TaskDefinition, TaskInputDefinition } from '../models';
 import ReplacementCommandFormatter from '../models/replacement-command-formatter';
+import { Table } from '../models/table';
+import { TableHeader } from '../models/table-header';
 import TaskService from '../task-service';
 
 export interface TaskInputFormatterOptions {
@@ -28,7 +30,8 @@ export default class TaskInputFormatter extends ReplacementCommandFormatter<Task
     if (task.inputs === undefined) return '';
 
     if (options.type === 'table') {
-      return this.formatTable(task);
+      const tbl = await this.getTable(task);
+      return this._formatterService.formatTable(tbl);
     }
     return this.formatExample(task);
   }
@@ -67,67 +70,28 @@ export default class TaskInputFormatter extends ReplacementCommandFormatter<Task
     return parts.join(EOL);
   }
 
-  private async formatTable(task: TaskDefinition) {
-    let tbl = await this.generateTable(task);
-
-    if (isModuleInstalled('prettier')) {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const prettier = require('prettier');
-      tbl = prettier.format(tbl, { parser: 'markdown' });
-    }
-    return tbl;
-  }
-
-  private async generateTable(task: TaskDefinition) {
+  private async getTable(task: TaskDefinition): Promise<Table> {
+    const getBool = (s: any) => s as boolean;
     const config = await this._service.getReadMeConfig();
 
     if (config === undefined) {
       throw new Error('Failed to find readme config');
     }
 
-    const rows: string[] = [];
-    const headers = config.includeOptionsFields.map((x) => x.field);
-    const wrap = (s: string) => `|${s}|`;
-    const getBool = (s: any) => s as boolean;
-    const align = (a: 'left' | 'center' | 'right') => {
-      switch (a) {
-        case 'left':
-          return ':---';
-        case 'center':
-          return ':---:';
-        case 'right':
-          return '---:';
-      }
-    };
-    rows.push(
-      wrap(
-        headers
-          .map(
-            (h) => config.includeOptionsFields.find((x) => x.field === h)?.title
-          )
-          .join('|')
-      )
-    );
-
-    rows.push(
-      wrap(
-        headers
-          .map((h) =>
-            align(
-              config?.includeOptionsFields?.find((x) => x.field === h)?.align ||
-                'left'
-            )
-          )
-          .join('|')
-      )
-    );
+    const headerKeys = config.includeInputsFields.map((x) => x.field);
+    const headerInfo: TableHeader[] = config.includeInputsFields.map((x) => {
+      return {
+        align: x.align || 'left',
+        title: x.title
+      };
+    });
 
     const rws = task.inputs.map((row) => {
-      const b: any[] = [];
-      headers.map((rowKey: any) => {
+      const b: string[] = [];
+      headerKeys.map((rowKey: string) => {
         const key = rowKey as keyof TaskInputDefinition;
         const val = row[key];
-        let inVal = '';
+        let inVal: any = '';
         if (val !== undefined) {
           if (this.codeFields.includes(key)) {
             inVal = '`' + row[key] + '`';
@@ -149,14 +113,25 @@ export default class TaskInputFormatter extends ReplacementCommandFormatter<Task
           inVal = this._service.parseVisibleRule(inVal);
         }
 
+        if (rowKey === 'options') {
+          inVal = this.formatOptions(inVal);
+        }
+
         if (inVal === '') inVal = '--';
 
         b.push(inVal);
       });
-      return wrap(b.join('|'));
+      return b;
     });
-    rows.push(rws.join(EOL));
 
-    return rows.join(EOL);
+    return {
+      header: headerInfo,
+      rows: rws
+    };
+  }
+  private formatOptions(input: { [key: string]: string }) {
+    return Object.keys(input)
+      .map((k) => '`' + k + '`')
+      .join(', ');
   }
 }

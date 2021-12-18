@@ -3,6 +3,8 @@ import { EOL } from 'os';
 import Replacer from '../../../core/replacer';
 import { TaskDefinition } from '../models';
 import ReplacementCommandFormatter from '../models/replacement-command-formatter';
+import { Table } from '../models/table';
+import { TableHeader } from '../models/table-header';
 import TaskService from '../task-service';
 
 export interface TaskFieldFormatterOptions {
@@ -27,6 +29,12 @@ export default class TaskFieldFormatter extends ReplacementCommandFormatter<Task
 
     if (options.field === 'version') {
       return `${task.version.Major}.${task.version.Minor}.${task.version.Patch}`;
+    }
+
+    if (options.field === 'outputVariables') {
+      const table = this.getOutputVariablesTable(task);
+      if (table === undefined) return '';
+      return this._formatterService.formatTable(table);
     }
 
     const field = task[options.field];
@@ -55,5 +63,21 @@ export default class TaskFieldFormatter extends ReplacementCommandFormatter<Task
       return '```' + options.codeFormat + EOL + value + EOL + '```';
     }
     return value;
+  }
+
+  private getOutputVariablesTable(task: TaskDefinition): Table | undefined {
+    const headers: TableHeader[] = [
+      { title: 'Name', align: 'left' },
+      { title: 'Description', align: 'left' }
+    ];
+
+    const rows = task.outputVariables?.map((x) => [x.name, x.description]);
+
+    if (rows === undefined) return undefined;
+
+    return {
+      header: headers,
+      rows: rows
+    };
   }
 }

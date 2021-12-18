@@ -6,7 +6,7 @@ import { ReplacementCommand } from './models/replacement-command';
 
 export const README_NAME = 'readme.json';
 export const README_DEFAULT_FILE: ReadmeConfig = {
-  includeOptionsFields: [
+  includeInputsFields: [
     { field: 'name', title: 'Option' },
     { field: 'defaultValue', title: 'Default Value' },
     { field: 'required', title: 'Required' },

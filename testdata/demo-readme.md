@@ -12,6 +12,10 @@ Current version: {{ #task-field[task=demo-task;field=version] }}
 
 {{ #task-input[task=demo-task;type=table] }}
 
+## Demo Task - Field - Output Variables
+
+{{ #task-field[task=demo-task;field=outputVariables;] }}
+
 ## Demo Task - Field - Handle Json
 
 {{ #task-field[task=demo-task;field=inputs;objectHandle=json] }}

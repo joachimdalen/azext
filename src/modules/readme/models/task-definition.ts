@@ -1,4 +1,5 @@
 import { TaskInputDefinition } from '.';
+import { TaskOutputVariable } from './task-output-variable';
 import { TaskVersion } from './task-version';
 
 export interface TaskDefinition {
@@ -12,4 +13,5 @@ export interface TaskDefinition {
   preview: boolean;
   version: TaskVersion;
   inputs: TaskInputDefinition[];
+  outputVariables?: TaskOutputVariable[];
 }

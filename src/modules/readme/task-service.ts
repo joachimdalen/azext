@@ -61,6 +61,8 @@ export default class TaskService {
   }
 
   parseVisibleRule(rule: string) {
+    if (rule === '' || rule === undefined) return rule;
+
     const ruleParts = rule.split(' ');
     const parsed: string[] = [];
 

@@ -4,7 +4,7 @@ A task to to demo
 
 Current version: 0.3.3
 
-# Example
+## Demo Task - Example
 
 ```yaml
 - task: Demo Task@0.3.3
@@ -18,18 +18,24 @@ Current version: 0.3.3
 
 ```
 
-# Table
-
 ## Demo Task - Table
 
-| Option             | Default Value | Required | Help                                         | Visible                 |
-| :----------------- | :------------ | :------: | :------------------------------------------- | :---------------------- |
-| `mode`             | `replace`     |    ❌    | Some additional help with [markdown link](#) | ``                      |
-| `inputType`        | `file`        |    ✅    | --                                           | ``                      |
-| `content`          | --            |    ❌    | --                                           | `inputType` IS `inline` |
-| `inputFile`        | `.env`        |    ❌    | Input file to perform transformation on      | `inputType` IS `file`   |
-| `outputFile`       | `.env`        |    ❌    | File to write transformed values to          | ``                      |
-| `preserveComments` | `false`       |    ❌    | --                                           | ``                      |
+| Option             | Default Value | Required | Help                                         | Visible                 | Options                 |
+| :----------------- | :------------ | :------: | :------------------------------------------- | :---------------------- | :---------------------- |
+| `mode`             | `replace`     |    ❌    | Some additional help with [markdown link](#) | --                      | `replace`, `substitute` |
+| `inputType`        | `file`        |    ✅    | --                                           | --                      | `file`, `inline`        |
+| `content`          | --            |    ❌    | --                                           | `inputType` IS `inline` | --                      |
+| `inputFile`        | `.env`        |    ❌    | Input file to perform transformation on      | `inputType` IS `file`   | --                      |
+| `outputFile`       | `.env`        |    ❌    | File to write transformed values to          | --                      | --                      |
+| `preserveComments` | `false`       |    ❌    | --                                           | --                      | --                      |
+
+
+## Demo Task - Field - Output Variables
+
+| Name            | Description                                     |
+| :-------------- | :---------------------------------------------- |
+| SomeOutput      | Contains information about the output           |
+| DifferentOutput | Contains information about the different output |
 
 
 ## Demo Task - Field - Handle Json

@@ -2,7 +2,7 @@ import { IncludeOptionsField, ReadmePartialRoot } from '.';
 import { RequiredOptions } from './required-options';
 
 export interface ReadmeConfig {
-  includeOptionsFields: IncludeOptionsField[];
+  includeInputsFields: IncludeOptionsField[];
   requiredOptions: RequiredOptions;
   partials?: ReadmePartialRoot;
 }
