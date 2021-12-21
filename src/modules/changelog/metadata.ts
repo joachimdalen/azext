@@ -1,7 +1,5 @@
 import ConfigProvider from '../../data-providers/config-provider';
-import { CHANGELOG_CACHE_NAME } from './changelog-constants';
 import ChangelogService from './changelog-service';
-import ChangelogCache from './models/changelog-cache';
 import ChangelogConfig from './models/changelog-config';
 import ChangelogDefinition from './models/changelog-definition';
 import GeneratorContext from './models/generator-context';
@@ -11,11 +9,9 @@ import { GenerateChangelogOptions } from './options';
 
 export class MetaDataLoader {
   private readonly _options: GenerateChangelogOptions;
-  private _configProvider: ConfigProvider;
   private readonly _changelogService: ChangelogService;
   constructor(options: GenerateChangelogOptions) {
     this._options = options;
-    this._configProvider = new ConfigProvider();
     this._changelogService = new ChangelogService();
   }
 
@@ -24,10 +20,12 @@ export class MetaDataLoader {
     let cachedPullRequests: GitHubPullRequest[] = [];
 
     if (this._options.fromCache) {
-      const cache = await this._changelogService.populateCache(
-        config.repository,
-        log
-      );
+      const cache = await this._changelogService.populateCache({
+        fresh: false,
+        cacheName: this._options.cacheName,
+        logName: this._options.logName,
+        configName: this._options.configName
+      });
 
       if (cache.issues) {
         cachedIssues = cache.issues;
@@ -60,18 +58,5 @@ export class MetaDataLoader {
     };
 
     return context;
-  }
-  async writeMetadataCache(context: GeneratorContext) {
-    if (this._options.generateCache) {
-      const cache: ChangelogCache = {
-        issues: [...context.issues.values()],
-        pullRequests: [...context.pullRequests.values()]
-      };
-
-      await this._configProvider.writeConfig(
-        this._options.cacheName || CHANGELOG_CACHE_NAME,
-        cache
-      );
-    }
   }
 }

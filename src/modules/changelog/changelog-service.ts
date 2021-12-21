@@ -8,7 +8,8 @@ import {
   CHANGELOG_CACHE_NAME,
   CHANGELOG_CONFIG_NAME,
   CHANGELOG_DEFAULT_CONFIG,
-  CHANGELOG_DEFAULT_FILE
+  CHANGELOG_DEFAULT_FILE,
+  CHANGELOG_NAME
 } from './changelog-constants';
 import Generator, { GeneratorResult } from './generator';
 import ChangelogCache from './models/changelog-cache';
@@ -17,6 +18,7 @@ import ChangelogDefinition from './models/changelog-definition';
 import GitHubIssue from './models/github-issue';
 import GitHubPullRequest from './models/github-pull-request';
 import {
+  CacheChangelogOptions,
   GenerateChangelogOptions,
   NewChangelogConfigOptions,
   NewChangelogOptions
@@ -86,19 +88,30 @@ class ChangelogService {
   }
 
   public async populateCache(
-    repository: string,
-    changelog: ChangelogDefinition[],
-    cacheName = CHANGELOG_CACHE_NAME,
-    fresh = false
+    options: CacheChangelogOptions
   ): Promise<ChangelogCache> {
     let cache: ChangelogCache = {
       issues: [],
       pullRequests: []
     };
+    const config = await this._configProvider.getConfig<ChangelogConfig>(
+      options.configName || CHANGELOG_CONFIG_NAME
+    );
 
-    if (!fresh) {
+    if (config == undefined)
+      throw new Error('Failed to load changelog configuration');
+
+    const changelog = await this._configProvider.getConfig<
+      ChangelogDefinition[]
+    >(options.logName || CHANGELOG_NAME);
+
+    if (changelog == undefined) throw new Error('Failed to load changelog');
+
+    if (!options.fresh) {
       const existingCache =
-        await this._configProvider.getConfig<ChangelogCache>(cacheName);
+        await this._configProvider.getConfig<ChangelogCache>(
+          options.cacheName || CHANGELOG_CACHE_NAME
+        );
 
       if (existingCache !== undefined) {
         if (existingCache.issues !== undefined) {
@@ -131,7 +144,7 @@ class ChangelogService {
         );
       }
       const issueResponse = await Promise.all(
-        issueIds.map((x) => this._github.getIssues(x, repository))
+        issueIds.map((x) => this._github.getIssues(x, config.repository))
       );
       const issues: GitHubIssue[] = issueResponse
         .filter(isIssue)
@@ -157,7 +170,7 @@ class ChangelogService {
       }
 
       const pullRequestResponse = await Promise.all(
-        prIds.map((x) => this._github.getPullRequests(x, repository))
+        prIds.map((x) => this._github.getPullRequests(x, config.repository))
       );
       const pullRequests: GitHubPullRequest[] = pullRequestResponse
         .filter(isPullRequest)
@@ -165,6 +178,11 @@ class ChangelogService {
 
       cache.pullRequests = pullRequests;
     }
+
+    await this._configProvider.writeConfig(
+      options.cacheName || CHANGELOG_CACHE_NAME,
+      cache
+    );
 
     return cache;
   }

@@ -75,7 +75,6 @@ class Generator {
     }
 
     await fs.writeFile(options.output, fileContent);
-    await metadataLoader.writeMetadataCache(context);
     return {
       latestVersion: this.getLatestVersion(filteredLogs),
       outputPath: options.output

@@ -45,3 +45,21 @@ export interface GenerateChangelogOptions {
 export interface NewChangelogOptions {
   outputName: string;
 }
+export interface CacheChangelogOptions {
+  /**
+   * Ignore existing cache
+   */
+  fresh: boolean;
+  /**
+   * File name of configuration file
+   */
+  configName: string;
+  /**
+   * File name of changelog file
+   */
+  logName: string;
+  /**
+   * File name of cache file
+   */
+  cacheName: string;
+}

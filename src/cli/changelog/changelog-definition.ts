@@ -11,6 +11,7 @@ import {
 } from '../../modules/changelog/changelog-constants';
 import HelpCmdHandler from '../help-cmd-handler';
 import { CommandBase } from '../models';
+import CacheChangelogCmdHandler from './handlers/changelog-cache-cmd-handler';
 import NewChangelogConfigCmdHandler from './handlers/changelog-config-cmd-handler';
 import ChangelogGenerateCmdHandler from './handlers/changelog-generate-cmd-handler';
 import NewChangelogCmdHandler from './handlers/changelog-new-cmd-handler';
@@ -29,6 +30,11 @@ const changelogCommands: CommandBase = {
         { name: 'generate', summary: 'Generate changelog markdown file' },
         { name: 'config', summary: 'Generate default config file' },
         { name: 'new', summary: 'Generate default changelog' },
+        {
+          name: 'cache',
+          summary:
+            'Refresh issue and pull request cache for changelog generation'
+        },
         helpCommand
       ]
     },
@@ -239,6 +245,47 @@ const changelogCommands: CommandBase = {
           name: 'output-file',
           alias: 'o',
           defaultValue: CHANGELOG_NAME
+        }
+      ],
+      subCommands: [
+        {
+          command: 'help',
+          handler: (options?: CommandBase) => new HelpCmdHandler(options),
+          sections: [],
+          options: []
+        }
+      ]
+    },
+    {
+      command: 'cache',
+      handler: () => new CacheChangelogCmdHandler(),
+      sections: [
+        ...introSections,
+        {
+          header: 'Command List',
+          content: [helpCommand]
+        },
+        {
+          header: 'Cache',
+          content: chalk.magentaBright(
+            'Refresh issue and pull request cache for changelog generation'
+          )
+        },
+        {
+          header: 'Options',
+          optionList: [
+            {
+              name: 'fresh',
+              description: 'Ignore existing cache and reload all'
+            }
+          ]
+        }
+      ],
+      options: [
+        {
+          name: 'fresh',
+          defaultValue: false,
+          type: Boolean
         }
       ],
       subCommands: [
