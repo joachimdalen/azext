@@ -1,11 +1,11 @@
 {
   "issues": [
     {
-      "id": 1083927547,
-      "number": 9,
+      "id": 1085540145,
+      "number": 13,
       "submitter": "joachimdalen",
-      "title": "Add change count to tag headers",
-      "url": "https://github.com/joachimdalen/azext/issues/9"
+      "title": "Add command to populate changelog cache without generating it",
+      "url": "https://github.com/joachimdalen/azext/issues/13"
     },
     {
       "id": 1078959284,
@@ -13,6 +13,13 @@
       "submitter": "joachimdalen",
       "title": "Documentation generation",
       "url": "https://github.com/joachimdalen/azext/issues/3"
+    },
+    {
+      "id": 1083927547,
+      "number": 9,
+      "submitter": "joachimdalen",
+      "title": "Add change count to tag headers",
+      "url": "https://github.com/joachimdalen/azext/issues/9"
     },
     {
       "id": 1078928336,
@@ -24,11 +31,11 @@
   ],
   "pullRequests": [
     {
-      "id": 807447923,
-      "number": 15,
+      "id": 807673980,
+      "number": 16,
       "submitter": "joachimdalen",
-      "title": "Add changeCount to type titles",
-      "url": "https://github.com/joachimdalen/azext/pull/15"
+      "title": "Add command for refresh of changelog cache",
+      "url": "https://github.com/joachimdalen/azext/pull/16"
     },
     {
       "id": 807279524,
@@ -38,6 +45,13 @@
       "url": "https://github.com/joachimdalen/azext/pull/12"
     },
     {
+      "id": 804203087,
+      "number": 6,
+      "submitter": "joachimdalen",
+      "title": "Refactor to support for usage from node",
+      "url": "https://github.com/joachimdalen/azext/pull/6"
+    },
+    {
       "id": 804609629,
       "number": 7,
       "submitter": "joachimdalen",
@@ -45,11 +59,11 @@
       "url": "https://github.com/joachimdalen/azext/pull/7"
     },
     {
-      "id": 804203087,
-      "number": 6,
+      "id": 807447923,
+      "number": 15,
       "submitter": "joachimdalen",
-      "title": "Refactor to support for usage from node",
-      "url": "https://github.com/joachimdalen/azext/pull/6"
+      "title": "Add changeCount to type titles",
+      "url": "https://github.com/joachimdalen/azext/pull/15"
     },
     {
       "id": 800887840,

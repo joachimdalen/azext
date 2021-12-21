@@ -49,6 +49,12 @@
             "description": "Added `changeCount` variable to type headers",
             "issue": 9,
             "pullRequest": 15
+          },
+          {
+            "type": "feature",
+            "description": "Added new subcommand ([cache](https://github.com/joachimdalen/azext/blob/master/docs/changelog/cache.md)) to update metadata cache",
+            "issue": 13,
+            "pullRequest": 16
           }
         ]
       },

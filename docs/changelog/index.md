@@ -7,6 +7,7 @@ The changelog commands allows you to manage changelogs
 - [Generate Changelogs](./generate.md)
 - [Generate default configuration](./config.md)
 - [Generate empty changelog template](./new.md)
+- [Refresh metadata cache](./cache.md)
 
 ## Help
 
@@ -29,6 +30,7 @@ Command List
   generate   Generate changelog markdown file
   config     Generate default config file
   new        Generate default changelog
+  cache      Refresh issue and pull request cache for changelog generation
   help       Print this usage guide.
 
 Options
