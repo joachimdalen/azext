@@ -1,0 +1,8 @@
+- task: DemoTask@0.3.3
+  inputs:
+    mode: replace
+    inputType: file
+    content: "some content here"
+    inputFile: .env
+    outputFile: .env
+    preserveComments: false

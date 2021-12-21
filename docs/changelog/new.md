@@ -22,7 +22,7 @@ New
 
 Options
 
-  -o, --output string   Output file
+  -o, --output-name string   Name of new changelog
 
 Global Options
 

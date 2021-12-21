@@ -1,5 +1,14 @@
 import chalk from 'chalk';
-import { introSections, helpCommand } from '../../constants';
+import path from 'path';
+
+import { helpCommand, introSections } from '../../constants';
+import { workingDirectory } from '../../core/process';
+import {
+  CHANGELOG_CACHE_NAME,
+  CHANGELOG_CONFIG_NAME,
+  CHANGELOG_NAME,
+  CHANGELOG_OUTPUT_NAME
+} from '../../modules/changelog/changelog-constants';
 import HelpCmdHandler from '../help-cmd-handler';
 import { CommandBase } from '../models';
 import NewChangelogConfigCmdHandler from './handlers/changelog-config-cmd-handler';
@@ -49,18 +58,23 @@ const changelogCommands: CommandBase = {
             {
               name: 'output',
               alias: 'o',
-              description: 'Path to output generated markdown file to',
-              defaultValue: 'CHANGELOG.md'
+              description: 'Full path to output generated markdown file to',
+              defaultValue: path.join(workingDirectory(), CHANGELOG_OUTPUT_NAME)
             },
             {
-              name: 'config',
+              name: 'config-name',
               alias: 'c',
-              description: 'Path to changelog-config.json'
+              description:
+                'File name of configuration file. Default: ' +
+                CHANGELOG_CONFIG_NAME,
+              defaultValue: CHANGELOG_CONFIG_NAME
             },
             {
-              name: 'log',
+              name: 'log-name',
               alias: 'l',
-              description: 'Path to changelog.json file'
+              description:
+                'File name of changelog entry file. Default: ' + CHANGELOG_NAME,
+              defaultValue: CHANGELOG_NAME
             },
             {
               name: 'format',
@@ -73,21 +87,17 @@ const changelogCommands: CommandBase = {
               name: 'generate-cache',
               type: Boolean,
               defaultValue: true,
-              description:
-                'Generate changelog-cache.json containing a cache of issues and pull requests'
+              description: `Generate ${CHANGELOG_CACHE_NAME} containing a cache of issues and pull requests`
             },
             {
               name: 'from-cache',
               type: Boolean,
               defaultValue: true,
-              description:
-                'Use changelog-cache.json for cache during generation'
+              description: `Load issues and pull requests from cache file before GitHub`
             },
             {
-              name: 'cache-output'
-            },
-            {
-              name: 'cache-file'
+              name: 'cache-file',
+              defaultValue: CHANGELOG_CACHE_NAME
             },
             {
               name: 'version',
@@ -102,20 +112,25 @@ const changelogCommands: CommandBase = {
         {
           name: 'output',
           alias: 'o',
-          defaultValue: 'CHANGELOG.md'
+
+          defaultValue: path.join(workingDirectory(), CHANGELOG_OUTPUT_NAME)
         },
         {
-          name: 'config',
-          alias: 'c'
+          name: 'config-name',
+          alias: 'c',
+
+          defaultValue: CHANGELOG_CONFIG_NAME
         },
         {
-          name: 'log',
-          alias: 'l'
+          name: 'log-name',
+          alias: 'l',
+
+          defaultValue: CHANGELOG_NAME
         },
         {
           name: 'format',
           type: Boolean,
-          defaultValue: false
+          defaultValue: true
         },
         {
           name: 'generate-cache',
@@ -128,13 +143,12 @@ const changelogCommands: CommandBase = {
           defaultValue: true
         },
         {
-          name: 'cache-output'
+          name: 'cache-file',
+          defaultValue: CHANGELOG_CACHE_NAME
         },
         {
-          name: 'cache-file'
-        },
-        {
-          name: 'version'
+          name: 'version',
+          type: String
         }
       ],
       subCommands: [
@@ -167,6 +181,11 @@ const changelogCommands: CommandBase = {
               description: 'Overwrite file if it exists',
               defaultValue: false,
               type: Boolean
+            },
+            {
+              name: 'config-name',
+              description: 'File name of configuration file',
+              defaultValue: CHANGELOG_CONFIG_NAME
             }
           ]
         }
@@ -176,6 +195,10 @@ const changelogCommands: CommandBase = {
           name: 'force',
           type: Boolean,
           defaultValue: false
+        },
+        {
+          name: 'config-name',
+          defaultValue: CHANGELOG_CONFIG_NAME
         }
       ],
       subCommands: [
@@ -204,18 +227,18 @@ const changelogCommands: CommandBase = {
           header: 'Options',
           optionList: [
             {
-              name: 'output',
+              name: 'output-name',
               alias: 'o',
-              description: 'Output file'
+              description: 'Name of new changelog'
             }
           ]
         }
       ],
       options: [
         {
-          name: 'output',
+          name: 'output-file',
           alias: 'o',
-          defaultValue: 'changelog.json'
+          defaultValue: CHANGELOG_NAME
         }
       ],
       subCommands: [

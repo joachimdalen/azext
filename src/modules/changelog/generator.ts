@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import fs from 'fs/promises';
+
 import { isModuleInstalled } from '../../core/addons-checker';
 import Replacer from '../../core/replacer';
 import { isNumber } from '../../core/utils';
@@ -27,11 +28,11 @@ class Generator {
     const configProvider = new ConfigProvider();
 
     const config = await configProvider.getConfig<ChangelogConfig>(
-      options.config || CHANGELOG_CONFIG_NAME
+      options.configName || CHANGELOG_CONFIG_NAME
     );
 
     const log = await configProvider.getConfig<ChangelogDefinition[]>(
-      options.log || CHANGELOG_NAME
+      options.logName || CHANGELOG_NAME
     );
 
     if (config == undefined) {
@@ -59,6 +60,7 @@ class Generator {
 
     if (options.format) {
       if (isModuleInstalled('prettier')) {
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
         const prettier = require('prettier');
         fileContent = prettier.format(fileContent, { parser: 'markdown' });
       } else {
@@ -85,8 +87,8 @@ class Generator {
   }
 
   buildFile(context: GeneratorContext, logs: ChangelogDefinition[]): string {
-    var builder = new MarkdownBuilder();
-    var replacer = new Replacer();
+    const builder = new MarkdownBuilder();
+    const replacer = new Replacer();
     const cfg = context.config;
     builder.addHeader(
       replacer.replaceEmojisIf(
@@ -130,11 +132,13 @@ class Generator {
         );
 
         if (change.length > 0) {
+          const mappedTag = cfg.tagMapping[tag];
+          if (mappedTag === undefined) {
+            console.warn('No mapping found for module-name ' + tag);
+          }
+
           builder.addHeader(
-            replacer.replaceEmojisIf(
-              cfg.tagMapping[tag],
-              cfg.replaceEmojis.tags
-            ),
+            replacer.replaceEmojisIf(mappedTag, cfg.replaceEmojis.tags),
             cfg.tagSize
           );
         }
@@ -171,7 +175,7 @@ class Generator {
 
                 if (ghIssue) {
                   builder.addSubListItem(
-                    `Reported in ${getIssueLink(ghIssue, context.config)}`
+                    `Issue: ${getIssueLink(ghIssue, context.config)}`
                   );
                 }
 
@@ -179,7 +183,7 @@ class Generator {
                   const ghPr = context.pullRequests.get(c.pullRequest);
                   if (ghPr) {
                     builder.addSubListItem(
-                      `Fixed in ${getPrLink(ghPr, context.config)}`
+                      `Pull Request: ${getPrLink(ghPr, context.config)}`
                     );
                   }
                 }
@@ -188,7 +192,7 @@ class Generator {
                   const ghPr = context.pullRequests.get(c.pullRequest);
                   if (ghPr) {
                     builder.addSubListItem(
-                      `Implemented in ${getPrLink(ghPr, context.config)}`
+                      `Issue: ${getPrLink(ghPr, context.config)}`
                     );
                   }
                 }
@@ -239,7 +243,7 @@ class Generator {
 
         nonAuthors.forEach((x) =>
           builder.addListItem(
-            `[${x.submitter}](https://github.com/${x.submitter})`
+            `[@${x.submitter}](https://github.com/${x.submitter})`
           )
         );
       }
@@ -256,7 +260,7 @@ class Generator {
     };
 
     const getIssueLink = (issue: GitHubIssue, config: ChangelogConfig) => {
-      const base = config.useDescriptiveIssues
+      return config.useDescriptiveIssues
         ? `[GH#${issue.number} - ${escapeText(
             replacer.replaceEmojisIf(
               issue.title,
@@ -264,16 +268,12 @@ class Generator {
             )
           )}](${issue.url})`
         : `[GH#${issue.number}](${issue.url})`;
-      if (issue.submitter === undefined) return base;
-      if (config.knownAuthors.includes(issue.submitter)) return base;
-      const author = `[${issue.submitter}](https://github.com/${issue.submitter})`;
-      return `${base} - Thanks ${author}`;
     };
     const getPrLink = (
       pullRequest: GitHubPullRequest,
       config: ChangelogConfig
     ) => {
-      const base = config.useDescriptivePullRequests
+      return config.useDescriptivePullRequests
         ? `[GH#${pullRequest.number} - ${escapeText(
             replacer.replaceEmojisIf(
               pullRequest.title,
@@ -281,10 +281,6 @@ class Generator {
             )
           )}](${pullRequest.url})`
         : `[PR#${pullRequest.number}](${pullRequest.url})`;
-      if (pullRequest.submitter === undefined) return base;
-      if (config.knownAuthors.includes(pullRequest.submitter)) return base;
-      const author = `[${pullRequest.submitter}](https://github.com/${pullRequest.submitter})`;
-      return `${base} - Thanks ${author}`;
     };
     logs.forEach((l) => getSection(context.tags, l));
     return builder.get();

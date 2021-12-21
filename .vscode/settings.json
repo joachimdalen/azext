@@ -5,7 +5,19 @@
                 "/.azext/changelog.json"
             ],
             "url": "./schemas/v1/changelog-schema.json"
-        }
+        },
+        {
+            "fileMatch": [
+                "/.azext/mappings.json"
+            ],
+            "url": "./schemas/v1/mappings-schema.json"
+        },
+        {
+            "fileMatch": [
+                "/.azext/readme.json"
+            ],
+            "url": "./schemas/v1/readme-schema.json"
+        },
     ],
     "[azure-pipelines]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"

@@ -1,6 +1,13 @@
 {
   "issues": [
     {
+      "id": 1078959284,
+      "number": 3,
+      "submitter": "joachimdalen",
+      "title": "Documentation generation",
+      "url": "https://github.com/joachimdalen/azext/issues/3"
+    },
+    {
       "id": 1078928336,
       "number": 2,
       "submitter": "joachimdalen",
@@ -9,6 +16,13 @@
     }
   ],
   "pullRequests": [
+    {
+      "id": 807279524,
+      "number": 12,
+      "submitter": "joachimdalen",
+      "title": "Refactoring and docs generation",
+      "url": "https://github.com/joachimdalen/azext/pull/12"
+    },
     {
       "id": 804609629,
       "number": 7,

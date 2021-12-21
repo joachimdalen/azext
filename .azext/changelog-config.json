@@ -6,7 +6,6 @@
     "format": "{{version}} ({{publishDate}})"
   },
   "moduleTitleFormat": { "size": "h4", "format": "`{{name}}@{{version}}`" },
-  "taskMapping": {},
   "sectionSplitter": "---",
   "tagSize": "h3",
   "tagMapping": {

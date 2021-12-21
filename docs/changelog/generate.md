@@ -32,16 +32,15 @@ Command List
 
 Options
 
-  -o, --output string     Path to output generated markdown file to
-  -c, --config string     Path to changelog-config.json
-  -l, --log string        Path to changelog.json file
-  --format                Format generated file. Requires Prettier to be installed
-  --generate-cache        Generate changelog-cache.json containing a cache of issues and pull requests
-  --from-cache            Use changelog-cache.json for cache during generation
-  --cache-output string
+  -o, --output string        Full path to output generated markdown file to
+  -c, --config-name string   File name of configuration file. Default: changelog-config.json
+  -l, --log-name string      File name of changelog entry file. Default: changelog.json
+  --format                   Format generated file. Requires Prettier to be installed
+  --generate-cache           Generate changelog-cache.json containing a cache of issues and pull requests
+  --from-cache               Load issues and pull requests from cache file before GitHub
   --cache-file string
-  --version string        Generate changelog for only this version. Maps to the version field of
-                          changelog.json
+  --version string           Generate changelog for only this version. Maps to the version field of
+                             changelog.json
 
 Global Options
 

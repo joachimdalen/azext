@@ -2,7 +2,7 @@ trigger:
   batch: true
   branches:
     include:
-    - master
+      - master
 pr: none
 pool:
   vmImage: ubuntu-latest
@@ -14,6 +14,7 @@ parameters:
     displayName: "Is Pre-Release"
 
 variables:
+  isMaster: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
   npm_config_cache: $(Pipeline.Workspace)/.npm
 
 stages:
@@ -102,7 +103,7 @@ stages:
             inputs:
               workingDirectory: $(Build.SourcesDirectory)
               targetType: inline
-              script:  node ./dist/azext.js changelog generate --version $(SetVersion.NPM_PACKAGE_VERSION) --format --output v$(SetVersion.NPM_PACKAGE_VERSION).md
+              script:  node ./dist/azext.js --ci ado changelog generate --version $(SetVersion.NPM_PACKAGE_VERSION) --format --output v$(SetVersion.NPM_PACKAGE_VERSION).md
           - task: PublishPipelineArtifact@1
             displayName: "Publish Changelog"
             inputs:

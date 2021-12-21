@@ -1,5 +1,7 @@
 # Init
 
-The changelog commands allows you to manage changelogs
+Initialize AzExt
+
+## Cli Commands
 
 - [Generate config folder](./init.md)

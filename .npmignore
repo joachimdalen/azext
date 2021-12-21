@@ -13,8 +13,6 @@ PULL_REQUEST_TEMPLATE.md
 tslint.json
 tsconfig.json
 *.vsix
-dist/tests/
-tests/
 *.env
 .gitattributes
 .dockerignore
@@ -26,3 +24,8 @@ webpack*
 changelog*
 npm.md
 git.md
+webpack.config.js
+jest.config.js
+src/tests/
+dist/tests/
+tests/

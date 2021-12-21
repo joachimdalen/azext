@@ -1,0 +1,6 @@
+{
+  "tasks": {
+    "demo-task": "../testdata/task1/task.json",
+    "demo-task-two": "../testdata/task2/task.json"
+  }
+}

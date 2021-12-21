@@ -1,4 +1,5 @@
 import emoji from 'node-emoji';
+
 class Replacer {
   private readonly _openTag = '{{';
   private readonly _closeTag = '}}';

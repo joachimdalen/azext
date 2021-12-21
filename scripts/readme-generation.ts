@@ -68,8 +68,9 @@ const replaceDefinitions = async () => {
       if (command && fullContent) {
         const result = cli.parse(command);
 
-        if (result.data?.parent?.sections) {
-          const dt = [...result.data.parent.sections, globalOptionsSection];
+        const sections = result.data?.parent?.sections || result.data?.command?.sections;
+        if (sections) {
+          const dt = [...sections, globalOptionsSection];
           dt.splice(0, introSections.length);
           const usage = commandLineUsage(dt);
 

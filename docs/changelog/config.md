@@ -17,7 +17,6 @@ The `changelog config` command generates a new changelog configuration file.
   },
   // Format of title for extension part (e.g task) - Example: #### `BuildTaskOne@2.1.45`
   "moduleTitleFormat": { "size": "h4", "format": "`{{name}}@{{version}}`" },
-  "taskMapping": {},
   "sectionSplitter": "---",
   // Header size of tags/area names
   "tagSize": "h3",
@@ -76,7 +75,8 @@ Command List
 
 Options
 
-  --force    Overwrite file if it exists
+  --force                Overwrite file if it exists
+  --config-name string   File name of configuration file
 
 Global Options
 

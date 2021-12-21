@@ -30,10 +30,10 @@ describe('Replacer', () => {
       expect(replaced).not.toEqual(raw);
     });
     it('should not replace when condition is false', () => {
-        const replacer = new Replacer();
-        const raw: string = 'Hello, :rocket:';
-        const replaced = replacer.replaceEmojisIf(raw, false);
-        expect(replaced).toEqual(raw);
-      });
+      const replacer = new Replacer();
+      const raw: string = 'Hello, :rocket:';
+      const replaced = replacer.replaceEmojisIf(raw, false);
+      expect(replaced).toEqual(raw);
+    });
   });
 });

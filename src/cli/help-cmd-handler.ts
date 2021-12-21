@@ -1,14 +1,14 @@
 import commandLineUsage from 'command-line-usage';
+
 import {
   BaseCommandHandler,
   GlobalOptions,
   globalOptionsSection
 } from './models';
-export interface HelpOptions {}
 
-export default class HelpCmdHandler extends BaseCommandHandler<HelpOptions> {
+export default class HelpCmdHandler extends BaseCommandHandler<unknown> {
   async handleCommand(
-    options: HelpOptions,
+    options: unknown,
     globalOptions?: GlobalOptions
   ): Promise<void> {
     const data = this.commandOptions?.sections;

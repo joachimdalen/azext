@@ -2,8 +2,11 @@
 
 Welcome to the documentation for AzExt.
 
+## Cli Commands
+
 - [Initialize AzExt](./init/index.md)
 - [Manage Changelogs](./changelog/index.md)
+- [Manage Documentation](./readme/index.md)
 
 ## Help
 
@@ -13,13 +16,24 @@ AzExt is divided into main and sub-commands. To get a list of the root commands 
 > azext help
 ```
 
+[//]: # "#help-definition[command=help]"
+
 ```text
+
 Command List
 
   init        Generate default config folder
   changelog   Tools to manage and generate changelogs
+  readme      Tools to manage and generate partial documentation
   help        Print this usage guide.
+
+Global Options
+
+  --ci string   Run in CI mode. Currenctly supported: ado (Azure DevOps) --ci=ado
+
 ```
+
+[//]: # "#help-definition[end]"
 
 ## Global options
 

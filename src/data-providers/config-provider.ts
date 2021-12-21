@@ -1,5 +1,6 @@
-import path from 'path';
 import fs from 'fs/promises';
+import path from 'path';
+
 import { workingDirectory } from '../core/process';
 
 class ConfigProvider {
@@ -19,15 +20,34 @@ class ConfigProvider {
     return folderPath;
   }
 
-  public getFullFilePath(filePath: string) {
-    if (path.isAbsolute(filePath)) return filePath;
-    if (filePath.startsWith('./')) return filePath;
-    return path.join(workingDirectory(), this._defaultFolder, filePath);
+  public getFullFilePath(filePath: string, fromConfigBase = false) {
+    if (!fromConfigBase) return path.resolve(workingDirectory(), filePath);
+    return path.resolve(this.getConfigFolder(), filePath);
+  }
+  public getConfigFolder() {
+    return path.join(workingDirectory(), this._defaultFolder);
+  }
+  public async hasConfigFolderInWorkingDir(): Promise<boolean> {
+    try {
+      await fs.stat(this.getConfigFolder());
+      return true;
+    } catch {
+      return false;
+    }
+  }
+  public getConfigPath(fileName: string) {
+    if (fileName.includes(path.sep)) {
+      throw new Error(
+        'Expected file name, but got file path (' + fileName + ')'
+      );
+    }
+
+    return path.join(this.getConfigFolder(), fileName);
   }
 
-  public async getConfig<T>(filePath: string): Promise<T | undefined> {
+  public async getConfig<T>(fileName: string): Promise<T | undefined> {
     try {
-      const resolvedPath = this.getFullFilePath(filePath);
+      const resolvedPath = this.getConfigPath(fileName);
       const fileBuffer = await fs.readFile(resolvedPath);
       const fileContent: T = JSON.parse(fileBuffer.toString());
       return fileContent;
@@ -37,12 +57,19 @@ class ConfigProvider {
   }
 
   public async writeConfig(
-    filePath: string,
+    fileName: string,
     data: any,
     asJson = true
   ): Promise<string> {
     await this.createConfigFolderIfNotExists();
-    const resolvedPath = this.getFullFilePath(filePath);
+    const resolvedPath = this.getConfigPath(fileName);
+
+    if (path.extname(resolvedPath) === undefined) {
+      throw new Error(
+        'Recieved folder path, but expected file path ' + resolvedPath
+      );
+    }
+
     await fs.writeFile(
       resolvedPath,
       asJson ? JSON.stringify(data, null, 2) : data

@@ -1,14 +1,15 @@
 import chalk from 'chalk';
+
+import { distinct, isIssue, isNumber, isPullRequest } from '../../core/utils';
+import ConfigProvider from '../../data-providers/config-provider';
 import GitHub from '../../data-providers/github';
-import { isIssue, isPullRequest, isNumber, distinct } from '../../core/utils';
+import { CHANGELOG_CACHE_NAME } from './changelog-constants';
 import ChangelogCache from './models/changelog-cache';
 import ChangelogConfig from './models/changelog-config';
 import ChangelogDefinition from './models/changelog-definition';
 import GeneratorContext from './models/generator-context';
 import GitHubIssue from './models/github-issue';
 import GitHubPullRequest from './models/github-pull-request';
-import ConfigProvider from '../../data-providers/config-provider';
-import { CHANGELOG_CACHE_NAME } from './changelog-constants';
 import { GenerateChangelogOptions } from './options';
 
 export class MetaDataLoader {
@@ -27,7 +28,7 @@ export class MetaDataLoader {
 
     if (this._options.fromCache) {
       const cache = await this._configProvider.getConfig<ChangelogCache>(
-        this._options.cacheFile || CHANGELOG_CACHE_NAME
+        this._options.cacheName || CHANGELOG_CACHE_NAME
       );
 
       if (cache !== undefined) {
@@ -119,7 +120,7 @@ export class MetaDataLoader {
       };
 
       await this._configProvider.writeConfig(
-        this._options.cacheOutput || CHANGELOG_CACHE_NAME,
+        this._options.cacheName || CHANGELOG_CACHE_NAME,
         cache
       );
     }

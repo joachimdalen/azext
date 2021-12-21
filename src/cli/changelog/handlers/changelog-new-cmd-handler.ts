@@ -13,6 +13,6 @@ export default class NewChangelogCmdHandler extends BaseCommandHandler<NewChange
     globalOptions?: GlobalOptions
   ): Promise<void> {
     const result = await this._service.createNewFile(options);
-    this.writeResult(result);
+    this.writeResult(result, globalOptions);
   }
 }
