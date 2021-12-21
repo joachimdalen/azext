@@ -2,6 +2,8 @@
 
 The changelog commands allows you to manage changelogs
 
+## Cli Commands
+
 - [Generate Changelogs](./generate.md)
 - [Generate default configuration](./config.md)
 - [Generate empty changelog template](./new.md)
