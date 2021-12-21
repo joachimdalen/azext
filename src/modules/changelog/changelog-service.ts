@@ -91,7 +91,7 @@ class ChangelogService {
     cacheName = CHANGELOG_CACHE_NAME,
     fresh = false
   ): Promise<ChangelogCache> {
-    const cache: ChangelogCache = {
+    let cache: ChangelogCache = {
       issues: [],
       pullRequests: []
     };
@@ -101,20 +101,21 @@ class ChangelogService {
         await this._configProvider.getConfig<ChangelogCache>(cacheName);
 
       if (existingCache !== undefined) {
-        if (cache.issues !== undefined) {
+        if (existingCache.issues !== undefined) {
           console.log(
             `ℹ️ Loaded ${chalk.cyanBright(
-              cache.issues.length
+              existingCache.issues.length
             )} from issue cache`
           );
         }
-        if (cache.pullRequests !== undefined) {
+        if (existingCache.pullRequests !== undefined) {
           console.log(
             `ℹ️ Loaded ${chalk.cyanBright(
-              cache.pullRequests.length
+              existingCache.pullRequests.length
             )} from pull request cache`
           );
         }
+        cache = existingCache;
       }
     }
 
