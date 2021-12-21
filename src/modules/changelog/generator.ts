@@ -175,7 +175,7 @@ class Generator {
 
                 if (ghIssue) {
                   builder.addSubListItem(
-                    `Reported in ${getIssueLink(ghIssue, context.config)}`
+                    `Issue: ${getIssueLink(ghIssue, context.config)}`
                   );
                 }
 
@@ -183,7 +183,7 @@ class Generator {
                   const ghPr = context.pullRequests.get(c.pullRequest);
                   if (ghPr) {
                     builder.addSubListItem(
-                      `Fixed in ${getPrLink(ghPr, context.config)}`
+                      `Pull Request: ${getPrLink(ghPr, context.config)}`
                     );
                   }
                 }
@@ -192,7 +192,7 @@ class Generator {
                   const ghPr = context.pullRequests.get(c.pullRequest);
                   if (ghPr) {
                     builder.addSubListItem(
-                      `Implemented in ${getPrLink(ghPr, context.config)}`
+                      `Issue: ${getPrLink(ghPr, context.config)}`
                     );
                   }
                 }
