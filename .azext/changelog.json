@@ -2,7 +2,20 @@
   {
     "publishDate": "202X-XX-XX",
     "version": "0.0.2",
+    "notes": "This release introduces a new command (`azext readme`) to manage documentation. See [GitHub Documentation](https://github.com/joachimdalen/azext/blob/master/docs/readme/index.md) for more information.",
     "modules": [
+      {
+        "name": "readme",
+        "version": "0.0.1",
+        "changes": [
+          {
+            "type": "feature",
+            "description": "Introduced feature",
+            "pullRequest": 12,
+            "issue": 3
+          }
+        ]
+      },
       {
         "name": "changelog",
         "version": "0.0.2",
@@ -21,6 +34,11 @@
             "description": "Added help command for changelog generation",
             "type": "feature",
             "pullRequest": 7
+          },
+          {
+            "description": "Updated title for linked issues and pull requests",
+            "type": "feature",
+            "pullRequest": 12
           }
         ]
       },
@@ -42,6 +60,11 @@
             "type": "feature",
             "description": "Add support for global options",
             "pullRequest": 7
+          },
+          {
+            "type": "maint",
+            "description": "Forced path of configuration files to be in folder `.azext/`",
+            "pullRequest": 12
           }
         ]
       },
