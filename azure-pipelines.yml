@@ -112,7 +112,7 @@ stages:
               publishLocation: "pipeline"
   - stage: publishPackage
     displayName: "Publish package"
-    condition: eq(variables.isMaster, true)
+    condition: and(succeeded(), eq(variables.isMaster, true))
     dependsOn: buildAndTest
     jobs:
       - deployment: "publish"
