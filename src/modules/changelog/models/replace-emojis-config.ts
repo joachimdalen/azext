@@ -1,5 +1,5 @@
 export default interface ReplaceEmojiesConfig {
-  tags: boolean;
+  types: boolean;
   changelogTitle: boolean;
   releaseTitle: boolean;
   moduleTitle: boolean;

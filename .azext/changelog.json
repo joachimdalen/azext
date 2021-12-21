@@ -39,6 +39,15 @@
             "description": "Updated title for linked issues and pull requests",
             "type": "feature",
             "pullRequest": 12
+          },
+          {
+            "description": "Renamed `tagSize` to `typeSize` and `tagMapping` to `typeMapping` in configuration",
+            "type": "feature"
+          },
+          {
+            "description": "Added `changeCount` variable to type headers",
+            "issue": 9,
+            "type": "feature"
           }
         ]
       },

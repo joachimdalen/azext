@@ -18,16 +18,16 @@ The `changelog config` command generates a new changelog configuration file.
   // Format of title for extension part (e.g task) - Example: #### `BuildTaskOne@2.1.45`
   "moduleTitleFormat": { "size": "h4", "format": "`{{name}}@{{version}}`" },
   "sectionSplitter": "---",
-  // Header size of tags/area names
-  "tagSize": "h3",
+  // Header size of change types
+  "typeSize": "h3",
   // This maps to the type field and provides headers for specific types
-  "tagMapping": {
+  "typeMapping": {
     "feature": ":rocket: Features",
     "fix": ":bug: Fixes",
     "tests": ":test_tube: Tests",
     "other": ":speech_balloon: Other",
     "docs": ":memo: Documentation",
-    "maint": ":hammer_and_wrench: Maintenance"
+    "maint": ":hammer_and_wrench: Maintenance ({{ changeCount }})"
   },
   // Format of title for attributions
   "attributionTitleFormat": { "size": "h2", "format": ":star2: Contributors" },
@@ -61,7 +61,7 @@ The `changelog config` command generates a new changelog configuration file.
 > azext changelog config help
 ```
 
-[//]: # "#help-definition[command=changelog,config,help]"
+[//]: # '#help-definition[command=changelog,config,help]'
 
 ```text
 
@@ -84,7 +84,7 @@ Global Options
 
 ```
 
-[//]: # "#help-definition[end]"
+[//]: # '#help-definition[end]'
 
 ## Formatted title
 
@@ -171,3 +171,13 @@ This is the title for the individual modules/sections
 | --------- | --------------------------------------- |
 | `name`    | The name of the module. E.g `my-module` |
 | `version` | The version of the module. E.g `0.1.2`  |
+
+## Type Mapping
+
+This is the type titles rendered in the changelog.
+
+### Supported Variables
+
+| Variable      | Description                                                |
+| ------------- | ---------------------------------------------------------- |
+| `changeCount` | The number of changes for this type in the current release |

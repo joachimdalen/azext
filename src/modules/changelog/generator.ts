@@ -21,6 +21,10 @@ export interface GeneratorResult {
 }
 
 class Generator {
+  private readonly _replacer: Replacer;
+  constructor() {
+    this._replacer = new Replacer();
+  }
   async generateChangelog(
     options: GenerateChangelogOptions
   ): Promise<GeneratorResult | undefined> {
@@ -86,203 +90,256 @@ class Generator {
     })[0].publishDate;
   }
 
+  private addSectionHeader(
+    builder: MarkdownBuilder,
+    cfg: ChangelogConfig,
+    release: ChangelogDefinition
+  ) {
+    const formattedHeader = this._replacer.replace(
+      cfg.releaseTitleFormat.format,
+      {
+        version: release.version,
+        publishDate: release.publishDate
+      }
+    );
+    builder.addHeader(
+      this._replacer.replaceEmojisIf(
+        formattedHeader,
+        cfg.replaceEmojis.releaseTitle
+      ),
+      cfg.releaseTitleFormat.size
+    );
+  }
+
+  private addSummaryAndNotes(
+    builder: MarkdownBuilder,
+    cfg: ChangelogConfig,
+    release: ChangelogDefinition
+  ) {
+    if (release.summary) {
+      builder.addRaw(
+        this._replacer.replaceEmojisIf(
+          release.summary,
+          cfg.replaceEmojis.summary
+        )
+      );
+      builder.addNewLine();
+    }
+    if (release.notes) {
+      builder.addNote(
+        this._replacer.replaceEmojisIf(release.notes, cfg.replaceEmojis.notes)
+      );
+
+      builder.addNewLine();
+    }
+  }
+
+  private addModuleChanges(
+    builder: MarkdownBuilder,
+    cfg: ChangelogConfig,
+    release: ChangelogDefinition,
+    context: GeneratorContext
+  ) {
+    for (const type of context.types) {
+      const change = release.modules.flatMap((y) =>
+        y.changes.filter((x) => x.type === type)
+      );
+
+      if (change.length > 0) {
+        const mappedTypeTitle = cfg.typeMapping[type];
+        if (mappedTypeTitle === undefined) {
+          console.warn('No mapping found for change type ' + type);
+        }
+
+        builder.addHeader(
+          this._replacer.replace(
+            this._replacer.replaceEmojisIf(
+              mappedTypeTitle,
+              cfg.replaceEmojis.types
+            ),
+            {
+              changeCount: change?.length || undefined
+            }
+          ),
+          cfg.typeSize
+        );
+      }
+
+      release.modules.forEach((rm) => {
+        const change = rm.changes.filter((x) => x.type === type);
+
+        if (change.length > 0) {
+          const formattedHeader = this._replacer.replace(
+            cfg.moduleTitleFormat.format,
+            {
+              name: rm.name,
+              version: rm.version
+            }
+          );
+          builder.addHeader(
+            this._replacer.replaceEmojisIf(
+              formattedHeader,
+              cfg.replaceEmojis.moduleTitle
+            ),
+            cfg.moduleTitleFormat.size
+          );
+
+          change.forEach((c) => {
+            builder.addListItem(
+              this._replacer.replaceEmojisIf(
+                c.description,
+                cfg.replaceEmojis.githubIssues
+              )
+            );
+
+            if (c.issue !== undefined) {
+              const ghIssue = context.issues.get(c.issue);
+
+              if (ghIssue) {
+                builder.addSubListItem(
+                  `Issue: ${this.getIssueLink(ghIssue, context.config)}`
+                );
+              }
+
+              if (c.pullRequest !== undefined) {
+                const ghPr = context.pullRequests.get(c.pullRequest);
+                if (ghPr) {
+                  builder.addSubListItem(
+                    `Pull Request: ${this.getPrLink(ghPr, context.config)}`
+                  );
+                }
+              }
+            } else {
+              if (c.pullRequest !== undefined) {
+                const ghPr = context.pullRequests.get(c.pullRequest);
+                if (ghPr) {
+                  builder.addSubListItem(
+                    `Issue: ${this.getPrLink(ghPr, context.config)}`
+                  );
+                }
+              }
+            }
+          });
+        }
+      });
+    }
+  }
+
+  private getIssueLink(issue: GitHubIssue, config: ChangelogConfig): string {
+    return config.useDescriptiveIssues
+      ? `[GH#${issue.number} - ${this.escapeText(
+          this._replacer.replaceEmojisIf(
+            issue.title,
+            config.replaceEmojis.githubIssues
+          )
+        )}](${issue.url})`
+      : `[GH#${issue.number}](${issue.url})`;
+  }
+  private getPrLink(
+    pullRequest: GitHubPullRequest,
+    config: ChangelogConfig
+  ): string {
+    return config.useDescriptivePullRequests
+      ? `[GH#${pullRequest.number} - ${this.escapeText(
+          this._replacer.replaceEmojisIf(
+            pullRequest.title,
+            config.replaceEmojis.githubPullRequests
+          )
+        )}](${pullRequest.url})`
+      : `[PR#${pullRequest.number}](${pullRequest.url})`;
+  }
+
+  private addContributors(
+    builder: MarkdownBuilder,
+    cfg: ChangelogConfig,
+    release: ChangelogDefinition,
+    context: GeneratorContext
+  ) {
+    const moduleIssues = release.modules
+      .flatMap((x) => x.changes.flatMap((y) => y.issue))
+      .filter(isNumber);
+    const modulePrs = release.modules
+      .flatMap((x) => x.changes.flatMap((y) => y.pullRequest))
+      .filter(isNumber);
+
+    const nonAuthors = [
+      ...context.issues.values(),
+      ...context.pullRequests.values()
+    ]
+      .filter(
+        (x) => moduleIssues.includes(x.number) || modulePrs.includes(x.number)
+      )
+      .filter((x) => {
+        if (x.submitter === undefined) return false;
+        return !cfg.knownAuthors.includes(x.submitter);
+      });
+
+    if (nonAuthors.length > 0) {
+      console.log(
+        `Found a total of ${nonAuthors.length} contributors for release ${release.version}`
+      );
+      builder.addHeader(
+        this._replacer.replaceEmojisIf(
+          cfg.attributionTitleFormat.format,
+          cfg.replaceEmojis.attributionTitle
+        ),
+        cfg.attributionTitleFormat.size
+      );
+      builder.addHeader(
+        this._replacer.replaceEmojisIf(
+          cfg.attributionSubTitle.format,
+          cfg.replaceEmojis.attributionSubTitle
+        ),
+
+        cfg.attributionSubTitle.size
+      );
+
+      nonAuthors.forEach((x) =>
+        builder.addListItem(
+          `[@${x.submitter}](https://github.com/${x.submitter})`
+        )
+      );
+    }
+  }
+
+  private escapeText(text: string): string {
+    return text
+      .replace(/\[/, '\\[')
+      .replace(/\]/, '\\]')
+      .replace(/</, '\\<')
+      .replace(/>/, '\\>');
+  }
+
+  private addVersion(
+    builder: MarkdownBuilder,
+    cfg: ChangelogConfig,
+    release: ChangelogDefinition,
+    context: GeneratorContext
+  ) {
+    builder.addNewLine();
+
+    this.addSectionHeader(builder, cfg, release);
+    this.addSummaryAndNotes(builder, cfg, release);
+    this.addModuleChanges(builder, cfg, release, context);
+    this.addContributors(builder, cfg, release, context);
+    builder.addSplitter();
+  }
+
   buildFile(context: GeneratorContext, logs: ChangelogDefinition[]): string {
     const builder = new MarkdownBuilder();
-    const replacer = new Replacer();
+
     const cfg = context.config;
     builder.addHeader(
-      replacer.replaceEmojisIf(
+      this._replacer.replaceEmojisIf(
         cfg.changelogTitle.format,
         cfg.replaceEmojis.changelogTitle
       ),
       cfg.changelogTitle.size
     );
 
-    const getSection = (tags: string[], release: ChangelogDefinition) => {
-      builder.addNewLine();
-      const formattedHeader = replacer.replace(cfg.releaseTitleFormat.format, {
-        version: release.version,
-        publishDate: release.publishDate
-      });
-      builder.addHeader(
-        replacer.replaceEmojisIf(
-          formattedHeader,
-          cfg.replaceEmojis.releaseTitle
-        ),
-        cfg.releaseTitleFormat.size
-      );
-
-      if (release.summary) {
-        builder.addRaw(
-          replacer.replaceEmojisIf(release.summary, cfg.replaceEmojis.summary)
-        );
-        builder.addNewLine();
-      }
-      if (release.notes) {
-        builder.addNote(
-          replacer.replaceEmojisIf(release.notes, cfg.replaceEmojis.notes)
-        );
-
-        builder.addNewLine();
-      }
-
-      tags.forEach((tag) => {
-        const change = release.modules.flatMap((y) =>
-          y.changes.filter((x) => x.type === tag)
-        );
-
-        if (change.length > 0) {
-          const mappedTag = cfg.tagMapping[tag];
-          if (mappedTag === undefined) {
-            console.warn('No mapping found for module-name ' + tag);
-          }
-
-          builder.addHeader(
-            replacer.replaceEmojisIf(mappedTag, cfg.replaceEmojis.tags),
-            cfg.tagSize
-          );
-        }
-
-        release.modules.forEach((rm) => {
-          const change = rm.changes.filter((x) => x.type === tag);
-
-          if (change.length > 0) {
-            const formattedHeader = replacer.replace(
-              cfg.moduleTitleFormat.format,
-              {
-                name: rm.name,
-                version: rm.version
-              }
-            );
-            builder.addHeader(
-              replacer.replaceEmojisIf(
-                formattedHeader,
-                cfg.replaceEmojis.moduleTitle
-              ),
-              cfg.moduleTitleFormat.size
-            );
-
-            change.forEach((c) => {
-              builder.addListItem(
-                replacer.replaceEmojisIf(
-                  c.description,
-                  cfg.replaceEmojis.githubIssues
-                )
-              );
-
-              if (c.issue !== undefined) {
-                const ghIssue = context.issues.get(c.issue);
-
-                if (ghIssue) {
-                  builder.addSubListItem(
-                    `Issue: ${getIssueLink(ghIssue, context.config)}`
-                  );
-                }
-
-                if (c.pullRequest !== undefined) {
-                  const ghPr = context.pullRequests.get(c.pullRequest);
-                  if (ghPr) {
-                    builder.addSubListItem(
-                      `Pull Request: ${getPrLink(ghPr, context.config)}`
-                    );
-                  }
-                }
-              } else {
-                if (c.pullRequest !== undefined) {
-                  const ghPr = context.pullRequests.get(c.pullRequest);
-                  if (ghPr) {
-                    builder.addSubListItem(
-                      `Issue: ${getPrLink(ghPr, context.config)}`
-                    );
-                  }
-                }
-              }
-            });
-          }
-        });
-      });
-
-      const moduleIssues = release.modules
-        .flatMap((x) => x.changes.flatMap((y) => y.issue))
-        .filter(isNumber);
-      const modulePrs = release.modules
-        .flatMap((x) => x.changes.flatMap((y) => y.pullRequest))
-        .filter(isNumber);
-
-      const nonAuthors = [
-        ...context.issues.values(),
-        ...context.pullRequests.values()
-      ]
-        .filter(
-          (x) => moduleIssues.includes(x.number) || modulePrs.includes(x.number)
-        )
-        .filter((x) => {
-          console.log();
-          if (x.submitter === undefined) return false;
-          return !cfg.knownAuthors.includes(x.submitter);
-        });
-      console.log(
-        `Found a total of ${nonAuthors.length} contributors for this release`
-      );
-      if (nonAuthors.length > 0) {
-        builder.addHeader(
-          replacer.replaceEmojisIf(
-            cfg.attributionTitleFormat.format,
-            cfg.replaceEmojis.attributionTitle
-          ),
-          cfg.attributionTitleFormat.size
-        );
-        builder.addHeader(
-          replacer.replaceEmojisIf(
-            cfg.attributionSubTitle.format,
-            cfg.replaceEmojis.attributionSubTitle
-          ),
-
-          cfg.attributionSubTitle.size
-        );
-
-        nonAuthors.forEach((x) =>
-          builder.addListItem(
-            `[@${x.submitter}](https://github.com/${x.submitter})`
-          )
-        );
-      }
-
-      builder.addSplitter();
-    };
-
-    const escapeText = (text: string): string => {
-      return text
-        .replace(/\[/, '\\[')
-        .replace(/\]/, '\\]')
-        .replace(/</, '\\<')
-        .replace(/>/, '\\>');
-    };
-
-    const getIssueLink = (issue: GitHubIssue, config: ChangelogConfig) => {
-      return config.useDescriptiveIssues
-        ? `[GH#${issue.number} - ${escapeText(
-            replacer.replaceEmojisIf(
-              issue.title,
-              cfg.replaceEmojis.githubIssues
-            )
-          )}](${issue.url})`
-        : `[GH#${issue.number}](${issue.url})`;
-    };
-    const getPrLink = (
-      pullRequest: GitHubPullRequest,
-      config: ChangelogConfig
-    ) => {
-      return config.useDescriptivePullRequests
-        ? `[GH#${pullRequest.number} - ${escapeText(
-            replacer.replaceEmojisIf(
-              pullRequest.title,
-              cfg.replaceEmojis.githubPullRequests
-            )
-          )}](${pullRequest.url})`
-        : `[PR#${pullRequest.number}](${pullRequest.url})`;
-    };
-    logs.forEach((l) => getSection(context.tags, l));
+    for (const version of logs) {
+      this.addVersion(builder, cfg, version, context);
+    }
     return builder.get();
   }
 }
