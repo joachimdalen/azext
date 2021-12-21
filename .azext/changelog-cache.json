@@ -24,6 +24,13 @@
   ],
   "pullRequests": [
     {
+      "id": 807447923,
+      "number": 15,
+      "submitter": "joachimdalen",
+      "title": "Add changeCount to type titles",
+      "url": "https://github.com/joachimdalen/azext/pull/15"
+    },
+    {
       "id": 807279524,
       "number": 12,
       "submitter": "joachimdalen",

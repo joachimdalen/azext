@@ -45,9 +45,10 @@
             "type": "feature"
           },
           {
+            "type": "feature",
             "description": "Added `changeCount` variable to type headers",
             "issue": 9,
-            "type": "feature"
+            "pullRequest": 15
           }
         ]
       },
