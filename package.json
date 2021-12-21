@@ -22,6 +22,7 @@
     "test:coverage": "jest --coverage",
     "test:ci": "jest --coverage --ci",
     "build:docs": "cd scripts && ts-node readme-generation.ts && cd ..",
+    "build:demo-docs": "node ./dist/azext.js readme generate --input ./testdata/demo-readme.md --output ./testdata/demo-readme-replaced.md",
     "lint": "eslint src --ignore-path .eslintignore --ext ts"
   },
   "author": "Joachim Dalen <joachim@dalenapps.no> (https://joachimdalen.no/)",
