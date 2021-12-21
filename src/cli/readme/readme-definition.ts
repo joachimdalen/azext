@@ -20,8 +20,8 @@ const readmeCommands: CommandBase = {
       header: 'Command List',
       content: [
         {
-          name: 'task-usage',
-          summary: 'Add task inputs to documentation files'
+          name: 'generate',
+          summary: 'Generate readme from partial files'
         },
         {
           name: 'init',
@@ -34,13 +34,13 @@ const readmeCommands: CommandBase = {
   options: [],
   subCommands: [
     {
-      command: 'task-usage',
+      command: 'generate',
       handler: () => new ReadmeCmdHandler(),
       sections: [
         ...introSections,
         {
-          header: 'Task Usage',
-          content: chalk.magentaBright('Add task inputs to documentation files')
+          header: 'Generate',
+          content: chalk.magentaBright('Generate readme from partial files')
         },
         {
           header: 'Command List',
