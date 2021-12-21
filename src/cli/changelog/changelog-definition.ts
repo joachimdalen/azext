@@ -102,7 +102,7 @@ const changelogCommands: CommandBase = {
               description: `Load issues and pull requests from cache file before GitHub`
             },
             {
-              name: 'cache-file',
+              name: 'cache-name',
               defaultValue: CHANGELOG_CACHE_NAME
             },
             {
@@ -149,7 +149,7 @@ const changelogCommands: CommandBase = {
           defaultValue: true
         },
         {
-          name: 'cache-file',
+          name: 'cache-name',
           defaultValue: CHANGELOG_CACHE_NAME
         },
         {
@@ -277,6 +277,25 @@ const changelogCommands: CommandBase = {
             {
               name: 'fresh',
               description: 'Ignore existing cache and reload all'
+            },
+            {
+              name: 'config-name',
+              alias: 'c',
+              description:
+                'File name of configuration file. Default: ' +
+                CHANGELOG_CONFIG_NAME,
+              defaultValue: CHANGELOG_CONFIG_NAME
+            },
+            {
+              name: 'log-name',
+              alias: 'l',
+              description:
+                'File name of changelog entry file. Default: ' + CHANGELOG_NAME,
+              defaultValue: CHANGELOG_NAME
+            },
+            {
+              name: 'cache-name',
+              defaultValue: CHANGELOG_CACHE_NAME
             }
           ]
         }
@@ -286,6 +305,20 @@ const changelogCommands: CommandBase = {
           name: 'fresh',
           defaultValue: false,
           type: Boolean
+        },
+        {
+          name: 'config-name',
+          alias: 'c',
+          defaultValue: CHANGELOG_CONFIG_NAME
+        },
+        {
+          name: 'log-name',
+          alias: 'l',
+          defaultValue: CHANGELOG_NAME
+        },
+        {
+          name: 'cache-name',
+          defaultValue: CHANGELOG_CACHE_NAME
         }
       ],
       subCommands: [
