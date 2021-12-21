@@ -1,11 +1,9 @@
 import fs from 'fs/promises';
-import path from 'path';
 
 import { ActionResult } from '../../constants';
 import ConfigProvider from '../../data-providers/config-provider';
 import CommandService from './command-service';
 import { ReadmeConfig } from './models';
-import { ReadmeInitOptions } from './options';
 import { README_DEFAULT_FILE, README_NAME } from './readme-constats';
 
 export default class ReadmeService {
@@ -16,16 +14,10 @@ export default class ReadmeService {
     this._configProvider = new ConfigProvider();
   }
 
-  public async initReadmeConfiguration(
-    options: ReadmeInitOptions
-  ): Promise<ActionResult> {
-    let fullPath = this._configProvider.getFullFilePath(options.root);
-
-    if (fullPath && path.extname(fullPath) !== undefined) {
-      fullPath = path.join(fullPath, README_NAME);
-    }
-
-    const exists = await this._configProvider.getConfig<ReadmeConfig>(fullPath);
+  public async initReadmeConfiguration(): Promise<ActionResult> {
+    const exists = await this._configProvider.getConfig<ReadmeConfig>(
+      README_NAME
+    );
 
     if (exists !== undefined) {
       return {
@@ -35,7 +27,7 @@ export default class ReadmeService {
     }
 
     const filePath = await this._configProvider.writeConfig(
-      fullPath,
+      README_NAME,
       README_DEFAULT_FILE
     );
     return {

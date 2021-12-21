@@ -5,6 +5,7 @@ export interface TaskInputDefinition {
   aliases: string[];
   label: string;
   type: TaskInputType;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   defaultValue: any;
   required: boolean;
   helpMarkDown: string;

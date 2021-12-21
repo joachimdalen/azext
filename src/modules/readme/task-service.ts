@@ -1,5 +1,4 @@
 import fs from 'fs/promises';
-import path from 'path';
 
 import ConfigProvider from '../../data-providers/config-provider';
 import { MAPPING_NAME } from '../init/init-constants';
@@ -18,16 +17,8 @@ export default class TaskService {
   async getTaskDefinition(
     taskName: string
   ): Promise<TaskDefinition | undefined> {
-    const s: any = undefined;
-
-    let fullPath = this._configProvider.getFullFilePath(s);
-
-    if (fullPath && path.extname(fullPath) !== undefined) {
-      fullPath = path.join(fullPath, MAPPING_NAME);
-    }
-
     const mapping = await this._configProvider.getConfig<DefaultMapping>(
-      fullPath
+      MAPPING_NAME
     );
 
     if (mapping === undefined) {
@@ -43,21 +34,10 @@ export default class TaskService {
     return fileContent;
   }
   async getReadMeConfig(): Promise<ReadmeConfig | undefined> {
-    const s: any = undefined;
-    let fullPath = this._configProvider.getFullFilePath(s);
-
-    if (fullPath && path.extname(fullPath) !== undefined) {
-      fullPath = path.join(fullPath, README_NAME);
-    }
-
-    try {
-      const fileBuffer = await fs.readFile(fullPath);
-      const fileContent: ReadmeConfig = JSON.parse(fileBuffer.toString());
-      return fileContent;
-    } catch {
-      console.error('err');
-      return undefined;
-    }
+    const config = await this._configProvider.getConfig<ReadmeConfig>(
+      README_NAME
+    );
+    return config;
   }
 
   parseVisibleRule(rule: string) {

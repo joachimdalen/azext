@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import { Section } from 'command-line-usage';
+
 import { LIB_VERSION } from './version';
 
 export const cliHeader = ` █████╗ ███████╗███████╗██╗  ██╗████████╗

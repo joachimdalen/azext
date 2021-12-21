@@ -1,6 +1,7 @@
 import { Octokit } from '@octokit/rest';
-import chalk from 'chalk';
 import { Endpoints } from '@octokit/types';
+import chalk from 'chalk';
+
 import GitHubIssue from '../modules/changelog/models/github-issue';
 import GitHubPullRequest from '../modules/changelog/models/github-pull-request';
 

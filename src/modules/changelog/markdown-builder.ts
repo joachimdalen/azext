@@ -1,4 +1,5 @@
 import { EOL } from 'os';
+
 import { HeaderSizes } from './models/header-sizes';
 
 export default class MarkdownBuilder {
