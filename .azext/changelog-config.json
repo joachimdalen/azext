@@ -14,7 +14,7 @@
     "tests": ":test_tube: Tests ({{changeCount}})",
     "other": ":speech_balloon: Other ({{changeCount}})",
     "docs": ":memo: Documentation ({{changeCount}})",
-    "maint": ":hammer_and_wrench: Maintenance"
+    "maint": ":hammer_and_wrench: Maintenance ({{changeCount}})"
   },
   "attributionTitleFormat": { "size": "h2", "format": ":star2: Contributors" },
   "attributionSubTitle": {
