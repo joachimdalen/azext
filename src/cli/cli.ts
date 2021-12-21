@@ -2,6 +2,7 @@ import chalk from 'chalk';
 import commandLineArgs, { OptionDefinition } from 'command-line-args';
 
 import { ActionResultWithData, helpCommand, introSections } from '../constants';
+import ConfigProvider from '../data-providers/config-provider';
 import changelogCommands from './changelog/changelog-definition';
 import HelpCmdHandler from './help-cmd-handler';
 import initCommands from './init/init-definition';
@@ -45,6 +46,10 @@ interface ParseResult {
 }
 
 class AzExtCli {
+  private readonly _configProvider: ConfigProvider;
+  constructor() {
+    this._configProvider = new ConfigProvider();
+  }
   private readonly rootCommands: CommandBase[] = [
     root,
     changelogCommands,
@@ -150,6 +155,12 @@ class AzExtCli {
           'No handler defined for command ' + data.command?.command
         );
       } else {
+        if (!(await this._configProvider.hasConfigFolderInWorkingDir())) {
+          throw new Error(
+            'Failed to find configuration folder in working directory'
+          );
+        }
+
         const handler = data.command.handler(data.parent || data.command);
         await handler.handleCommand(
           handler.getOptions(data.rest?.options),

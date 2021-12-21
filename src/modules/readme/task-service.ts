@@ -27,7 +27,7 @@ export default class TaskService {
 
     const taskNameMapped = mapping.tasks[taskName];
 
-    const taskPath = this._configProvider.getFullFilePath(taskNameMapped);
+    const taskPath = this._configProvider.getFullFilePath(taskNameMapped, true);
 
     const fileBuffer = await fs.readFile(taskPath);
     const fileContent: TaskDefinition = JSON.parse(fileBuffer.toString());

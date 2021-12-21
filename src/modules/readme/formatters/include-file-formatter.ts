@@ -47,8 +47,10 @@ export default class IncludeFileFormatter extends ReplacementCommandFormatter<In
     if (partialPath === undefined) {
       throw new Error('No such partial ' + options.file);
     }
-
-    const taskPath = this._configProvider.getFullFilePath(partialPath.file);
+    const taskPath = this._configProvider.getFullFilePath(
+      partialPath.file,
+      true
+    );
 
     const fileBuffer = await fs.readFile(taskPath);
     const fileContent: string = fileBuffer.toString();

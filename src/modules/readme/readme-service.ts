@@ -37,7 +37,8 @@ export default class ReadmeService {
   }
 
   async processReadMe(filePath: string) {
-    let content = (await fs.readFile(filePath)).toString();
+    const fullFilePath = this._configProvider.getFullFilePath(filePath);
+    let content = (await fs.readFile(fullFilePath)).toString();
 
     const matches = this._cmdService.getMatches(content);
 

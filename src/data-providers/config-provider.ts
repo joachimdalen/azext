@@ -20,10 +20,21 @@ class ConfigProvider {
     return folderPath;
   }
 
-  public getFullFilePath(filePath: string) {
-    return path.resolve(workingDirectory(), filePath);
+  public getFullFilePath(filePath: string, fromConfigBase = false) {
+    if (!fromConfigBase) return path.resolve(workingDirectory(), filePath);
+    return path.resolve(this.getConfigFolder(), filePath);
   }
-
+  public getConfigFolder() {
+    return path.join(workingDirectory(), this._defaultFolder);
+  }
+  public async hasConfigFolderInWorkingDir(): Promise<boolean> {
+    try {
+      await fs.stat(this.getConfigFolder());
+      return true;
+    } catch {
+      return false;
+    }
+  }
   public getConfigPath(fileName: string) {
     if (fileName.includes(path.sep)) {
       throw new Error(
@@ -31,7 +42,7 @@ class ConfigProvider {
       );
     }
 
-    return path.join(workingDirectory(), this._defaultFolder, fileName);
+    return path.join(this.getConfigFolder(), fileName);
   }
 
   public async getConfig<T>(fileName: string): Promise<T | undefined> {
