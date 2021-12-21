@@ -60,9 +60,11 @@ export class MetaDataLoader {
       .filter(isNumber)
       .filter(distinct)
       .filter((y) => !cachedIssues.some((x) => x.number === y));
-    console.log(
-      `ℹ️ Found ${chalk.cyanBright(issueIds.length)} issues not in cache`
-    );
+    if (issueIds?.length > 0) {
+      console.log(
+        `ℹ️ Found ${chalk.cyanBright(issueIds.length)} issues not in cache`
+      );
+    }
     const issueResponse = await Promise.all(
       issueIds.map((x) => this._github.getIssues(x, config.repository))
     );
@@ -77,9 +79,12 @@ export class MetaDataLoader {
       .filter(isNumber)
       .filter(distinct)
       .filter((y) => !cachedPullRequests.some((x) => x.number === y));
-    console.log(
-      `ℹ️ Found ${chalk.cyanBright(prIds.length)} pull requests not in cache`
-    );
+    if (prIds?.length > 0) {
+      console.log(
+        `ℹ️ Found ${chalk.cyanBright(prIds.length)} pull requests not in cache`
+      );
+    }
+
     const pullRequestResponse = await Promise.all(
       prIds.map((x) => this._github.getPullRequests(x, config.repository))
     );
@@ -94,7 +99,7 @@ export class MetaDataLoader {
       pullRequests.map((i) => [i.number, i])
     );
 
-    const distinctTags = log
+    const distinctTypes = log
       .flatMap((x) =>
         x.modules.flatMap((y) => y.changes.flatMap((z) => z.type))
       )
@@ -106,7 +111,7 @@ export class MetaDataLoader {
       config,
       issues: githubIssues,
       pullRequests: githubPullRequests,
-      tags: distinctTags
+      types: distinctTypes
     };
 
     return context;

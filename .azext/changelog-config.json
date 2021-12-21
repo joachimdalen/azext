@@ -7,13 +7,13 @@
   },
   "moduleTitleFormat": { "size": "h4", "format": "`{{name}}@{{version}}`" },
   "sectionSplitter": "---",
-  "tagSize": "h3",
-  "tagMapping": {
-    "feature": ":rocket: Features",
-    "fix": ":bug: Fixes",
-    "tests": ":test_tube: Tests",
-    "other": ":speech_balloon: Other",
-    "docs": ":memo: Documentation",
+  "typeSize": "h3",
+  "typeMapping": {
+    "feature": ":rocket: Features ({{changeCount}})",
+    "fix": ":bug: Fixes ({{changeCount}})",
+    "tests": ":test_tube: Tests ({{changeCount}})",
+    "other": ":speech_balloon: Other ({{changeCount}})",
+    "docs": ":memo: Documentation ({{changeCount}})",
     "maint": ":hammer_and_wrench: Maintenance"
   },
   "attributionTitleFormat": { "size": "h2", "format": ":star2: Contributors" },
@@ -24,7 +24,7 @@
   "useDescriptiveIssues": true,
   "useDescriptivePullRequests": true,
   "replaceEmojis": {
-    "tags": true,
+    "types": true,
     "changelogTitle": true,
     "releaseTitle": true,
     "moduleTitle": true,

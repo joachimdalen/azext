@@ -22,8 +22,8 @@ export const CHANGELOG_DEFAULT_CONFIG: ChangelogConfig = {
     format: '`{{name}}@{{version}}`'
   },
   sectionSplitter: '---',
-  tagSize: 'h3',
-  tagMapping: {
+  typeSize: 'h3',
+  typeMapping: {
     feature: ':rocket: Features',
     fix: ':bug: Fixes',
     tests: ':test_tube: Tests',
@@ -41,7 +41,7 @@ export const CHANGELOG_DEFAULT_CONFIG: ChangelogConfig = {
   useDescriptiveIssues: true,
   useDescriptivePullRequests: true,
   replaceEmojis: {
-    tags: true,
+    types: true,
     changelogTitle: true,
     releaseTitle: true,
     moduleTitle: true,

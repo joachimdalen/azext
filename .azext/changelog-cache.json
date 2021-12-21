@@ -1,6 +1,13 @@
 {
   "issues": [
     {
+      "id": 1083927547,
+      "number": 9,
+      "submitter": "joachimdalen",
+      "title": "Add change count to tag headers",
+      "url": "https://github.com/joachimdalen/azext/issues/9"
+    },
+    {
       "id": 1078959284,
       "number": 3,
       "submitter": "joachimdalen",
@@ -16,6 +23,13 @@
     }
   ],
   "pullRequests": [
+    {
+      "id": 807447923,
+      "number": 15,
+      "submitter": "joachimdalen",
+      "title": "Add changeCount to type titles",
+      "url": "https://github.com/joachimdalen/azext/pull/15"
+    },
     {
       "id": 807279524,
       "number": 12,

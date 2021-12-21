@@ -7,9 +7,9 @@ export default interface ChangelogConfig {
   changelogTitle: TitleFormat;
   releaseTitleFormat: TitleFormat;
   moduleTitleFormat: TitleFormat;
-  tagSize: HeaderSizes;
   sectionSplitter: string;
-  tagMapping: {
+  typeSize: HeaderSizes;
+  typeMapping: {
     [key: string]: string;
   };
   knownAuthors: string[];

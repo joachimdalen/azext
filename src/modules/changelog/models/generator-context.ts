@@ -6,5 +6,5 @@ export default interface GeneratorContext {
   config: ChangelogConfig;
   issues: Map<number, GitHubIssue>;
   pullRequests: Map<number, GitHubPullRequest>;
-  tags: string[];
+  types: string[];
 }
