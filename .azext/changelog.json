@@ -9,7 +9,8 @@
         "changes": [
           {
             "type": "docs",
-            "description": "Updated NPM readme"
+            "description": "Updated NPM readme",
+            "pullRequest": 20
           }
         ]
       }
