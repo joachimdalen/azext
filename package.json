@@ -12,7 +12,7 @@
   ],
   "icon": "./docs/images/azext-icon.png",
   "scripts": {
-    "set:version": "node -p \"'export const LIB_VERSION = ' + JSON.stringify(require('./package.json').version).replace('\"') + ';'\" > src/version.ts",
+    "set:version": "node -p \"'export const LIB_VERSION = ' + JSON.stringify(require('./package.json').version) + ';'\" > src/version.ts",
     "build": "tsc -d",
     "build-wp": "webpack --config webpack.config.js",
     "prettify": "prettier --write src",
