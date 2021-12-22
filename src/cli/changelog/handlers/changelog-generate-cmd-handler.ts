@@ -1,11 +1,11 @@
+import { logWarning, setVariable } from '../../../core/azure-devops-logger';
 import {
   ADO_LATEST_VERSION,
   ADO_OUTPUT_PATH
 } from '../../../modules/changelog/changelog-constants';
-import { logWarning, setVariable } from '../../../core/azure-devops-logger';
 import ChangelogService from '../../../modules/changelog/changelog-service';
-import { BaseCommandHandler, GlobalOptions } from '../../models';
 import { GenerateChangelogOptions } from '../../../modules/changelog/options';
+import { BaseCommandHandler, GlobalOptions } from '../../models';
 
 export default class ChangelogGenerateCmdHandler extends BaseCommandHandler<GenerateChangelogOptions> {
   private _service: ChangelogService;
