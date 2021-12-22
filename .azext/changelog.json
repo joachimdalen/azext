@@ -1,6 +1,6 @@
 [
   {
-    "publishDate": "202X-XX-XX",
+    "publishDate": "2021-12-22",
     "version": "0.2.0",
     "notes": "This release introduces a new command (`azext readme`) to manage documentation. See [GitHub Documentation](https://github.com/joachimdalen/azext/blob/master/docs/readme/index.md) for more information.",
     "modules": [
@@ -22,7 +22,7 @@
         "changes": [
           {
             "type": "feature",
-            "description": "Include issue number and pull request issue when using descriptive titles",
+            "description": "Include issue number and pull request number when using descriptive titles",
             "pullRequest": 6
           },
           {
