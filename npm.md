@@ -9,7 +9,7 @@
   <p align="center">
     A collection of tools to help with developing extensions for Azure DevOps.
     <br />
-    <a href="https://github.com/joachimdalen/azext"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/joachimdalen/azext/blob/master/docs/index.md"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://www.npmjs.com/package/@joachimdalen/azext">View Package</a>
@@ -34,12 +34,26 @@
 
 AzExt provides a set of utilities to help with developing Extensions for Azure DevOps.
 
-| Command     | Description                             |
-| ----------- | --------------------------------------- |
-| `init`      | Generate default config folder          |
-| `changelog` | Tools to manage and generate changelogs |
+[//]: # "#help-definition[command=help]"
 
-Full documentation is available on GitHub.
+```text
+
+Command List
+
+  init        Generate default config folder
+  changelog   Tools to manage and generate changelogs
+  readme      Tools to manage and generate partial documentation
+  help        Print this usage guide.
+
+Global Options
+
+  --ci string   Run in CI mode. Currenctly supported: ado (Azure DevOps) --ci=ado
+
+```
+
+[//]: # "#help-definition[end]"
+
+Full documentation is available on [GitHub](https://github.com/joachimdalen/azext/blob/master/docs/index.md).
 
 ## License
 

@@ -31,6 +31,13 @@
   ],
   "pullRequests": [
     {
+      "id": 808530277,
+      "number": 20,
+      "submitter": "joachimdalen",
+      "title": "Fix readme for Npm",
+      "url": "https://github.com/joachimdalen/azext/pull/20"
+    },
+    {
       "id": 807673980,
       "number": 16,
       "submitter": "joachimdalen",
