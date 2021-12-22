@@ -1,12 +1,12 @@
 [
   {
     "publishDate": "202X-XX-XX",
-    "version": "0.0.2",
+    "version": "0.2.0",
     "notes": "This release introduces a new command (`azext readme`) to manage documentation. See [GitHub Documentation](https://github.com/joachimdalen/azext/blob/master/docs/readme/index.md) for more information.",
     "modules": [
       {
         "name": "readme",
-        "version": "0.0.1",
+        "version": "0.1.0",
         "changes": [
           {
             "type": "feature",
@@ -18,7 +18,7 @@
       },
       {
         "name": "changelog",
-        "version": "0.0.2",
+        "version": "0.2.0",
         "changes": [
           {
             "type": "feature",
@@ -60,7 +60,7 @@
       },
       {
         "name": "core",
-        "version": "0.0.2",
+        "version": "0.2.0",
         "changes": [
           {
             "type": "maint",
@@ -86,7 +86,7 @@
       },
       {
         "name": "init",
-        "version": "0.0.2",
+        "version": "0.2.0",
         "changes": [
           {
             "description": "Fixed init command not respecting `--root` option",
