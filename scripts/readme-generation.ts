@@ -8,8 +8,6 @@ import glob from 'glob';
 import { isModuleInstalled } from '../src/core/addons-checker';
 import { globalOptionsSection } from '../src/cli/models';
 
-const filePattern = '../docs/**/*.md';
-
 const globFiles = function (pattern: string): Promise<string[] | undefined> {
   return new Promise((resolve, reject) => {
     glob(pattern, (err, files) =>
@@ -26,12 +24,12 @@ const pattern = [
 const fullMatch =
   /(?<fullcontent>(?<start>\[\/\/\]\:\s#\s["']#(?<startidentifier>.+)\[command=(?<startcommand>.+)\]["'])(?<content>[\S\s]+)(?<end>\[\/\/\]\:\s#\s["']#(?<endidentifier>.+)\[end\]["']))/gm;
 
-//const files = ['../docs/changelog/generate.md', '../docs/changelog/config.md'];
-
-const replaceDefinitions = async () => {
-  console.log(chalk.greenBright('Starting documentation processing'));
+const replaceDefinitions = async (path: string) => {
+  console.log(
+    chalk.greenBright(`Starting documentation processing for pattern: ${path}`)
+  );
   const cli = new AzExtCli();
-  const files = await globFiles(filePattern);
+  const files = await globFiles(path);
 
   if (files === undefined) {
     console.error(chalk.redBright('Unable to find files'));
@@ -68,7 +66,8 @@ const replaceDefinitions = async () => {
       if (command && fullContent) {
         const result = cli.parse(command);
 
-        const sections = result.data?.parent?.sections || result.data?.command?.sections;
+        const sections =
+          result.data?.parent?.sections || result.data?.command?.sections;
         if (sections) {
           const dt = [...sections, globalOptionsSection];
           dt.splice(0, introSections.length);
@@ -112,6 +111,12 @@ const replaceDefinitions = async () => {
   }
 };
 
-replaceDefinitions().then(() =>
+const replaceMultiple = async (patterns: string[]) => {
+  for (const pattern of patterns) {
+    await replaceDefinitions(pattern);
+  }
+};
+
+replaceMultiple(['../docs/**/*.md', '../npm.md']).then(() =>
   console.log(chalk.bgGreenBright.black('Processing completed'))
 );

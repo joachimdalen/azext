@@ -1,6 +1,22 @@
 [
   {
     "publishDate": "2021-12-22",
+    "version": "0.2.1",
+    "modules": [
+      {
+        "name": "core",
+        "version": "0.2.1",
+        "changes": [
+          {
+            "type": "docs",
+            "description": "Updated NPM readme"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "publishDate": "2021-12-22",
     "version": "0.2.0",
     "notes": "This release introduces a new command (`azext readme`) to manage documentation. See [GitHub Documentation](https://github.com/joachimdalen/azext/blob/master/docs/readme/index.md) for more information.",
     "modules": [
