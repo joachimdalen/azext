@@ -1,6 +1,13 @@
 {
   "issues": [
     {
+      "id": 1088623657,
+      "number": 22,
+      "submitter": "joachimdalen",
+      "title": "Changes with only a linked pull request gets the wrong link type",
+      "url": "https://github.com/joachimdalen/azext/issues/22"
+    },
+    {
       "id": 1085540145,
       "number": 13,
       "submitter": "joachimdalen",
@@ -30,6 +37,13 @@
     }
   ],
   "pullRequests": [
+    {
+      "id": 809910833,
+      "number": 23,
+      "submitter": "joachimdalen",
+      "title": "Fix PRs getting wrong title",
+      "url": "https://github.com/joachimdalen/azext/pull/23"
+    },
     {
       "id": 808530277,
       "number": 20,
