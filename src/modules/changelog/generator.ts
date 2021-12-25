@@ -10,6 +10,7 @@ import MarkdownBuilder from './markdown-builder';
 import { MetaDataLoader } from './metadata';
 import ChangelogConfig from './models/changelog-config';
 import ChangelogDefinition from './models/changelog-definition';
+import ChangelogEntry from './models/changelog-entry';
 import GeneratorContext from './models/generator-context';
 import GitHubIssue from './models/github-issue';
 import GitHubPullRequest from './models/github-pull-request';
@@ -133,6 +134,40 @@ class Generator {
     }
   }
 
+  private addGitHubMeta(
+    entry: ChangelogEntry,
+    builder: MarkdownBuilder,
+    context: GeneratorContext
+  ) {
+    if (entry.issue !== undefined) {
+      const ghIssue = context.issues.get(entry.issue);
+
+      if (ghIssue) {
+        builder.addSubListItem(
+          `Issue: ${this.getIssueLink(ghIssue, context.config)}`
+        );
+      }
+
+      if (entry.pullRequest !== undefined) {
+        const ghPr = context.pullRequests.get(entry.pullRequest);
+        if (ghPr) {
+          builder.addSubListItem(
+            `Pull Request: ${this.getPrLink(ghPr, context.config)}`
+          );
+        }
+      }
+    } else {
+      if (entry.pullRequest !== undefined) {
+        const ghPr = context.pullRequests.get(entry.pullRequest);
+        if (ghPr) {
+          builder.addSubListItem(
+            `Pull Request: ${this.getPrLink(ghPr, context.config)}`
+          );
+        }
+      }
+    }
+  }
+
   private addModuleChanges(
     builder: MarkdownBuilder,
     cfg: ChangelogConfig,
@@ -191,33 +226,7 @@ class Generator {
               )
             );
 
-            if (c.issue !== undefined) {
-              const ghIssue = context.issues.get(c.issue);
-
-              if (ghIssue) {
-                builder.addSubListItem(
-                  `Issue: ${this.getIssueLink(ghIssue, context.config)}`
-                );
-              }
-
-              if (c.pullRequest !== undefined) {
-                const ghPr = context.pullRequests.get(c.pullRequest);
-                if (ghPr) {
-                  builder.addSubListItem(
-                    `Pull Request: ${this.getPrLink(ghPr, context.config)}`
-                  );
-                }
-              }
-            } else {
-              if (c.pullRequest !== undefined) {
-                const ghPr = context.pullRequests.get(c.pullRequest);
-                if (ghPr) {
-                  builder.addSubListItem(
-                    `Issue: ${this.getPrLink(ghPr, context.config)}`
-                  );
-                }
-              }
-            }
+            this.addGitHubMeta(c, builder, context);
           });
         }
       });
