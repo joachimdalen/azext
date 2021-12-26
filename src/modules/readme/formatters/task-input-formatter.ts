@@ -50,9 +50,7 @@ export default class TaskInputFormatter extends ReplacementCommandFormatter<Task
 
   private generateExample(task: TaskDefinition) {
     const parts = [];
-    parts.push(
-      `- task: ${task.friendlyName}@${task.version.Major}.${task.version.Minor}.${task.version.Patch}`
-    );
+    parts.push(`- task: ${task.name}@${task.version.Major}`);
     parts.push(`  inputs:`);
     task.inputs.forEach((ip) => {
       let base = `     ${ip.name}:`;

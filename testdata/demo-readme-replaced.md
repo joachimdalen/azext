@@ -7,7 +7,7 @@ Current version: 0.3.3
 ## Demo Task - Example
 
 ```yaml
-- task: Demo Task@0.3.3
+- task: Task1@0
   inputs:
     mode: replace #Replace mode replces variables based on the key while subsitute only replaces Azure Pipelines variable syntax values `$(Pipeline.Workdir)`. Accepts `replace` (Replace by keys) and `substitute` (Replace by values)
     inputType: file #Input type to read initial values from. `file` will read from a file in the repo. `inline` will add to the file content directly
