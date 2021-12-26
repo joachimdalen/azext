@@ -12,6 +12,34 @@
             "description": "Fix GitHub pull requests getting the wrong link title",
             "issue": 22,
             "pullRequest": 23
+          },
+          {
+            "type": "fix",
+            "description": "Fix certain cli options not passing the correct value to handler",
+            "issue": 24,
+            "pullRequest": 25
+          }
+        ]
+      },
+      {
+        "name": "readme",
+        "version": "0.2.2",
+        "changes": [
+          {
+            "type": "other",
+            "description": "Refactor how cli parameters are set in the cli definition",
+            "pullRequest": 25
+          }
+        ]
+      },
+      {
+        "name": "init",
+        "version": "0.2.2",
+        "changes": [
+          {
+            "type": "other",
+            "description": "Refactor how cli parameters are set in the cli definition",
+            "pullRequest": 25
           }
         ]
       }
