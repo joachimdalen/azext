@@ -40,6 +40,12 @@
             "type": "other",
             "description": "Refactor how cli parameters are set in the cli definition",
             "pullRequest": 25
+          },
+          {
+            "type": "fix",
+            "description": "Fixed an issue where the cli would look for `.azext` directory when trying to create it",
+            "issue": 21,
+            "pullRequest": 26
           }
         ]
       }
