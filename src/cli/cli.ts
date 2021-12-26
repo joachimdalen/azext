@@ -155,7 +155,10 @@ class AzExtCli {
           'No handler defined for command ' + data.command?.command
         );
       } else {
-        if (!(await this._configProvider.hasConfigFolderInWorkingDir())) {
+        if (
+          data.command.skipDirectoryCheck === false &&
+          !(await this._configProvider.hasConfigFolderInWorkingDir())
+        ) {
           throw new Error(
             'Failed to find configuration folder in working directory'
           );
