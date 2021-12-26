@@ -117,6 +117,4 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-changelog*.md
-CHANGELOG*.md
 test-results.xml
