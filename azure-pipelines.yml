@@ -3,6 +3,14 @@ trigger:
   branches:
     include:
       - master
+  paths:
+    exclude:
+      - CHANGELOG.md
+      - .azext
+      - .vscode
+      - docs
+      - schemas
+      - scripts
 pr: none
 pool:
   vmImage: ubuntu-latest
