@@ -1,6 +1,13 @@
 {
   "issues": [
     {
+      "id": 1087961018,
+      "number": 21,
+      "submitter": "joachimdalen",
+      "title": "Can not initialize in a new project",
+      "url": "https://github.com/joachimdalen/azext/issues/21"
+    },
+    {
       "id": 1088756681,
       "number": 24,
       "submitter": "joachimdalen",
@@ -44,6 +51,13 @@
     }
   ],
   "pullRequests": [
+    {
+      "id": 810010044,
+      "number": 26,
+      "submitter": "joachimdalen",
+      "title": "Fix not being able to initialize in a new project",
+      "url": "https://github.com/joachimdalen/azext/pull/26"
+    },
     {
       "id": 810008546,
       "number": 25,

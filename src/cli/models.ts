@@ -48,6 +48,7 @@ export interface CommandBase {
   sections: Section[];
   options: OptionDefinition[];
   subCommands?: CommandBase[];
+  skipDirectoryCheck?: boolean;
 }
 
 export const helpCommand: CommandBase = {

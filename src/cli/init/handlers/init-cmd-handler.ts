@@ -8,7 +8,6 @@ export default class InitCmdHandler extends BaseCommandHandler<InitOptions> {
   private _service: InitService;
   constructor() {
     super();
-    console.log('Creating init service');
     this._service = new InitService();
   }
   async handleCommand(options: InitOptions): Promise<void> {

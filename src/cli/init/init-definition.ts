@@ -12,6 +12,7 @@ enum InitOptionNames {
 
 const initCommands: CommandBase = {
   command: 'init',
+  skipDirectoryCheck: true,
   handler: () => new InitCmdHandler(),
   sections: [
     ...introSections,
