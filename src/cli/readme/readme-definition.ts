@@ -6,6 +6,11 @@ import { CommandBase } from '../models';
 import ReadmeCmdHandler from './handlers/readme-cmd-handler';
 import ReadmeInitCmdHandler from './handlers/readme-init-cmd-handler';
 
+enum ReadmeOptionNames {
+  Input = 'input',
+  Output = 'output'
+}
+
 const readmeCommands: CommandBase = {
   command: 'readme',
   sections: [
@@ -50,19 +55,19 @@ const readmeCommands: CommandBase = {
           header: 'Options',
           optionList: [
             {
-              name: 'input',
+              name: ReadmeOptionNames.Input,
               description: 'Input file containing the template'
             },
             {
-              name: 'output',
+              name: ReadmeOptionNames.Output,
               description: 'Output file to write replaced value to'
             }
           ]
         }
       ],
       options: [
-        { name: 'input', alias: 'i' },
-        { name: 'output', alias: 'o' }
+        { name: ReadmeOptionNames.Input, alias: 'i' },
+        { name: ReadmeOptionNames.Output, alias: 'o' }
       ],
       subCommands: [defaultHelpCommand]
     },

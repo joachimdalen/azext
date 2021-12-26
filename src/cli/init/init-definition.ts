@@ -6,6 +6,10 @@ import { CommandBase } from '../models';
 import InitCmdHandler from './handlers/init-cmd-handler';
 import InitMappingCmdHandler from './handlers/init-mapping-cmd-handler';
 
+enum InitOptionNames {
+  Root = 'root'
+}
+
 const initCommands: CommandBase = {
   command: 'init',
   handler: () => new InitCmdHandler(),
@@ -26,7 +30,7 @@ const initCommands: CommandBase = {
       header: 'Options',
       optionList: [
         {
-          name: 'root',
+          name: InitOptionNames.Root,
           description: 'Root folder to initialize in'
         }
       ]
@@ -51,13 +55,13 @@ const initCommands: CommandBase = {
           header: 'Options',
           optionList: [
             {
-              name: 'root',
+              name: InitOptionNames.Root,
               description: 'Root folder to initialize in'
             }
           ]
         }
       ],
-      options: [{ name: 'root', alias: 'r' }],
+      options: [{ name: InitOptionNames.Root, alias: 'r' }],
       subCommands: [defaultHelpCommand]
     },
     defaultHelpCommand
