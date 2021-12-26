@@ -18,4 +18,6 @@ export default interface ChangelogConfig {
   attributionTitleFormat: TitleFormat;
   attributionSubTitle: TitleFormat;
   replaceEmojis: ReplaceEmojiesConfig;
+  rootChangesTitle?: TitleFormat;
+  moduleChangesTitle?: TitleFormat;
 }

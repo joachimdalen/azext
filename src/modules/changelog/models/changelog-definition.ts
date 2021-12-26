@@ -1,3 +1,4 @@
+import ChangelogEntry from './changelog-entry';
 import ChangelogModule from './changelog-module';
 
 export default interface ChangelogDefinition {
@@ -6,4 +7,5 @@ export default interface ChangelogDefinition {
   summary?: string;
   notes?: string;
   modules: ChangelogModule[];
+  changes?: ChangelogEntry[];
 }

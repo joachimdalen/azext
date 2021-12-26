@@ -6,6 +6,14 @@
     "format": "{{version}} ({{publishDate}})"
   },
   "moduleTitleFormat": { "size": "h4", "format": "`{{name}}@{{version}}`" },
+  "rootChangesTitle": {
+    "size": "h2",
+    "format": ":bookmark: Base changes"
+  },
+  "moduleChangesTitle": {
+    "size": "h2",
+    "format": ":package: Module changes"
+  },
   "sectionSplitter": "---",
   "typeSize": "h3",
   "typeMapping": {
@@ -30,6 +38,8 @@
     "moduleTitle": true,
     "attributionTitle": true,
     "attributionSubTitle": true,
+    "rootChangesTitle": true,
+    "moduleChangesTitle": true,
     "githubIssues": false,
     "githubPullRequests": false,
     "notes": true,

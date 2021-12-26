@@ -67,7 +67,6 @@
                     "type": "array",
                     "title": "The changes schema",
                     "description": "An explanation about the purpose of this instance.",
-
                     "items": {
                       "anyOf": [
                         {
@@ -101,6 +100,44 @@
                         }
                       ]
                     }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "changes": {
+          "type": "array",
+          "title": "The changes schema",
+          "description": "An explanation about the purpose of this instance.",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "title": "Change entry",
+                "description": "An explanation about the purpose of this instance.",
+                "required": ["description", "type"],
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "title": "The description schema",
+                    "description": "An explanation about the purpose of this instance."
+                  },
+                  "type": {
+                    "type": "string",
+                    "title": "The type schema",
+                    "description": "An explanation about the purpose of this instance."
+                  },
+                  "issue": {
+                    "type": "integer",
+                    "title": "GitHub issue number",
+                    "description": "The GitHub issue number issue number of a releated GitHub issue"
+                  },
+                  "pullRequest": {
+                    "type": "integer",
+                    "title": "GitHub pull request number",
+                    "description": "The GitHub pull request number issue number of a releated GitHub pull request"
                   }
                 }
               }
