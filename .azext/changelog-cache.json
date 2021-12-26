@@ -1,6 +1,13 @@
 {
   "issues": [
     {
+      "id": 1088796811,
+      "number": 29,
+      "submitter": "joachimdalen",
+      "title": "Wrong usage example is generated",
+      "url": "https://github.com/joachimdalen/azext/issues/29"
+    },
+    {
       "id": 1087961018,
       "number": 21,
       "submitter": "joachimdalen",
@@ -51,6 +58,13 @@
     }
   ],
   "pullRequests": [
+    {
+      "id": 810062467,
+      "number": 32,
+      "submitter": "joachimdalen",
+      "title": "Fix wrong fields used in usage docs",
+      "url": "https://github.com/joachimdalen/azext/pull/32"
+    },
     {
       "id": 810060363,
       "number": 31,

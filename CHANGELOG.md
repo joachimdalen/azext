@@ -9,6 +9,14 @@
 - Use standalone prettier to reduce size
   - Pull Request: [GH#31 - Use standalone prettier](https://github.com/joachimdalen/azext/pull/31)
 
+### 🐛 Fixes (1)
+
+#### `readme@0.2.3`
+
+- Fixed wrong fields being used when generating yaml examples
+  - Issue: [GH#29 - Wrong usage example is generated](https://github.com/joachimdalen/azext/issues/29)
+  - Pull Request: [GH#32 - Fix wrong fields used in usage docs](https://github.com/joachimdalen/azext/pull/32)
+
 ---
 
 ## 0.2.2 (2021-12-26)
