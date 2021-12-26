@@ -16,6 +16,20 @@ import NewChangelogConfigCmdHandler from './handlers/changelog-config-cmd-handle
 import ChangelogGenerateCmdHandler from './handlers/changelog-generate-cmd-handler';
 import NewChangelogCmdHandler from './handlers/changelog-new-cmd-handler';
 
+enum ChangelogCliNames {
+  ConfigName = 'config-name',
+  Force = 'force',
+  Output = 'output',
+  Format = 'format',
+  GenerateCache = 'generate-cache',
+  FromCache = 'from-cache',
+  CacheName = 'cache-name',
+  Version = 'version',
+  OutputName = 'output-name',
+  Fresh = 'fresh',
+  LogName = 'log-name'
+}
+
 const changelogCommands: CommandBase = {
   command: 'changelog',
   sections: [
@@ -62,13 +76,13 @@ const changelogCommands: CommandBase = {
           header: 'Options',
           optionList: [
             {
-              name: 'output',
+              name: ChangelogCliNames.Output,
               alias: 'o',
               description: 'Full path to output generated markdown file to',
               defaultValue: path.join(workingDirectory(), CHANGELOG_OUTPUT_NAME)
             },
             {
-              name: 'config-name',
+              name: ChangelogCliNames.ConfigName,
               alias: 'c',
               description:
                 'File name of configuration file. Default: ' +
@@ -76,37 +90,37 @@ const changelogCommands: CommandBase = {
               defaultValue: CHANGELOG_CONFIG_NAME
             },
             {
-              name: 'log-name',
+              name: ChangelogCliNames.LogName,
               alias: 'l',
               description:
                 'File name of changelog entry file. Default: ' + CHANGELOG_NAME,
               defaultValue: CHANGELOG_NAME
             },
             {
-              name: 'format',
+              name: ChangelogCliNames.Format,
               type: Boolean,
               defaultValue: true,
               description:
                 'Format generated file. Requires Prettier to be installed'
             },
             {
-              name: 'generate-cache',
+              name: ChangelogCliNames.GenerateCache,
               type: Boolean,
               defaultValue: true,
               description: `Generate ${CHANGELOG_CACHE_NAME} containing a cache of issues and pull requests`
             },
             {
-              name: 'from-cache',
+              name: ChangelogCliNames.FromCache,
               type: Boolean,
               defaultValue: true,
               description: `Load issues and pull requests from cache file before GitHub`
             },
             {
-              name: 'cache-name',
+              name: ChangelogCliNames.CacheName,
               defaultValue: CHANGELOG_CACHE_NAME
             },
             {
-              name: 'version',
+              name: ChangelogCliNames.Version,
               type: String,
               description:
                 'Generate changelog for only this version. Maps to the version field of changelog.json'
@@ -116,44 +130,44 @@ const changelogCommands: CommandBase = {
       ],
       options: [
         {
-          name: 'output',
+          name: ChangelogCliNames.Output,
           alias: 'o',
 
           defaultValue: path.join(workingDirectory(), CHANGELOG_OUTPUT_NAME)
         },
         {
-          name: 'config-name',
+          name: ChangelogCliNames.ConfigName,
           alias: 'c',
 
           defaultValue: CHANGELOG_CONFIG_NAME
         },
         {
-          name: 'log-name',
+          name: ChangelogCliNames.LogName,
           alias: 'l',
 
           defaultValue: CHANGELOG_NAME
         },
         {
-          name: 'format',
+          name: ChangelogCliNames.Format,
           type: Boolean,
           defaultValue: true
         },
         {
-          name: 'generate-cache',
+          name: ChangelogCliNames.GenerateCache,
           type: Boolean,
           defaultValue: true
         },
         {
-          name: 'from-cache',
+          name: ChangelogCliNames.FromCache,
           type: Boolean,
           defaultValue: true
         },
         {
-          name: 'cache-name',
+          name: ChangelogCliNames.CacheName,
           defaultValue: CHANGELOG_CACHE_NAME
         },
         {
-          name: 'version',
+          name: ChangelogCliNames.Version,
           type: String
         }
       ],
@@ -183,13 +197,13 @@ const changelogCommands: CommandBase = {
           header: 'Options',
           optionList: [
             {
-              name: 'force',
+              name: ChangelogCliNames.Force,
               description: 'Overwrite file if it exists',
               defaultValue: false,
               type: Boolean
             },
             {
-              name: 'config-name',
+              name: ChangelogCliNames.ConfigName,
               description: 'File name of configuration file',
               defaultValue: CHANGELOG_CONFIG_NAME
             }
@@ -198,12 +212,12 @@ const changelogCommands: CommandBase = {
       ],
       options: [
         {
-          name: 'force',
+          name: ChangelogCliNames.Force,
           type: Boolean,
           defaultValue: false
         },
         {
-          name: 'config-name',
+          name: ChangelogCliNames.ConfigName,
           defaultValue: CHANGELOG_CONFIG_NAME
         }
       ],
@@ -233,7 +247,7 @@ const changelogCommands: CommandBase = {
           header: 'Options',
           optionList: [
             {
-              name: 'output-name',
+              name: ChangelogCliNames.OutputName,
               alias: 'o',
               description: 'Name of new changelog'
             }
@@ -242,7 +256,7 @@ const changelogCommands: CommandBase = {
       ],
       options: [
         {
-          name: 'output-file',
+          name: ChangelogCliNames.OutputName,
           alias: 'o',
           defaultValue: CHANGELOG_NAME
         }
@@ -275,11 +289,11 @@ const changelogCommands: CommandBase = {
           header: 'Options',
           optionList: [
             {
-              name: 'fresh',
+              name: ChangelogCliNames.Fresh,
               description: 'Ignore existing cache and reload all'
             },
             {
-              name: 'config-name',
+              name: ChangelogCliNames.ConfigName,
               alias: 'c',
               description:
                 'File name of configuration file. Default: ' +
@@ -287,14 +301,14 @@ const changelogCommands: CommandBase = {
               defaultValue: CHANGELOG_CONFIG_NAME
             },
             {
-              name: 'log-name',
+              name: ChangelogCliNames.LogName,
               alias: 'l',
               description:
                 'File name of changelog entry file. Default: ' + CHANGELOG_NAME,
               defaultValue: CHANGELOG_NAME
             },
             {
-              name: 'cache-name',
+              name: ChangelogCliNames.CacheName,
               defaultValue: CHANGELOG_CACHE_NAME
             }
           ]
@@ -302,22 +316,22 @@ const changelogCommands: CommandBase = {
       ],
       options: [
         {
-          name: 'fresh',
+          name: ChangelogCliNames.Fresh,
           defaultValue: false,
           type: Boolean
         },
         {
-          name: 'config-name',
+          name: ChangelogCliNames.ConfigName,
           alias: 'c',
           defaultValue: CHANGELOG_CONFIG_NAME
         },
         {
-          name: 'log-name',
+          name: ChangelogCliNames.LogName,
           alias: 'l',
           defaultValue: CHANGELOG_NAME
         },
         {
-          name: 'cache-name',
+          name: ChangelogCliNames.CacheName,
           defaultValue: CHANGELOG_CACHE_NAME
         }
       ],
