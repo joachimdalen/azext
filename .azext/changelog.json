@@ -1,5 +1,22 @@
 [
   {
+    "publishDate": "2021-12-XX",
+    "version": "0.2.3",
+    "modules": [
+      {
+        "name": "core",
+        "version": "0.2.3",
+        "changes": [
+          {
+            "type": "maint",
+            "description": "Use standalone prettier to reduce size",
+            "pullRequest": 31
+          }
+        ]
+      }
+    ]
+  },
+  {
     "publishDate": "2021-12-26",
     "version": "0.2.2",
     "modules": [
