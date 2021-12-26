@@ -52,6 +52,13 @@
   ],
   "pullRequests": [
     {
+      "id": 810060363,
+      "number": 31,
+      "submitter": "joachimdalen",
+      "title": "Use standalone prettier",
+      "url": "https://github.com/joachimdalen/azext/pull/31"
+    },
+    {
       "id": 810010044,
       "number": 26,
       "submitter": "joachimdalen",

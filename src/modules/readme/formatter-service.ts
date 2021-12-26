@@ -26,8 +26,9 @@ export default class FormatterService {
 
     if (isModuleInstalled('prettier')) {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const prettier = require('prettier');
-      tblString = prettier.format(tblString, { parser: 'markdown' });
+      const prettier = require('prettier/standalone');
+      const plugins = [require('prettier/parser-markdown')];
+      tblString = prettier.format(tblString, { parser: 'markdown', plugins });
     }
 
     return tblString;

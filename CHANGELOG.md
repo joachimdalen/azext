@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.3 (2021-12-XX)
+
+### 🛠️ Maintenance (1)
+
+#### `core@0.2.3`
+
+- Use standalone prettier to reduce size
+  - Pull Request: [GH#31 - Use standalone prettier](https://github.com/joachimdalen/azext/pull/31)
+
+---
+
 ## 0.2.2 (2021-12-26)
 
 ### 🐛 Fixes (3)
@@ -47,6 +58,15 @@
 ## 0.2.0 (2021-12-22)
 
 > This release introduces a new command (`azext readme`) to manage documentation. See [GitHub Documentation](https://github.com/joachimdalen/azext/blob/master/docs/readme/index.md) for more information.
+
+### 🛠️ Maintenance (2)
+
+#### `core@0.2.0`
+
+- Split CLI and implementation in preparation for Node API
+  - Pull Request: [GH#6 - Refactor to support for usage from node](https://github.com/joachimdalen/azext/pull/6)
+- Forced path of configuration files to be in folder `.azext/`
+  - Pull Request: [GH#12 - Refactoring and docs generation](https://github.com/joachimdalen/azext/pull/12)
 
 ### 🐛 Fixes (2)
 
@@ -102,20 +122,18 @@
 - Add new command to create mapping file
   - Issue: [GH#3 - Documentation generation](https://github.com/joachimdalen/azext/issues/3)
 
-### 🛠️ Maintenance (2)
-
-#### `core@0.2.0`
-
-- Split CLI and implementation in preparation for Node API
-  - Pull Request: [GH#6 - Refactor to support for usage from node](https://github.com/joachimdalen/azext/pull/6)
-- Forced path of configuration files to be in folder `.azext/`
-  - Pull Request: [GH#12 - Refactoring and docs generation](https://github.com/joachimdalen/azext/pull/12)
-
 ---
 
 ## 0.0.1 (2021-12-13)
 
 Initial release of AzExt
+
+### 🛠️ Maintenance (1)
+
+#### `core@0.0.1`
+
+- Setup CI and CD
+  - Pull Request: [GH#1 - Setup build and deployment pipeline](https://github.com/joachimdalen/azext/pull/1)
 
 ### 🚀 Features (3)
 
@@ -130,12 +148,5 @@ Initial release of AzExt
 #### `config@0.0.1`
 
 - Added config command
-
-### 🛠️ Maintenance (1)
-
-#### `core@0.0.1`
-
-- Setup CI and CD
-  - Pull Request: [GH#1 - Setup build and deployment pipeline](https://github.com/joachimdalen/azext/pull/1)
 
 ---

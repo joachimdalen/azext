@@ -66,8 +66,12 @@ class Generator {
     if (options.format) {
       if (isModuleInstalled('prettier')) {
         // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const prettier = require('prettier');
-        fileContent = prettier.format(fileContent, { parser: 'markdown' });
+        const prettier = require('prettier/standalone');
+        const plugins = [require('prettier/parser-markdown')];
+        fileContent = prettier.format(fileContent, {
+          parser: 'markdown',
+          plugins
+        });
       } else {
         throw new Error(
           'Prettier is not installed. Install module globally to enable formatting'
