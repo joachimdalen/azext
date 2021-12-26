@@ -37,8 +37,10 @@ const replaceDefinitions = async (path: string) => {
   }
 
   let prettier = undefined;
+  let plugins = undefined;
   if (isModuleInstalled('prettier')) {
-    prettier = require('prettier');
+    prettier = require('prettier/standalone');
+    plugins = [require('prettier/parser-markdown')];
     console.log('Loaded prettier');
   } else {
     console.log(
@@ -92,7 +94,10 @@ const replaceDefinitions = async (path: string) => {
 
           if (prettier !== undefined) {
             console.log(`Formatting ${chalk.cyanBright(file)}`);
-            newString = prettier.format(newString, { parser: 'markdown' });
+            newString = prettier.format(newString, {
+              parser: 'markdown',
+              plugins
+            });
           } else {
             console.log(
               chalk.redBright('Prettier is not installed, skipping formatting')

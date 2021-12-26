@@ -41,8 +41,9 @@ export default class TaskInputFormatter extends ReplacementCommandFormatter<Task
 
     if (isModuleInstalled('prettier')) {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const prettier = require('prettier');
-      tbl = prettier.format(tbl, { parser: 'yaml' });
+      const prettier = require('prettier/standalone');
+      const plugins = [require('prettier/parser-yaml')];
+      tbl = prettier.format(tbl, { parser: 'yaml', plugins });
     }
     return '```yaml' + EOL + tbl + EOL + '```';
   }
