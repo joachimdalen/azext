@@ -1,6 +1,13 @@
 {
   "issues": [
     {
+      "id": 1083928439,
+      "number": 10,
+      "submitter": "joachimdalen",
+      "title": "Add changes to root release outside of individual modules",
+      "url": "https://github.com/joachimdalen/azext/issues/10"
+    },
+    {
       "id": 1088796811,
       "number": 29,
       "submitter": "joachimdalen",
@@ -58,6 +65,13 @@
     }
   ],
   "pullRequests": [
+    {
+      "id": 810212850,
+      "number": 34,
+      "submitter": "joachimdalen",
+      "title": "Add changes to root release",
+      "url": "https://github.com/joachimdalen/azext/pull/34"
+    },
     {
       "id": 810062467,
       "number": 32,

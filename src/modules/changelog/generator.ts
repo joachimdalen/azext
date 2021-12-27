@@ -172,35 +172,91 @@ class Generator {
     }
   }
 
+  private addChanges(
+    builder: MarkdownBuilder,
+    cfg: ChangelogConfig,
+    context: GeneratorContext,
+    changes: ChangelogEntry[]
+  ) {
+    changes.forEach((c) => {
+      builder.addListItem(
+        this._replacer.replaceEmojisIf(
+          c.description,
+          cfg.replaceEmojis.githubIssues
+        )
+      );
+
+      this.addGitHubMeta(c, builder, context);
+    });
+  }
+
+  private addTypeHeader(
+    builder: MarkdownBuilder,
+    cfg: ChangelogConfig,
+    type: string,
+    count?: number
+  ) {
+    const mappedTypeTitle = cfg.typeMapping[type];
+    if (mappedTypeTitle === undefined) {
+      console.warn('No mapping found for change type ' + type);
+    }
+
+    builder.addHeader(
+      this._replacer.replace(
+        this._replacer.replaceEmojisIf(
+          mappedTypeTitle,
+          cfg.replaceEmojis.types
+        ),
+        {
+          changeCount: count || undefined
+        }
+      ),
+      cfg.typeSize
+    );
+  }
+
+  private addRootChanges(
+    builder: MarkdownBuilder,
+    cfg: ChangelogConfig,
+    release: ChangelogDefinition,
+    context: GeneratorContext
+  ) {
+    if (release.changes === undefined) return;
+    for (const type of context.types) {
+      const change = release.changes.filter((x) => x.type === type);
+
+      if (change.length > 0) {
+        this.addTypeHeader(builder, cfg, type, change?.length);
+      }
+
+      const changes = release.changes?.filter((x) => x.type === type);
+      this.addChanges(builder, cfg, context, changes);
+    }
+  }
+
   private addModuleChanges(
     builder: MarkdownBuilder,
     cfg: ChangelogConfig,
     release: ChangelogDefinition,
     context: GeneratorContext
   ) {
+    if (cfg.moduleChangesTitle && release.changes !== undefined) {
+      builder.addHeader(
+        this._replacer.replaceEmojisIf(
+          cfg.moduleChangesTitle.format,
+          cfg.replaceEmojis.moduleChangesTitle
+        ),
+        cfg.moduleChangesTitle.size
+      );
+    }
+
     for (const type of context.types) {
       const change = release.modules.flatMap((y) =>
         y.changes.filter((x) => x.type === type)
       );
 
       if (change.length > 0) {
-        const mappedTypeTitle = cfg.typeMapping[type];
-        if (mappedTypeTitle === undefined) {
-          console.warn('No mapping found for change type ' + type);
-        }
-
-        builder.addHeader(
-          this._replacer.replace(
-            this._replacer.replaceEmojisIf(
-              mappedTypeTitle,
-              cfg.replaceEmojis.types
-            ),
-            {
-              changeCount: change?.length || undefined
-            }
-          ),
-          cfg.typeSize
-        );
+        this.addTypeHeader(builder, cfg, type, change?.length);
       }
 
       release.modules.forEach((rm) => {
@@ -222,16 +278,7 @@ class Generator {
             cfg.moduleTitleFormat.size
           );
 
-          change.forEach((c) => {
-            builder.addListItem(
-              this._replacer.replaceEmojisIf(
-                c.description,
-                cfg.replaceEmojis.githubIssues
-              )
-            );
-
-            this.addGitHubMeta(c, builder, context);
-          });
+          this.addChanges(builder, cfg, context, change);
         }
       });
     }
@@ -332,6 +379,7 @@ class Generator {
 
     this.addSectionHeader(builder, cfg, release);
     this.addSummaryAndNotes(builder, cfg, release);
+    this.addRootChanges(builder, cfg, release, context);
     this.addModuleChanges(builder, cfg, release, context);
     this.addContributors(builder, cfg, release, context);
     builder.addSplitter();

@@ -21,6 +21,10 @@ export const CHANGELOG_DEFAULT_CONFIG: ChangelogConfig = {
     size: 'h4',
     format: '`{{name}}@{{version}}`'
   },
+  moduleChangesTitle: {
+    size: 'h3',
+    format: ':package: Module changes'
+  },
   sectionSplitter: '---',
   typeSize: 'h3',
   typeMapping: {
@@ -47,6 +51,7 @@ export const CHANGELOG_DEFAULT_CONFIG: ChangelogConfig = {
     moduleTitle: true,
     attributionTitle: true,
     attributionSubTitle: true,
+    moduleChangesTitle: true,
     githubIssues: false,
     githubPullRequests: false,
     notes: true,

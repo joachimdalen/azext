@@ -6,6 +6,10 @@
     "format": "{{version}} ({{publishDate}})"
   },
   "moduleTitleFormat": { "size": "h4", "format": "`{{name}}@{{version}}`" },
+  "moduleChangesTitle": {
+    "size": "h2",
+    "format": ":package: Module changes"
+  },
   "sectionSplitter": "---",
   "typeSize": "h3",
   "typeMapping": {
@@ -30,6 +34,7 @@
     "moduleTitle": true,
     "attributionTitle": true,
     "attributionSubTitle": true,
+    "moduleChangesTitle": true,
     "githubIssues": false,
     "githubPullRequests": false,
     "notes": true,
