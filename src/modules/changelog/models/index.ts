@@ -9,3 +9,4 @@ export * from './github-pull-request';
 export * from './header-sizes';
 export * from './replace-emojis-config';
 export * from './title-format';
+export * from './text-format';

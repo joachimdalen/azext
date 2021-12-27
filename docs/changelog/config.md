@@ -35,6 +35,10 @@ The `changelog config` command generates a new changelog configuration file.
   "attributionSubTitle": {
     "format": "Thank you to the following for contributing to the latest release"
   },
+  // Format of link title used for contributors
+  "attributionLinkTextFormat": {
+    "format": "@{{ghUsername}}"
+  },
   // This is the known authors that should not have their contributions listed in the changelog
   "knownAuthors": [],
   // Use issue title instead of number in links
@@ -181,3 +185,15 @@ This is the type titles rendered in the changelog.
 | Variable      | Description                                                |
 | ------------- | ---------------------------------------------------------- |
 | `changeCount` | The number of changes for this type in the current release |
+
+## Attribution Link Text Format
+
+This is the title of the link that is rendered in the contribution list
+
+`[attributionLinkTextFormat.format](https://github.com/<username>)`
+
+### Supported Variables
+
+| Variable     | Description             |
+| ------------ | ----------------------- |
+| `ghUsername` | Username of contributor |

@@ -41,6 +41,9 @@ export const CHANGELOG_DEFAULT_CONFIG: ChangelogConfig = {
   attributionSubTitle: {
     format: 'Thank you to the following for contributing to the latest release'
   },
+  attributionLinkTextFormat: {
+    format: '@{{ghUsername}}'
+  },
   knownAuthors: [],
   useDescriptiveIssues: true,
   useDescriptivePullRequests: true,

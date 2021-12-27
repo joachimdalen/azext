@@ -9,15 +9,23 @@
 
 ## 📦 Module changes
 
-### 🚀 Features (1)
+### 🚀 Features (2)
 
 #### `changelog@0.3.0`
 
 - Added ability to add changes outside of individual modules
   - Issue: [GH#10 - Add changes to root release outside of individual modules](https://github.com/joachimdalen/azext/issues/10)
   - Pull Request: [GH#34 - Add changes to root release](https://github.com/joachimdalen/azext/pull/34)
+- Added config to set format for contributor link
+  - Pull Request: [GH#35 - Fix duplicated authors in contributions](https://github.com/joachimdalen/azext/pull/35)
 
-### 🐛 Fixes (1)
+### 🐛 Fixes (2)
+
+#### `changelog@0.3.0`
+
+- Fixed duplicated contributors in list
+  - Issue: [GH#33 - Duplicated contributors](https://github.com/joachimdalen/azext/issues/33)
+  - Pull Request: [GH#35 - Fix duplicated authors in contributions](https://github.com/joachimdalen/azext/pull/35)
 
 #### `readme@0.3.0`
 

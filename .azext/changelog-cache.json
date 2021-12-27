@@ -1,6 +1,13 @@
 {
   "issues": [
     {
+      "id": 1088997546,
+      "number": 33,
+      "submitter": "joachimdalen",
+      "title": "Duplicated contributors",
+      "url": "https://github.com/joachimdalen/azext/issues/33"
+    },
+    {
       "id": 1083928439,
       "number": 10,
       "submitter": "joachimdalen",
@@ -65,6 +72,13 @@
     }
   ],
   "pullRequests": [
+    {
+      "id": 810292509,
+      "number": 35,
+      "submitter": "joachimdalen",
+      "title": "Fix duplicated authors in contributions",
+      "url": "https://github.com/joachimdalen/azext/pull/35"
+    },
     {
       "id": 810212850,
       "number": 34,
