@@ -222,15 +222,6 @@ class Generator {
     context: GeneratorContext
   ) {
     if (release.changes === undefined) return;
-    if (cfg.rootChangesTitle) {
-      builder.addHeader(
-        this._replacer.replaceEmojisIf(
-          cfg.rootChangesTitle.format,
-          cfg.replaceEmojis.rootChangesTitle
-        ),
-        cfg.rootChangesTitle.size
-      );
-    }
     for (const type of context.types) {
       const change = release.changes.filter((x) => x.type === type);
 

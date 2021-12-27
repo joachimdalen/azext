@@ -21,10 +21,6 @@ export const CHANGELOG_DEFAULT_CONFIG: ChangelogConfig = {
     size: 'h4',
     format: '`{{name}}@{{version}}`'
   },
-  rootChangesTitle: {
-    size: 'h3',
-    format: ':bookmark: Base changes'
-  },
   moduleChangesTitle: {
     size: 'h3',
     format: ':package: Module changes'
@@ -55,7 +51,6 @@ export const CHANGELOG_DEFAULT_CONFIG: ChangelogConfig = {
     moduleTitle: true,
     attributionTitle: true,
     attributionSubTitle: true,
-    rootChangesTitle: true,
     moduleChangesTitle: true,
     githubIssues: false,
     githubPullRequests: false,

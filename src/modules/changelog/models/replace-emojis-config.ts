@@ -9,6 +9,5 @@ export default interface ReplaceEmojiesConfig {
   summary: boolean;
   githubIssues: boolean;
   githubPullRequests: boolean;
-  rootChangesTitle: boolean;
   moduleChangesTitle: boolean;
 }
