@@ -19,6 +19,17 @@
             "description": "Added ability to add changes outside of individual modules",
             "issue": 10,
             "pullRequest": 34
+          },
+          {
+            "type": "fix",
+            "description": "Fixed duplicated contributors in list",
+            "issue": 33,
+            "pullRequest": 35
+          },
+          {
+            "type": "feature",
+            "description": "Added config to set format for contributor link",
+            "pullRequest": 35
           }
         ]
       },
