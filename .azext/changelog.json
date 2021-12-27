@@ -1,22 +1,30 @@
 [
   {
     "publishDate": "2021-12-XX",
-    "version": "0.2.3",
+    "version": "0.3.0",
+    "changes": [
+      {
+        "type": "other",
+        "description": "Use standalone prettier to reduce size",
+        "pullRequest": 31
+      }
+    ],
     "modules": [
       {
-        "name": "core",
-        "version": "0.2.3",
+        "name": "changelog",
+        "version": "0.3.0",
         "changes": [
           {
-            "type": "maint",
-            "description": "Use standalone prettier to reduce size",
-            "pullRequest": 31
+            "type": "feature",
+            "description": "Added ability to add changes outside of individual modules",
+            "issue": 10,
+            "pullRequest": 34
           }
         ]
       },
       {
         "name": "readme",
-        "version": "0.2.3",
+        "version": "0.3.0",
         "changes": [
           {
             "type": "fix",
