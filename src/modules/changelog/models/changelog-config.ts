@@ -1,5 +1,6 @@
 import { HeaderSizes } from './header-sizes';
 import ReplaceEmojiesConfig from './replace-emojis-config';
+import TextFormat from './text-format';
 import TitleFormat from './title-format';
 
 export default interface ChangelogConfig {
@@ -17,6 +18,7 @@ export default interface ChangelogConfig {
   useDescriptivePullRequests: boolean;
   attributionTitleFormat: TitleFormat;
   attributionSubTitle: TitleFormat;
+  attributionLinkTextFormat: TextFormat;
   replaceEmojis: ReplaceEmojiesConfig;
   moduleChangesTitle?: TitleFormat;
 }

@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 
 import { isModuleInstalled } from '../../core/addons-checker';
 import Replacer from '../../core/replacer';
-import { isNumber } from '../../core/utils';
+import { distinct, isNumber } from '../../core/utils';
 import ConfigProvider from '../../data-providers/config-provider';
 import { CHANGELOG_CONFIG_NAME, CHANGELOG_NAME } from './changelog-constants';
 import MarkdownBuilder from './markdown-builder';
@@ -334,9 +334,6 @@ class Generator {
       });
 
     if (nonAuthors.length > 0) {
-      console.log(
-        `Found a total of ${nonAuthors.length} contributors for release ${release.version}`
-      );
       builder.addHeader(
         this._replacer.replaceEmojisIf(
           cfg.attributionTitleFormat.format,
@@ -353,9 +350,15 @@ class Generator {
         cfg.attributionSubTitle.size
       );
 
-      nonAuthors.forEach((x) =>
+      const distinctAuthors = nonAuthors
+        .map((v: GitHubIssue | GitHubPullRequest) => v.submitter)
+        .filter(distinct);
+
+      distinctAuthors.forEach((authorName) =>
         builder.addListItem(
-          `[@${x.submitter}](https://github.com/${x.submitter})`
+          `[${this._replacer.replace(cfg.attributionLinkTextFormat.format, {
+            ghUsername: authorName
+          })}](https://github.com/${authorName})`
         )
       );
     }

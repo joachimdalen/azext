@@ -24,7 +24,10 @@
   "attributionSubTitle": {
     "format": "Thank you to the following for contributing to the latest release"
   },
-  "knownAuthors": ["joachimdalen"],
+  "attributionLinkTextFormat": {
+    "format": "@{{ghUsername}}"
+  },
+  "knownAuthors": [],
   "useDescriptiveIssues": true,
   "useDescriptivePullRequests": true,
   "replaceEmojis": {
