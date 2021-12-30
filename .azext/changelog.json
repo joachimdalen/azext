@@ -1,6 +1,6 @@
 [
   {
-    "publishDate": "2021-12-XX",
+    "publishDate": "2021-12-30",
     "version": "0.3.0",
     "changes": [
       {
@@ -102,17 +102,11 @@
   {
     "publishDate": "2021-12-25",
     "version": "0.2.1",
-    "modules": [
+    "changes": [
       {
-        "name": "core",
-        "version": "0.2.1",
-        "changes": [
-          {
-            "type": "docs",
-            "description": "Updated NPM readme",
-            "pullRequest": 20
-          }
-        ]
+        "type": "docs",
+        "description": "Updated NPM readme",
+        "pullRequest": 20
       }
     ]
   },
@@ -120,6 +114,28 @@
     "publishDate": "2021-12-22",
     "version": "0.2.0",
     "notes": "This release introduces a new command (`azext readme`) to manage documentation. See [GitHub Documentation](https://github.com/joachimdalen/azext/blob/master/docs/readme/index.md) for more information.",
+    "changes": [
+      {
+        "type": "maint",
+        "description": "Split CLI and implementation in preparation for Node API",
+        "pullRequest": 6
+      },
+      {
+        "description": "Added more detailed documentation",
+        "type": "docs",
+        "pullRequest": 7
+      },
+      {
+        "type": "feature",
+        "description": "Add support for global options",
+        "pullRequest": 7
+      },
+      {
+        "type": "maint",
+        "description": "Forced path of configuration files to be in folder `.azext/`",
+        "pullRequest": 12
+      }
+    ],
     "modules": [
       {
         "name": "readme",
@@ -176,32 +192,6 @@
         ]
       },
       {
-        "name": "core",
-        "version": "0.2.0",
-        "changes": [
-          {
-            "type": "maint",
-            "description": "Split CLI and implementation in preparation for Node API",
-            "pullRequest": 6
-          },
-          {
-            "description": "Added more detailed documentation",
-            "type": "docs",
-            "pullRequest": 7
-          },
-          {
-            "type": "feature",
-            "description": "Add support for global options",
-            "pullRequest": 7
-          },
-          {
-            "type": "maint",
-            "description": "Forced path of configuration files to be in folder `.azext/`",
-            "pullRequest": 12
-          }
-        ]
-      },
-      {
         "name": "init",
         "version": "0.2.0",
         "changes": [
@@ -224,6 +214,13 @@
     "publishDate": "2021-12-13",
     "version": "0.0.1",
     "summary": "Initial release of AzExt",
+    "changes": [
+      {
+        "type": "maint",
+        "description": "Setup CI and CD",
+        "pullRequest": 1
+      }
+    ],
     "modules": [
       {
         "name": "changelog",
@@ -252,17 +249,6 @@
           {
             "description": "Added config command",
             "type": "feature"
-          }
-        ]
-      },
-      {
-        "name": "core",
-        "version": "0.0.1",
-        "changes": [
-          {
-            "type": "maint",
-            "description": "Setup CI and CD",
-            "pullRequest": 1
           }
         ]
       }

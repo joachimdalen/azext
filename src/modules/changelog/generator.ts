@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 
 import { isModuleInstalled } from '../../core/addons-checker';
 import Replacer from '../../core/replacer';
-import { distinct, isNumber } from '../../core/utils';
+import { distinct, getChangesForDefinition, isNumber } from '../../core/utils';
 import ConfigProvider from '../../data-providers/config-provider';
 import { CHANGELOG_CONFIG_NAME, CHANGELOG_NAME } from './changelog-constants';
 import MarkdownBuilder from './markdown-builder';
@@ -240,6 +240,8 @@ class Generator {
     release: ChangelogDefinition,
     context: GeneratorContext
   ) {
+    if (!release.modules) return;
+
     if (cfg.moduleChangesTitle && release.changes !== undefined) {
       builder.addHeader(
         this._replacer.replaceEmojisIf(
@@ -314,12 +316,10 @@ class Generator {
     release: ChangelogDefinition,
     context: GeneratorContext
   ) {
-    const moduleIssues = release.modules
-      .flatMap((x) => x.changes.flatMap((y) => y.issue))
-      .filter(isNumber);
-    const modulePrs = release.modules
-      .flatMap((x) => x.changes.flatMap((y) => y.pullRequest))
-      .filter(isNumber);
+    const changes = getChangesForDefinition(release);
+
+    const moduleIssues = changes.flatMap((x) => x.issue).filter(isNumber);
+    const modulePrs = changes.flatMap((x) => x.pullRequest).filter(isNumber);
 
     const nonAuthors = [
       ...context.issues.values(),
@@ -382,8 +382,15 @@ class Generator {
 
     this.addSectionHeader(builder, cfg, release);
     this.addSummaryAndNotes(builder, cfg, release);
-    this.addRootChanges(builder, cfg, release, context);
-    this.addModuleChanges(builder, cfg, release, context);
+
+    if (release.changes) {
+      this.addRootChanges(builder, cfg, release, context);
+    }
+
+    if (release.modules) {
+      this.addModuleChanges(builder, cfg, release, context);
+    }
+
     this.addContributors(builder, cfg, release, context);
     builder.addSplitter();
   }

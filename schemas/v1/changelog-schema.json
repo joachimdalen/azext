@@ -6,7 +6,16 @@
       "description": "An explanation about the purpose of this instance.",
       "default": {},
       "additionalProperties": false,
-      "required": ["publishDate", "version", "modules"],
+
+      "required": ["publishDate", "version"],
+      "anyOf": [
+        {
+          "required": ["changes"]
+        },
+        {
+          "required": ["modules"]
+        }
+      ],
       "properties": {
         "publishDate": {
           "type": "string",

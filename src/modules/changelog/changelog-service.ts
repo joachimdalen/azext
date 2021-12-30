@@ -1,7 +1,13 @@
 import chalk from 'chalk';
 
 import { ActionResult } from '../../constants';
-import { distinct, isIssue, isNumber, isPullRequest } from '../../core';
+import {
+  distinct,
+  getChangesForAllDefinition,
+  isIssue,
+  isNumber,
+  isPullRequest
+} from '../../core';
 import ConfigProvider from '../../data-providers/config-provider';
 import GitHub from '../../data-providers/github';
 import {
@@ -133,8 +139,9 @@ class ChangelogService {
     }
 
     if (cache.issues) {
-      const issueIds = changelog
-        .flatMap((x) => x.modules.flatMap((x) => x.changes.map((x) => x.issue)))
+      const allModules = getChangesForAllDefinition(changelog);
+      const issueIds = allModules
+        .map((x) => x.issue)
         .filter(isNumber)
         .filter(distinct)
         .filter((y) => !cache.issues?.some((x) => x.number === y));
@@ -154,10 +161,10 @@ class ChangelogService {
     }
 
     if (cache.pullRequests) {
-      const prIds = changelog
-        .flatMap((x) =>
-          x.modules.flatMap((x) => x.changes.map((x) => x.pullRequest))
-        )
+      const allModules = getChangesForAllDefinition(changelog);
+
+      const prIds = allModules
+        .map((x) => x.pullRequest)
         .filter(isNumber)
         .filter(distinct)
         .filter((y) => !cache.pullRequests?.some((x) => x.number === y));

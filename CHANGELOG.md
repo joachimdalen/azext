@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.0 (2021-12-XX)
+## 0.3.0 (2021-12-30)
 
 ### 💬 Other (1)
 
@@ -37,6 +37,18 @@
 
 ## 0.2.2 (2021-12-26)
 
+### 💬 Other (2)
+
+#### `readme@0.2.2`
+
+- Refactor how cli parameters are set in the cli definition
+  - Pull Request: [GH#25 - Fix wrong option names being passed from cli to handler](https://github.com/joachimdalen/azext/pull/25)
+
+#### `init@0.2.2`
+
+- Refactor how cli parameters are set in the cli definition
+  - Pull Request: [GH#25 - Fix wrong option names being passed from cli to handler](https://github.com/joachimdalen/azext/pull/25)
+
 ### 🐛 Fixes (3)
 
 #### `changelog@0.2.2`
@@ -54,25 +66,11 @@
   - Issue: [GH#21 - Can not initialize in a new project](https://github.com/joachimdalen/azext/issues/21)
   - Pull Request: [GH#26 - Fix not being able to initialize in a new project](https://github.com/joachimdalen/azext/pull/26)
 
-### 💬 Other (2)
-
-#### `readme@0.2.2`
-
-- Refactor how cli parameters are set in the cli definition
-  - Pull Request: [GH#25 - Fix wrong option names being passed from cli to handler](https://github.com/joachimdalen/azext/pull/25)
-
-#### `init@0.2.2`
-
-- Refactor how cli parameters are set in the cli definition
-  - Pull Request: [GH#25 - Fix wrong option names being passed from cli to handler](https://github.com/joachimdalen/azext/pull/25)
-
 ---
 
 ## 0.2.1 (2021-12-25)
 
 ### 📝 Documentation (1)
-
-#### `core@0.2.1`
 
 - Updated NPM readme
   - Pull Request: [GH#20 - Fix readme for Npm](https://github.com/joachimdalen/azext/pull/20)
@@ -83,7 +81,26 @@
 
 > This release introduces a new command (`azext readme`) to manage documentation. See [GitHub Documentation](https://github.com/joachimdalen/azext/blob/master/docs/readme/index.md) for more information.
 
-### 🚀 Features (9)
+### 🚀 Features (1)
+
+- Add support for global options
+  - Pull Request: [GH#7 - Update documentation](https://github.com/joachimdalen/azext/pull/7)
+
+### 📝 Documentation (1)
+
+- Added more detailed documentation
+  - Pull Request: [GH#7 - Update documentation](https://github.com/joachimdalen/azext/pull/7)
+
+### 🛠️ Maintenance (2)
+
+- Split CLI and implementation in preparation for Node API
+  - Pull Request: [GH#6 - Refactor to support for usage from node](https://github.com/joachimdalen/azext/pull/6)
+- Forced path of configuration files to be in folder `.azext/`
+  - Pull Request: [GH#12 - Refactoring and docs generation](https://github.com/joachimdalen/azext/pull/12)
+
+## 📦 Module changes
+
+### 🚀 Features (8)
 
 #### `readme@0.1.0`
 
@@ -107,11 +124,6 @@
   - Issue: [GH#13 - Add command to populate changelog cache without generating it](https://github.com/joachimdalen/azext/issues/13)
   - Pull Request: [GH#16 - Add command for refresh of changelog cache](https://github.com/joachimdalen/azext/pull/16)
 
-#### `core@0.2.0`
-
-- Add support for global options
-  - Pull Request: [GH#7 - Update documentation](https://github.com/joachimdalen/azext/pull/7)
-
 #### `init@0.2.0`
 
 - Add new command to create mapping file
@@ -130,27 +142,18 @@
   - Issue: [GH#2 - Init command does not respect --root option](https://github.com/joachimdalen/azext/issues/2)
   - Pull Request: [GH#6 - Refactor to support for usage from node](https://github.com/joachimdalen/azext/pull/6)
 
-### 📝 Documentation (1)
-
-#### `core@0.2.0`
-
-- Added more detailed documentation
-  - Pull Request: [GH#7 - Update documentation](https://github.com/joachimdalen/azext/pull/7)
-
-### 🛠️ Maintenance (2)
-
-#### `core@0.2.0`
-
-- Split CLI and implementation in preparation for Node API
-  - Pull Request: [GH#6 - Refactor to support for usage from node](https://github.com/joachimdalen/azext/pull/6)
-- Forced path of configuration files to be in folder `.azext/`
-  - Pull Request: [GH#12 - Refactoring and docs generation](https://github.com/joachimdalen/azext/pull/12)
-
 ---
 
 ## 0.0.1 (2021-12-13)
 
 Initial release of AzExt
+
+### 🛠️ Maintenance (1)
+
+- Setup CI and CD
+  - Pull Request: [GH#1 - Setup build and deployment pipeline](https://github.com/joachimdalen/azext/pull/1)
+
+## 📦 Module changes
 
 ### 🚀 Features (3)
 
@@ -165,12 +168,5 @@ Initial release of AzExt
 #### `config@0.0.1`
 
 - Added config command
-
-### 🛠️ Maintenance (1)
-
-#### `core@0.0.1`
-
-- Setup CI and CD
-  - Pull Request: [GH#1 - Setup build and deployment pipeline](https://github.com/joachimdalen/azext/pull/1)
 
 ---

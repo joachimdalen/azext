@@ -1,4 +1,4 @@
-import ConfigProvider from '../../data-providers/config-provider';
+import { getChangesForAllDefinition } from '../../core';
 import ChangelogService from './changelog-service';
 import ChangelogConfig from './models/changelog-config';
 import ChangelogDefinition from './models/changelog-definition';
@@ -42,10 +42,10 @@ export class MetaDataLoader {
       cachedPullRequests.map((i) => [i.number, i])
     );
 
-    const distinctTypes = log
-      .flatMap((x) =>
-        x.modules.flatMap((y) => y.changes.flatMap((z) => z.type))
-      )
+    const changes = getChangesForAllDefinition(log);
+
+    const distinctTypes = changes
+      .map((x) => x.type)
       .filter((value, index, self) => {
         return self.indexOf(value) === index;
       });
