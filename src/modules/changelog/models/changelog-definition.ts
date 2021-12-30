@@ -6,6 +6,6 @@ export default interface ChangelogDefinition {
   publishDate: string;
   summary?: string;
   notes?: string;
-  modules: ChangelogModule[];
+  modules?: ChangelogModule[];
   changes?: ChangelogEntry[];
 }

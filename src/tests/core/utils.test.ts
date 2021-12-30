@@ -1,4 +1,12 @@
-import { distinct, isIssue, isNumber, isPullRequest } from '../../core';
+import {
+  distinct,
+  getChangesForAllDefinition,
+  getChangesForDefinition,
+  isIssue,
+  isNumber,
+  isPullRequest
+} from '../../core';
+import ChangelogDefinition from '../../modules/changelog/models/changelog-definition';
 import GitHubIssue from '../../modules/changelog/models/github-issue';
 import GitHubPullRequest from '../../modules/changelog/models/github-pull-request';
 
@@ -44,6 +52,128 @@ describe('Utils', () => {
   describe('distinct', () => {
     it('should return distinct values', () => {
       expect([1, 2, 2, 3].filter(distinct)).toEqual([1, 2, 3]);
+    });
+  });
+  describe('getChangesForDefinition', () => {
+    it('should return correct when only root changes', () => {
+      const definition: ChangelogDefinition = {
+        publishDate: '2021-12-30',
+        version: '0.0.1',
+        changes: [
+          {
+            type: 'bugfix',
+            description: 'Some desc'
+          }
+        ]
+      };
+
+      const fetched = getChangesForDefinition(definition);
+
+      expect(fetched.length).toEqual(1);
+    });
+    it('should return correct when only module changes', () => {
+      const definition: ChangelogDefinition = {
+        publishDate: '2021-12-30',
+        version: '0.0.1',
+        modules: [
+          {
+            name: 'module-1',
+            version: '0.0.1',
+            changes: [
+              {
+                type: 'bugfix',
+                description: 'Some desc'
+              }
+            ]
+          }
+        ]
+      };
+
+      const fetched = getChangesForDefinition(definition);
+
+      expect(fetched.length).toEqual(1);
+    });
+    it('should return correct when root and module changes', () => {
+      const definition: ChangelogDefinition = {
+        publishDate: '2021-12-30',
+        version: '0.0.1',
+        changes: [
+          {
+            type: 'bugfix',
+            description: 'Some desc'
+          }
+        ],
+        modules: [
+          {
+            name: 'module-1',
+            version: '0.0.1',
+            changes: [
+              {
+                type: 'bugfix',
+                description: 'Some desc'
+              }
+            ]
+          }
+        ]
+      };
+
+      const fetched = getChangesForDefinition(definition);
+
+      expect(fetched.length).toEqual(2);
+    });
+  });
+  describe('getChangesForAllDefinition', () => {
+    it('should return correct when root and module changes', () => {
+      const definitions: ChangelogDefinition[] = [
+        {
+          publishDate: '2021-12-30',
+          version: '0.0.1',
+          changes: [
+            {
+              type: 'bugfix',
+              description: 'Some desc'
+            }
+          ],
+          modules: [
+            {
+              name: 'module-1',
+              version: '0.0.1',
+              changes: [
+                {
+                  type: 'bugfix',
+                  description: 'Some desc'
+                }
+              ]
+            }
+          ]
+        },
+        {
+          publishDate: '2021-12-30',
+          version: '0.0.1',
+          changes: [
+            {
+              type: 'bugfix',
+              description: 'Some desc'
+            }
+          ],
+          modules: [
+            {
+              name: 'module-1',
+              version: '0.0.1',
+              changes: [
+                {
+                  type: 'bugfix',
+                  description: 'Some desc'
+                }
+              ]
+            }
+          ]
+        }
+      ];
+
+      const fetched = getChangesForAllDefinition(definitions);
+
+      expect(fetched.length).toEqual(4);
     });
   });
 });
