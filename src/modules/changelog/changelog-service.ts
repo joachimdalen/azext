@@ -17,6 +17,7 @@ import {
   CHANGELOG_DEFAULT_FILE,
   CHANGELOG_NAME
 } from './changelog-constants';
+import { mergeConfig } from './config-merge';
 import Generator, { GeneratorResult } from './generator';
 import ChangelogCache from './models/changelog-cache';
 import ChangelogConfig from './models/changelog-config';
@@ -46,6 +47,7 @@ class ChangelogService {
     const result = await this._generator.generateChangelog(options);
     return result;
   }
+
   async createDefaultConfig(
     options: NewChangelogConfigOptions
   ): Promise<ActionResult> {
@@ -100,12 +102,14 @@ class ChangelogService {
       issues: [],
       pullRequests: []
     };
-    const config = await this._configProvider.getConfig<ChangelogConfig>(
-      options.configName || CHANGELOG_CONFIG_NAME
-    );
+    const userConfig = await this._configProvider.getConfig<
+      Partial<ChangelogConfig>
+    >(options.configName || CHANGELOG_CONFIG_NAME);
 
-    if (config == undefined)
+    if (userConfig == undefined)
       throw new Error('Failed to load changelog configuration');
+
+    const config = mergeConfig(userConfig);
 
     const changelog = await this._configProvider.getConfig<
       ChangelogDefinition[]

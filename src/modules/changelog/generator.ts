@@ -6,6 +6,7 @@ import Replacer from '../../core/replacer';
 import { distinct, getChangesForDefinition, isNumber } from '../../core/utils';
 import ConfigProvider from '../../data-providers/config-provider';
 import { CHANGELOG_CONFIG_NAME, CHANGELOG_NAME } from './changelog-constants';
+import { mergeConfig } from './config-merge';
 import MarkdownBuilder from './markdown-builder';
 import { MetaDataLoader } from './metadata';
 import ChangelogConfig from './models/changelog-config';
@@ -33,7 +34,7 @@ class Generator {
     const metadataLoader = new MetaDataLoader(options);
     const configProvider = new ConfigProvider();
 
-    const config = await configProvider.getConfig<ChangelogConfig>(
+    const userConfig = await configProvider.getConfig<Partial<ChangelogConfig>>(
       options.configName || CHANGELOG_CONFIG_NAME
     );
 
@@ -41,7 +42,7 @@ class Generator {
       options.logName || CHANGELOG_NAME
     );
 
-    if (config == undefined) {
+    if (userConfig == undefined) {
       console.log('Failed to load config');
       return;
     }
@@ -50,6 +51,7 @@ class Generator {
       return;
     }
 
+    const config = mergeConfig(userConfig);
     const context = await metadataLoader.loadMetadata(config, log);
 
     const filteredLogs =
