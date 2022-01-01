@@ -73,6 +73,13 @@
   ],
   "pullRequests": [
     {
+      "id": 812545832,
+      "number": 38,
+      "submitter": "joachimdalen",
+      "title": "Add ability to override issue and pr prefix",
+      "url": "https://github.com/joachimdalen/azext/pull/38"
+    },
+    {
       "id": 810292509,
       "number": 35,
       "submitter": "joachimdalen",
