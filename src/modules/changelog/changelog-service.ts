@@ -17,8 +17,8 @@ import {
   CHANGELOG_DEFAULT_FILE,
   CHANGELOG_NAME
 } from './changelog-constants';
-import { mergeConfig } from './config-merge';
 import Generator, { GeneratorResult } from './generator';
+import { mergeChangelogConfig } from './merge-changelog-config';
 import ChangelogCache from './models/changelog-cache';
 import ChangelogConfig from './models/changelog-config';
 import ChangelogDefinition from './models/changelog-definition';
@@ -109,7 +109,7 @@ class ChangelogService {
     if (userConfig == undefined)
       throw new Error('Failed to load changelog configuration');
 
-    const config = mergeConfig(userConfig);
+    const config = mergeChangelogConfig(userConfig);
 
     const changelog = await this._configProvider.getConfig<
       ChangelogDefinition[]

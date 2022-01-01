@@ -6,8 +6,8 @@ import Replacer from '../../core/replacer';
 import { distinct, getChangesForDefinition, isNumber } from '../../core/utils';
 import ConfigProvider from '../../data-providers/config-provider';
 import { CHANGELOG_CONFIG_NAME, CHANGELOG_NAME } from './changelog-constants';
-import { mergeConfig } from './config-merge';
 import MarkdownBuilder from './markdown-builder';
+import { mergeChangelogConfig } from './merge-changelog-config';
 import { MetaDataLoader } from './metadata';
 import ChangelogConfig from './models/changelog-config';
 import ChangelogDefinition from './models/changelog-definition';
@@ -51,7 +51,7 @@ class Generator {
       return;
     }
 
-    const config = mergeConfig(userConfig);
+    const config = mergeChangelogConfig(userConfig);
     const context = await metadataLoader.loadMetadata(config, log);
 
     const filteredLogs =

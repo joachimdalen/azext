@@ -1,7 +1,7 @@
-import { mergeConfig } from '../../../modules/changelog/config-merge';
+import { mergeChangelogConfig } from '../../../modules/changelog/merge-changelog-config';
 import ChangelogConfig from '../../../modules/changelog/models/changelog-config';
 
-describe('mergeConfig', () => {
+describe('mergeChangelogConfig', () => {
   it('should merge config', () => {
     const userConfig: Partial<ChangelogConfig> = {
       repository: 'demo/test',
@@ -13,7 +13,7 @@ describe('mergeConfig', () => {
       }
     };
 
-    const config = mergeConfig(userConfig);
+    const config = mergeChangelogConfig(userConfig);
 
     expect(config).toEqual({
       repository: 'demo/test',
