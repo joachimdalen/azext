@@ -2,6 +2,7 @@ import { HeaderSizes } from './header-sizes';
 import ReplaceEmojiesConfig from './replace-emojis-config';
 import TextFormat from './text-format';
 import TitleFormat from './title-format';
+import TypeResourcePrefix from './type-resource-prefix';
 
 export default interface ChangelogConfig {
   repository: string;
@@ -12,6 +13,9 @@ export default interface ChangelogConfig {
   typeSize: HeaderSizes;
   typeMapping: {
     [key: string]: string;
+  };
+  typeResourcePrefixMapping: {
+    [key: string]: TypeResourcePrefix;
   };
   knownAuthors: string[];
   useDescriptiveIssues: boolean;

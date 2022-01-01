@@ -14,6 +14,7 @@ import ChangelogEntry from './models/changelog-entry';
 import GeneratorContext from './models/generator-context';
 import GitHubIssue from './models/github-issue';
 import GitHubPullRequest from './models/github-pull-request';
+import TypeResourcePrefix from './models/type-resource-prefix';
 import { GenerateChangelogOptions } from './options';
 
 export interface GeneratorResult {
@@ -138,17 +139,31 @@ class Generator {
     }
   }
 
-  private addGitHubMeta(
-    entry: ChangelogEntry,
-    builder: MarkdownBuilder,
-    context: GeneratorContext
-  ) {
+  private getResourceLink(
+    cfg: ChangelogConfig,
+    type: string
+  ): TypeResourcePrefix {
+    const typeMap = cfg.typeResourcePrefixMapping[type];
+
+    if (typeMap === undefined) {
+      return {
+        issue: 'Issue:',
+        pullRequest: 'Pull Request:'
+      };
+    }
+
+    return typeMap;
+  }
+
+  public getGithubMeta(entry: ChangelogEntry, context: GeneratorContext) {
+    const builder = new MarkdownBuilder();
+    const resourceLink = this.getResourceLink(context.config, entry.type);
     if (entry.issue !== undefined) {
       const ghIssue = context.issues.get(entry.issue);
 
       if (ghIssue) {
         builder.addSubListItem(
-          `Issue: ${this.getIssueLink(ghIssue, context.config)}`
+          `${resourceLink.issue} ${this.getIssueLink(ghIssue, context.config)}`
         );
       }
 
@@ -156,7 +171,10 @@ class Generator {
         const ghPr = context.pullRequests.get(entry.pullRequest);
         if (ghPr) {
           builder.addSubListItem(
-            `Pull Request: ${this.getPrLink(ghPr, context.config)}`
+            `${resourceLink.pullRequest} ${this.getPrLink(
+              ghPr,
+              context.config
+            )}`
           );
         }
       }
@@ -165,11 +183,15 @@ class Generator {
         const ghPr = context.pullRequests.get(entry.pullRequest);
         if (ghPr) {
           builder.addSubListItem(
-            `Pull Request: ${this.getPrLink(ghPr, context.config)}`
+            `${resourceLink.pullRequest} ${this.getPrLink(
+              ghPr,
+              context.config
+            )}`
           );
         }
       }
     }
+    return builder.get();
   }
 
   private addChanges(
@@ -186,7 +208,7 @@ class Generator {
         )
       );
 
-      this.addGitHubMeta(c, builder, context);
+      builder.addRaw(this.getGithubMeta(c, context));
     });
   }
 
@@ -301,7 +323,7 @@ class Generator {
     config: ChangelogConfig
   ): string {
     return config.useDescriptivePullRequests
-      ? `[GH#${pullRequest.number} - ${this.escapeText(
+      ? `[PR#${pullRequest.number} - ${this.escapeText(
           this._replacer.replaceEmojisIf(
             pullRequest.title,
             config.replaceEmojis.githubPullRequests
