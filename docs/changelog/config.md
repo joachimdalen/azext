@@ -29,6 +29,17 @@ The `changelog config` command generates a new changelog configuration file.
     "docs": ":memo: Documentation",
     "maint": ":hammer_and_wrench: Maintenance ({{ changeCount }})"
   },
+  // Map issue and pull request prefixes to different types
+  "typeResourcePrefixMapping": {
+    "feature": {
+      "issue": "Suggested in:",
+      "pullRequest": "Implemented in:"
+    },
+    "fix": {
+      "issue": "Reported in:",
+      "pullRequest": "Fixed in:"
+    }
+  },
   // Format of title for attributions
   "attributionTitleFormat": { "size": "h2", "format": ":star2: Contributors" },
   // Format of sub-title for attributions
@@ -185,6 +196,21 @@ This is the type titles rendered in the changelog.
 | Variable      | Description                                                |
 | ------------- | ---------------------------------------------------------- |
 | `changeCount` | The number of changes for this type in the current release |
+
+## Type Resource Prefix Mapping
+
+This allows to change the prefix used when listing issues and pull request
+
+The default is:
+
+```json
+"type": {
+  "issue": "Issue:",
+  "pullRequest": "Pull Request:"
+},
+```
+
+Key is the same type as defined in `typeMapping`
 
 ## Attribution Link Text Format
 

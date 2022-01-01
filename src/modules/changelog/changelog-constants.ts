@@ -34,6 +34,16 @@ export const CHANGELOG_DEFAULT_CONFIG: ChangelogConfig = {
     other: ':speech_balloon: Other',
     docs: ':memo: Documentation'
   },
+  typeResourcePrefixMapping: {
+    feature: {
+      issue: 'Suggested in:',
+      pullRequest: 'Implemented in:'
+    },
+    fix: {
+      issue: 'Reported in:',
+      pullRequest: 'Fixed in:'
+    }
+  },
   attributionTitleFormat: {
     size: 'h2',
     format: ':star2: Contributors'

@@ -32,34 +32,34 @@ export default class MarkdownBuilder {
     }
   }
   addH1(text: string) {
-    this._content = this._content + `# ${text}` + EOL;
+    this.addRaw(`# ${text}`);
   }
   addH2(text: string) {
-    this._content = this._content + `## ${text}` + EOL;
+    this.addRaw(`## ${text}`);
   }
   addH3(text: string) {
-    this._content = this._content + `### ${text}` + EOL;
+    this.addRaw(`### ${text}`);
   }
   addH4(text: string) {
-    this._content = this._content + `#### ${text}` + EOL;
+    this.addRaw(`#### ${text}`);
   }
   addListItem(text: string) {
-    this._content = this._content + `- ${text}` + EOL;
+    this.addRaw(`- ${text}`);
   }
   addSubListItem(text: string) {
-    this._content = this._content + `\t - ${text}` + EOL;
+    this.addRaw(`\t - ${text}`);
   }
   addRaw(text: string) {
     this._content = this._content + text + EOL;
   }
   addNote(text: string) {
-    this._content = this._content + `> ${text}` + EOL;
+    this.addRaw(`> ${text}`);
   }
   addSplitter() {
-    this._content = this._content + '---' + EOL;
+    this.addRaw('---');
   }
   addNewLine() {
-    this._content = this._content + EOL;
+    this.addRaw(EOL);
   }
   get() {
     return this._content;

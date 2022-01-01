@@ -1,5 +1,22 @@
 [
   {
+    "publishDate": "2022-01-XX",
+    "version": "0.4.0",
+    "modules": [
+      {
+        "name": "changelog",
+        "version": "0.4.0",
+        "changes": [
+          {
+            "type": "feature",
+            "description": "Added the ability to override issue and title prefixed with [typeResourcePrefixMapping](https://github.com/joachimdalen/azext/blob/master/docs/changelog/config.md#type-resource-prefix-mapping)",
+            "pullRequest": 38
+          }
+        ]
+      }
+    ]
+  },
+  {
     "publishDate": "2021-12-30",
     "version": "0.3.0",
     "changes": [

@@ -1,6 +1,6 @@
 {
   "name": "@joachimdalen/azext",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A collection of utilities to help with extension development for Azure DevOps",
   "main": "dist/azext.js",
   "bin": {
