@@ -11,6 +11,24 @@
             "type": "feature",
             "description": "Added the ability to override issue and title prefixed with [typeResourcePrefixMapping](https://github.com/joachimdalen/azext/blob/master/docs/changelog/config.md#type-resource-prefix-mapping)",
             "pullRequest": 38
+          },
+          {
+            "type": "enhancement",
+            "description": "Merge default config with user config",
+            "issue": 37,
+            "pullRequest": 39
+          }
+        ]
+      },
+      {
+        "name": "readme",
+        "version": "0.4.0",
+        "changes": [
+          {
+            "type": "enhancement",
+            "description": "Merge default config with user config",
+            "issue": 37,
+            "pullRequest": 39
           }
         ]
       }
