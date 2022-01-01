@@ -166,31 +166,17 @@ class Generator {
           `${resourceLink.issue} ${this.getIssueLink(ghIssue, context.config)}`
         );
       }
+    }
 
-      if (entry.pullRequest !== undefined) {
-        const ghPr = context.pullRequests.get(entry.pullRequest);
-        if (ghPr) {
-          builder.addSubListItem(
-            `${resourceLink.pullRequest} ${this.getPrLink(
-              ghPr,
-              context.config
-            )}`
-          );
-        }
-      }
-    } else {
-      if (entry.pullRequest !== undefined) {
-        const ghPr = context.pullRequests.get(entry.pullRequest);
-        if (ghPr) {
-          builder.addSubListItem(
-            `${resourceLink.pullRequest} ${this.getPrLink(
-              ghPr,
-              context.config
-            )}`
-          );
-        }
+    if (entry.pullRequest !== undefined) {
+      const ghPr = context.pullRequests.get(entry.pullRequest);
+      if (ghPr) {
+        builder.addSubListItem(
+          `${resourceLink.pullRequest} ${this.getPrLink(ghPr, context.config)}`
+        );
       }
     }
+
     return builder.get();
   }
 
