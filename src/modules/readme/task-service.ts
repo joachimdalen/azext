@@ -3,9 +3,10 @@ import fs from 'fs/promises';
 import ConfigProvider from '../../data-providers/config-provider';
 import { MAPPING_NAME } from '../init/init-constants';
 import { DefaultMapping } from '../init/models';
+import { mergeReadmeConfig } from './merge-readme-config';
 import { TaskDefinition } from './models';
 import { ReadmeConfig } from './models/readme-config';
-import { README_NAME } from './readme-constats';
+import { README_DEFAULT_FILE, README_NAME } from './readme-constats';
 
 export default class TaskService {
   private _configProvider: ConfigProvider;
@@ -34,10 +35,15 @@ export default class TaskService {
     return fileContent;
   }
   async getReadMeConfig(): Promise<ReadmeConfig | undefined> {
-    const config = await this._configProvider.getConfig<ReadmeConfig>(
-      README_NAME
-    );
-    return config;
+    const userConfig = await this._configProvider.getConfig<
+      Partial<ReadmeConfig>
+    >(README_NAME);
+
+    if (userConfig === undefined) {
+      return README_DEFAULT_FILE;
+    }
+
+    return mergeReadmeConfig(userConfig);
   }
 
   parseVisibleRule(rule: string) {

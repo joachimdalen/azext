@@ -25,7 +25,6 @@ export const CHANGELOG_DEFAULT_CONFIG: ChangelogConfig = {
     size: 'h3',
     format: ':package: Module changes'
   },
-  sectionSplitter: '---',
   typeSize: 'h3',
   typeMapping: {
     feature: ':rocket: Features',

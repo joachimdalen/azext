@@ -9,7 +9,6 @@ export default interface ChangelogConfig {
   changelogTitle: TitleFormat;
   releaseTitleFormat: TitleFormat;
   moduleTitleFormat: TitleFormat;
-  sectionSplitter: string;
   typeSize: HeaderSizes;
   typeMapping: {
     [key: string]: string;

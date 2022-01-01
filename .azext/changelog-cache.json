@@ -1,6 +1,13 @@
 {
   "issues": [
     {
+      "id": 1090945848,
+      "number": 37,
+      "submitter": "joachimdalen",
+      "title": "Merge user config with default to ensure all config is set",
+      "url": "https://github.com/joachimdalen/azext/issues/37"
+    },
+    {
       "id": 1088997546,
       "number": 33,
       "submitter": "joachimdalen",
@@ -72,6 +79,13 @@
     }
   ],
   "pullRequests": [
+    {
+      "id": 812552791,
+      "number": 39,
+      "submitter": "joachimdalen",
+      "title": "Merge configs to ensure defaults are provided",
+      "url": "https://github.com/joachimdalen/azext/pull/39"
+    },
     {
       "id": 812545832,
       "number": 38,

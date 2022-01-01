@@ -9,6 +9,20 @@
 - Added the ability to override issue and title prefixed with [typeResourcePrefixMapping](https://github.com/joachimdalen/azext/blob/master/docs/changelog/config.md#type-resource-prefix-mapping)
   - Added in [PR#38 - Add ability to override issue and pr prefix](https://github.com/joachimdalen/azext/pull/38)
 
+### 📣 Enhancements (2)
+
+#### `changelog@0.4.0`
+
+- Merge default config with user config
+  - Suggested in [GH#37 - Merge user config with default to ensure all config is set](https://github.com/joachimdalen/azext/issues/37)
+  - Improved in [PR#39 - Merge configs to ensure defaults are provided](https://github.com/joachimdalen/azext/pull/39)
+
+#### `readme@0.4.0`
+
+- Merge default config with user config
+  - Suggested in [GH#37 - Merge user config with default to ensure all config is set](https://github.com/joachimdalen/azext/issues/37)
+  - Improved in [PR#39 - Merge configs to ensure defaults are provided](https://github.com/joachimdalen/azext/pull/39)
+
 ---
 
 ## 0.3.0 (2021-12-30)
