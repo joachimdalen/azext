@@ -235,5 +235,64 @@ describe('Generator', () => {
         '- Fixed in [PR#1 - Some pr](https://example/1)'
       );
     });
+    it('should use default when mapping not found', async () => {
+      const generator = new Generator();
+
+      const entry: ChangelogEntry = {
+        type: 'fix',
+        description: 'Add something',
+        pullRequest: 1,
+        issue: 10
+      };
+
+      const context: GeneratorContext = {
+        types: ['fix'],
+        config: {
+          typeMapping: {
+            fix: 'Bugfixes'
+          },
+          typeResourcePrefixMapping: {},
+          useDescriptiveIssues: true,
+          useDescriptivePullRequests: true,
+          replaceEmojis: {
+            githubIssues: false,
+            githubPullRequests: false
+          }
+        } as any,
+        issues: new Map<number, GitHubIssue>([
+          [
+            10,
+            {
+              title: 'Some issue',
+              id: 2251,
+              number: 10,
+              url: 'https://example/10',
+              submitter: 'user1'
+            }
+          ]
+        ]),
+        pullRequests: new Map<number, GitHubPullRequest>([
+          [
+            1,
+            {
+              title: 'Some pr',
+              id: 2221,
+              number: 1,
+              url: 'https://example/1',
+              submitter: 'user1'
+            }
+          ]
+        ])
+      };
+
+      const result = generator.getGithubMeta(entry, context);
+
+      expect(result).toContain(
+        '- Issue: [GH#10 - Some issue](https://example/10)'
+      );
+      expect(result).toContain(
+        '- Pull Request: [PR#1 - Some pr](https://example/1)'
+      );
+    });
   });
 });
