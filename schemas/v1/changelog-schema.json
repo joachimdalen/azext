@@ -27,15 +27,32 @@
           "title": "Version",
           "description": "The version of the release"
         },
-        "notes": {
-          "type": "string",
-          "title": "Notes",
-          "description": "Additional notes for the release"
-        },
-        "summary": {
-          "type": "string",
-          "title": "Summary",
-          "description": "A short summary about the release"
+        "sections": {
+          "type": "object",
+          "title": "Sections",
+          "description": "Additional sections",
+          "patternProperties": {
+            "^[a-zA-Z]+$": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["type", "content"],
+                    "properties": {
+                      "type": {
+                        "type": "string"
+                      },
+                      "content": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
         },
         "modules": {
           "type": "array",
@@ -49,7 +66,6 @@
                 "type": "object",
                 "title": "The first anyOf schema",
                 "description": "An explanation about the purpose of this instance.",
-
                 "required": ["name", "version", "changes"],
                 "properties": {
                   "name": {

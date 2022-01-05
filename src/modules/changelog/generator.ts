@@ -118,29 +118,6 @@ class Generator {
     );
   }
 
-  private addSummaryAndNotes(
-    builder: MarkdownBuilder,
-    cfg: ChangelogConfig,
-    release: ChangelogDefinition
-  ) {
-    if (release.summary) {
-      builder.addRaw(
-        this._replacer.replaceEmojisIf(
-          release.summary,
-          cfg.replaceEmojis.summary
-        )
-      );
-      builder.addNewLine();
-    }
-    if (release.notes) {
-      builder.addNote(
-        this._replacer.replaceEmojisIf(release.notes, cfg.replaceEmojis.notes)
-      );
-
-      builder.addNewLine();
-    }
-  }
-
   private getResourceLink(
     cfg: ChangelogConfig,
     type: string
@@ -177,6 +154,65 @@ class Generator {
           `${resourceLink.pullRequest} ${this.getPrLink(ghPr, context.config)}`
         );
       }
+    }
+
+    return builder.get();
+  }
+
+  public getSections(
+    definition: ChangelogDefinition,
+    context: GeneratorContext
+  ) {
+    if (definition.sections === undefined) return '';
+
+    const builder = new MarkdownBuilder();
+    const sectionNames = Object.keys(definition.sections);
+
+    for (const name of sectionNames) {
+      const sectionConfig =
+        context.config.sections && context.config.sections[name];
+
+      if (sectionConfig?.title) {
+        builder.addHeader(
+          this._replacer.replace(
+            this._replacer.replaceEmojisIf(
+              sectionConfig.title.format,
+              context.config.replaceEmojis.sectionTitle
+            ),
+            {}
+          ),
+          sectionConfig.title.size
+        );
+        builder.addNewLine();
+      }
+
+      for (const section of definition.sections[name]) {
+        const replacedContent = this._replacer.replaceEmojisIf(
+          section.content,
+          context.config.replaceEmojis.sectionContent
+        );
+
+        switch (section.type) {
+          case 'list-item':
+            builder.addListItem(replacedContent);
+            break;
+          case 'quote':
+            builder.addNewLine();
+            builder.addQuote(replacedContent);
+            break;
+          case 'text':
+            builder.addNewLine();
+            builder.addRaw(replacedContent);
+            break;
+          default:
+            throw new Error(
+              `Unknown section type ${section.type} in section ${name}`
+            );
+        }
+      }
+
+      builder.addNewLine();
+      builder.addSplitter();
     }
 
     return builder.get();
@@ -391,7 +427,8 @@ class Generator {
     builder.addNewLine();
 
     this.addSectionHeader(builder, cfg, release);
-    this.addSummaryAndNotes(builder, cfg, release);
+
+    builder.addRaw(this.getSections(release, context));
 
     if (release.changes) {
       this.addRootChanges(builder, cfg, release, context);

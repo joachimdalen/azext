@@ -11,3 +11,4 @@ export * from './replace-emojis-config';
 export * from './title-format';
 export * from './text-format';
 export * from './type-resource-prefix';
+export * from './changelog-section-config';
