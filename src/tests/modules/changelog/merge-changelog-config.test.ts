@@ -17,6 +17,14 @@ describe('mergeChangelogConfig', () => {
 
     expect(config).toEqual({
       repository: 'demo/test',
+      sections: {
+        summary: {
+          title: {
+            format: ':speech_balloon: Summary',
+            size: 'h4'
+          }
+        }
+      },
       changelogTitle: {
         size: 'h1',
         format: 'Changelog'
@@ -71,8 +79,8 @@ describe('mergeChangelogConfig', () => {
         moduleChangesTitle: true,
         githubIssues: false,
         githubPullRequests: false,
-        notes: true,
-        summary: true
+        sectionContent: true,
+        sectionTitle: true
       }
     });
   });
