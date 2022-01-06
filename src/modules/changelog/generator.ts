@@ -212,9 +212,9 @@ class Generator {
       }
 
       builder.addNewLine();
-      builder.addSplitter();
     }
 
+    builder.addSplitter();
     return builder.get();
   }
 

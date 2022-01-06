@@ -108,7 +108,11 @@
 
 ## 0.2.0 (2021-12-22)
 
-> This release introduces a new command (`azext readme`) to manage documentation. See [GitHub Documentation](https://github.com/joachimdalen/azext/blob/master/docs/readme/index.md) for more information.
+**📝 Release summary**
+
+This release introduces a new command (`azext readme`) to manage documentation. See [GitHub Documentation](https://github.com/joachimdalen/azext/blob/master/docs/readme/index.md) for more information.
+
+---
 
 ### 🚀 Features (1)
 
@@ -186,7 +190,11 @@
 
 ## 0.0.1 (2021-12-13)
 
+**📝 Release summary**
+
 Initial release of AzExt
+
+---
 
 ### 🛠️ Maintenance (1)
 

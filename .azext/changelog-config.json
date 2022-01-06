@@ -14,7 +14,13 @@
     "summary": {
       "title": {
         "size": "bold",
-        "format": "Summary"
+        "format": ":memo: Release summary"
+      }
+    },
+    "knownIssues": {
+      "title": {
+        "size": "bold",
+        "format": ":bulb: Known issues"
       }
     }
   },
