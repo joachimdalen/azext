@@ -87,6 +87,13 @@
   ],
   "pullRequests": [
     {
+      "id": 816815655,
+      "number": 43,
+      "submitter": "joachimdalen",
+      "title": "Add ability to add multiple issues and prs",
+      "url": "https://github.com/joachimdalen/azext/pull/43"
+    },
+    {
       "id": 816809018,
       "number": 42,
       "submitter": "joachimdalen",

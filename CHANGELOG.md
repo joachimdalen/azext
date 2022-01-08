@@ -8,13 +8,17 @@
 
 ---
 
-### 🚀 Features (1)
+### 🚀 Features (2)
 
 #### `changelog@0.5.0`
 
 - Added the ability to define custom sections
+
   - Suggested in [GH#40 - Add ability to set a "Known issues" section on root](https://github.com/joachimdalen/azext/issues/40)
   - Added in [PR#42 - Add ability to define custom information sections at root level](https://github.com/joachimdalen/azext/pull/42)
+
+- Added the ability to add multiple issues and pull requests per change
+  - Added in [PR#43 - Add ability to add multiple issues and prs](https://github.com/joachimdalen/azext/pull/43)
 
 ---
 
