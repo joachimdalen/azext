@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.5.0 (2022-01-XX)
+
+**🔥 BREAKING CHANGES 🔥**
+
+- Removed `notes` and `summary` from `changelog`. These have been replaced by `sections`
+
+---
+
+### 🚀 Features (1)
+
+#### `changelog@0.5.0`
+
+- Added the ability to define custom sections
+  - Suggested in [GH#40 - Add ability to set a "Known issues" section on root](https://github.com/joachimdalen/azext/issues/40)
+  - Added in [PR#42 - Add ability to define custom information sections at root level](https://github.com/joachimdalen/azext/pull/42)
+
+---
+
 ## 0.4.0 (2022-01-05)
 
 ### 🚀 Features (1)
@@ -108,7 +126,11 @@
 
 ## 0.2.0 (2021-12-22)
 
-> This release introduces a new command (`azext readme`) to manage documentation. See [GitHub Documentation](https://github.com/joachimdalen/azext/blob/master/docs/readme/index.md) for more information.
+**✏️ Release summary**
+
+This release introduces a new command (`azext readme`) to manage documentation. See [GitHub Documentation](https://github.com/joachimdalen/azext/blob/master/docs/readme/index.md) for more information.
+
+---
 
 ### 🚀 Features (1)
 
@@ -186,7 +208,11 @@
 
 ## 0.0.1 (2021-12-13)
 
+**✏️ Release summary**
+
 Initial release of AzExt
+
+---
 
 ### 🛠️ Maintenance (1)
 

@@ -10,7 +10,26 @@
     "size": "h2",
     "format": ":package: Module changes"
   },
-  "sectionSplitter": "---",
+  "sections": {
+    "summary": {
+      "title": {
+        "size": "bold",
+        "format": ":pencil2: Release summary"
+      }
+    },
+    "knownIssues": {
+      "title": {
+        "size": "bold",
+        "format": ":bulb: Known issues"
+      }
+    },
+    "breakingChanges": {
+      "title": {
+        "size": "bold",
+        "format": ":fire: BREAKING CHANGES :fire:"
+      }
+    }
+  },
   "typeSize": "h3",
   "typeMapping": {
     "feature": ":rocket: Features ({{changeCount}})",
@@ -58,7 +77,7 @@
     "moduleChangesTitle": true,
     "githubIssues": false,
     "githubPullRequests": false,
-    "notes": true,
-    "summary": true
+    "sectionTitle": true,
+    "sectionContent": true
   }
 }

@@ -27,6 +27,9 @@ export default class MarkdownBuilder {
       case 'h4':
         this.addH4(format);
         break;
+      case 'bold':
+        this.addBold(format);
+        break;
       default:
         this.addRaw(format);
     }
@@ -43,6 +46,9 @@ export default class MarkdownBuilder {
   addH4(text: string) {
     this.addRaw(`#### ${text}`);
   }
+  addBold(text: string) {
+    this.addRaw(`**${text}**`);
+  }
   addListItem(text: string) {
     this.addRaw(`- ${text}`);
   }
@@ -52,11 +58,11 @@ export default class MarkdownBuilder {
   addRaw(text: string) {
     this._content = this._content + text + EOL;
   }
-  addNote(text: string) {
+  addQuote(text: string) {
     this.addRaw(`> ${text}`);
   }
   addSplitter() {
-    this.addRaw('---');
+    this.addRaw('----');
   }
   addNewLine() {
     this.addRaw(EOL);

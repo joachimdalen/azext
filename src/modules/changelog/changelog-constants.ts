@@ -43,6 +43,14 @@ export const CHANGELOG_DEFAULT_CONFIG: ChangelogConfig = {
       pullRequest: 'Fixed in:'
     }
   },
+  sections: {
+    summary: {
+      title: {
+        size: 'h4',
+        format: ':speech_balloon: Summary'
+      }
+    }
+  },
   attributionTitleFormat: {
     size: 'h2',
     format: ':star2: Contributors'
@@ -66,15 +74,21 @@ export const CHANGELOG_DEFAULT_CONFIG: ChangelogConfig = {
     moduleChangesTitle: true,
     githubIssues: false,
     githubPullRequests: false,
-    notes: true,
-    summary: true
+    sectionContent: true,
+    sectionTitle: true
   }
 };
 export const CHANGELOG_DEFAULT_FILE: ChangelogDefinition = {
   publishDate: '01-01-1970',
   version: '0.0.0',
-  notes: 'Optional notes',
-  summary: 'Optional summary',
+  sections: {
+    summary: [
+      {
+        type: 'list-item',
+        content: 'Some summary'
+      }
+    ]
+  },
   modules: [
     {
       name: 'module-name',

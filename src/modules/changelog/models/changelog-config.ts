@@ -1,3 +1,4 @@
+import { ChangelogSectionConfig } from './changelog-section-config';
 import { HeaderSizes } from './header-sizes';
 import ReplaceEmojiesConfig from './replace-emojis-config';
 import TextFormat from './text-format';
@@ -10,6 +11,9 @@ export default interface ChangelogConfig {
   releaseTitleFormat: TitleFormat;
   moduleTitleFormat: TitleFormat;
   typeSize: HeaderSizes;
+  sections: {
+    [key: string]: ChangelogSectionConfig;
+  };
   typeMapping: {
     [key: string]: string;
   };

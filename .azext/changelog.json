@@ -1,5 +1,31 @@
 [
   {
+    "publishDate": "2022-01-XX",
+    "version": "0.5.0",
+    "sections": {
+      "breakingChanges": [
+        {
+          "type": "list-item",
+          "content": "Removed `notes` and `summary` from `changelog`. These have been replaced by `sections`"
+        }
+      ]
+    },
+    "modules": [
+      {
+        "name": "changelog",
+        "version": "0.5.0",
+        "changes": [
+          {
+            "type": "feature",
+            "description": "Added the ability to define custom sections",
+            "issue": 40,
+            "pullRequest": 42
+          }
+        ]
+      }
+    ]
+  },
+  {
     "publishDate": "2022-01-05",
     "version": "0.4.0",
     "modules": [
@@ -148,7 +174,14 @@
   {
     "publishDate": "2021-12-22",
     "version": "0.2.0",
-    "notes": "This release introduces a new command (`azext readme`) to manage documentation. See [GitHub Documentation](https://github.com/joachimdalen/azext/blob/master/docs/readme/index.md) for more information.",
+    "sections": {
+      "summary": [
+        {
+          "type": "text",
+          "content": "This release introduces a new command (`azext readme`) to manage documentation. See [GitHub Documentation](https://github.com/joachimdalen/azext/blob/master/docs/readme/index.md) for more information."
+        }
+      ]
+    },
     "changes": [
       {
         "type": "maint",
@@ -248,7 +281,14 @@
   {
     "publishDate": "2021-12-13",
     "version": "0.0.1",
-    "summary": "Initial release of AzExt",
+    "sections": {
+      "summary": [
+        {
+          "type": "text",
+          "content": "Initial release of AzExt"
+        }
+      ]
+    },
     "changes": [
       {
         "type": "maint",
