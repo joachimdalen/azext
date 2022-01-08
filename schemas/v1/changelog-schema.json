@@ -103,9 +103,17 @@
                               "description": "An explanation about the purpose of this instance."
                             },
                             "issue": {
-                              "type": "integer",
                               "title": "GitHub issue number",
-                              "description": "The GitHub issue number issue number of a releated GitHub issue"
+                              "description": "The GitHub issue number issue number of a releated GitHub issue",
+                              "oneOf": [
+                                { "type": "integer" },
+                                {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "number"
+                                  }
+                                }
+                              ]
                             },
                             "pullRequest": {
                               "type": "integer",

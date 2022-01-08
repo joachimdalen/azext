@@ -52,8 +52,8 @@ export default class MarkdownBuilder {
   addListItem(text: string) {
     this.addRaw(`- ${text}`);
   }
-  addSubListItem(text: string) {
-    this.addRaw(`\t - ${text}`);
+  addSubListItem(text: string, double = false) {
+    this.addRaw(double ? `\t\t - ${text}` : `\t - ${text}`);
   }
   addRaw(text: string) {
     this._content = this._content + text + EOL;

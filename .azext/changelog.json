@@ -20,6 +20,11 @@
             "description": "Added the ability to define custom sections",
             "issue": 40,
             "pullRequest": 42
+          },
+          {
+            "type": "feature",
+            "description": "Added the ability to add multiple issues and pull requests per change",
+            "pullRequest": 43
           }
         ]
       }

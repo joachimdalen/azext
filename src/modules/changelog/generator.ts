@@ -134,25 +134,80 @@ class Generator {
     return typeMap;
   }
 
+  public getGithubIssue(
+    issueId: number,
+    resourceLink: TypeResourcePrefix,
+    context: GeneratorContext,
+    removePrefix: boolean
+  ) {
+    const ghIssue = context.issues.get(issueId);
+
+    if (ghIssue) {
+      const link = this.getIssueLink(ghIssue, context.config);
+      return removePrefix ? link : `${resourceLink.issue} ${link}`;
+    }
+
+    return undefined;
+  }
+
+  public getGithubPr(
+    prId: number,
+    resourceLink: TypeResourcePrefix,
+    context: GeneratorContext,
+    removePrefix: boolean
+  ) {
+    const ghPr = context.pullRequests.get(prId);
+
+    if (ghPr) {
+      const link = this.getPrLink(ghPr, context.config);
+      return removePrefix ? link : `${resourceLink.pullRequest} ${link}`;
+    }
+
+    return undefined;
+  }
+
   public getGithubMeta(entry: ChangelogEntry, context: GeneratorContext) {
     const builder = new MarkdownBuilder();
     const resourceLink = this.getResourceLink(context.config, entry.type);
-    if (entry.issue !== undefined) {
-      const ghIssue = context.issues.get(entry.issue);
 
-      if (ghIssue) {
-        builder.addSubListItem(
-          `${resourceLink.issue} ${this.getIssueLink(ghIssue, context.config)}`
+    if (entry.issue !== undefined) {
+      const isMultiple = Array.isArray(entry.issue);
+      const issueIds: number[] = Array.isArray(entry.issue)
+        ? entry.issue
+        : [entry.issue];
+
+      if (isMultiple && resourceLink?.issue) {
+        builder.addSubListItem(resourceLink.issue);
+      }
+
+      for (const issueId of issueIds) {
+        const issue = this.getGithubIssue(
+          issueId,
+          resourceLink,
+          context,
+          isMultiple
         );
+        if (issue) {
+          builder.addSubListItem(issue, isMultiple);
+        }
       }
     }
 
     if (entry.pullRequest !== undefined) {
-      const ghPr = context.pullRequests.get(entry.pullRequest);
-      if (ghPr) {
-        builder.addSubListItem(
-          `${resourceLink.pullRequest} ${this.getPrLink(ghPr, context.config)}`
-        );
+      const isMultiple = Array.isArray(entry.pullRequest);
+      const prIds: number[] = Array.isArray(entry.pullRequest)
+        ? entry.pullRequest
+        : [entry.pullRequest];
+
+      if (isMultiple && resourceLink?.pullRequest) {
+        builder.addSubListItem(resourceLink.pullRequest);
+      }
+
+      for (const prId of prIds) {
+        const pr = this.getGithubPr(prId, resourceLink, context, isMultiple);
+        if (pr) {
+          builder.addSubListItem(pr, isMultiple);
+        }
       }
     }
 
