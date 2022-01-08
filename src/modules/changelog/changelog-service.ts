@@ -145,7 +145,7 @@ class ChangelogService {
     if (cache.issues) {
       const allModules = getChangesForAllDefinition(changelog);
       const issueIds = allModules
-        .map((x) => x.issue)
+        .flatMap((x) => (Array.isArray(x.issue) ? x.issue : [x.issue]))
         .filter(isNumber)
         .filter(distinct)
         .filter((y) => !cache.issues?.some((x) => x.number === y));
@@ -168,7 +168,9 @@ class ChangelogService {
       const allModules = getChangesForAllDefinition(changelog);
 
       const prIds = allModules
-        .map((x) => x.pullRequest)
+        .flatMap((x) =>
+          Array.isArray(x.pullRequest) ? x.pullRequest : [x.pullRequest]
+        )
         .filter(isNumber)
         .filter(distinct)
         .filter((y) => !cache.pullRequests?.some((x) => x.number === y));

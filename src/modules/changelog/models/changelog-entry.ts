@@ -1,6 +1,6 @@
 export default interface ChangelogEntry {
   type: string;
-  issue?: number;
-  pullRequest?: number;
+  issue?: number | number[];
+  pullRequest?: number | number[];
   description: string;
 }
