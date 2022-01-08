@@ -40,6 +40,14 @@ The `changelog config` command generates a new changelog configuration file.
       "pullRequest": "Fixed in:"
     }
   },
+  "sections": {
+    "summary": {
+      "title": {
+        "size": "h4",
+        "format": ":speech_balloon: Summary"
+      }
+    }
+  },
   // Format of title for attributions
   "attributionTitleFormat": { "size": "h2", "format": ":star2: Contributors" },
   // Format of sub-title for attributions
@@ -64,8 +72,9 @@ The `changelog config` command generates a new changelog configuration file.
     "attributionSubTitle": true,
     "githubIssues": false,
     "githubPullRequests": false,
-    "notes": true,
-    "summary": true
+    "summary": true,
+    "sectionTitle": true,
+    "sectionContent": true
   }
 }
 ```

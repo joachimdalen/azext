@@ -1,6 +1,13 @@
 {
   "issues": [
     {
+      "id": 1093700253,
+      "number": 40,
+      "submitter": "joachimdalen",
+      "title": "Add ability to set a \"Known issues\" section on root",
+      "url": "https://github.com/joachimdalen/azext/issues/40"
+    },
+    {
       "id": 1090945848,
       "number": 37,
       "submitter": "joachimdalen",
@@ -79,6 +86,13 @@
     }
   ],
   "pullRequests": [
+    {
+      "id": 816809018,
+      "number": 42,
+      "submitter": "joachimdalen",
+      "title": "Add ability to define custom information sections at root level",
+      "url": "https://github.com/joachimdalen/azext/pull/42"
+    },
     {
       "id": 812552791,
       "number": 39,

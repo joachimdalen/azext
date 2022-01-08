@@ -14,13 +14,19 @@
     "summary": {
       "title": {
         "size": "bold",
-        "format": ":memo: Release summary"
+        "format": ":pencil2: Release summary"
       }
     },
     "knownIssues": {
       "title": {
         "size": "bold",
         "format": ":bulb: Known issues"
+      }
+    },
+    "breakingChanges": {
+      "title": {
+        "size": "bold",
+        "format": ":fire: BREAKING CHANGES :fire:"
       }
     }
   },

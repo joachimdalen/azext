@@ -1,5 +1,31 @@
 [
   {
+    "publishDate": "2022-01-XX",
+    "version": "0.5.0",
+    "sections": {
+      "breakingChanges": [
+        {
+          "type": "list-item",
+          "content": "Removed `notes` and `summary` from `changelog`. These have been replaced by `sections`"
+        }
+      ]
+    },
+    "modules": [
+      {
+        "name": "changelog",
+        "version": "0.5.0",
+        "changes": [
+          {
+            "type": "feature",
+            "description": "Added the ability to define custom sections",
+            "issue": 40,
+            "pullRequest": 42
+          }
+        ]
+      }
+    ]
+  },
+  {
     "publishDate": "2022-01-05",
     "version": "0.4.0",
     "modules": [
