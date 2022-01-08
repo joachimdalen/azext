@@ -67,6 +67,7 @@
                 "title": "The first anyOf schema",
                 "description": "An explanation about the purpose of this instance.",
                 "required": ["name", "version", "changes"],
+                "additionalProperties": false,
                 "properties": {
                   "name": {
                     "type": "string",
@@ -76,16 +77,6 @@
                   "version": {
                     "type": "string",
                     "title": "The version schema",
-                    "description": "An explanation about the purpose of this instance."
-                  },
-                  "notes": {
-                    "type": "string",
-                    "title": "The notes schema",
-                    "description": "An explanation about the purpose of this instance."
-                  },
-                  "summary": {
-                    "type": "string",
-                    "title": "The summary schema",
                     "description": "An explanation about the purpose of this instance."
                   },
                   "changes": {
