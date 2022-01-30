@@ -39,23 +39,32 @@ export default class ReadmeService {
   async processReadMe(filePath: string) {
     const fullFilePath = this._configProvider.getFullFilePath(filePath);
     let content = (await fs.readFile(fullFilePath)).toString();
+    let matches = this._cmdService.getMatches(content);
+    let count = 0;
+    while (matches.length > 0) {
+      if (count >= (process.env.AZEXT_MAX_README_ITERATION || 30)) {
+        throw new Error(
+          'Iteration count exceeded defined limit. Possible recursion. Please check your includes'
+        );
+      }
+      count++;
 
-    const matches = this._cmdService.getMatches(content);
+      for (const match of matches) {
+        if (match.content?.startsWith('#')) {
+          const commandResult = this._cmdService.getCommand(match.content);
 
-    for (const match of matches) {
-      if (match.content?.startsWith('#')) {
-        const commandResult = this._cmdService.getCommand(match.content);
+          if (commandResult && match.full) {
+            const formatter = commandResult.command.formatter();
+            const dd = formatter.getOptions(commandResult.options);
+            const res = await formatter.getFormatted(dd);
 
-        if (commandResult && match.full) {
-          const formatter = commandResult.command.formatter();
-          const dd = formatter.getOptions(commandResult.options);
-          const res = await formatter.getFormatted(dd);
-
-          if (res !== undefined) {
-            content = content.replace(match.full, res);
+            if (res !== undefined) {
+              content = content.replace(match.full, res);
+            }
           }
         }
       }
+      matches = this._cmdService.getMatches(content);
     }
     return content;
   }
