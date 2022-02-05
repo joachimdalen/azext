@@ -110,5 +110,57 @@ describe('ReadmeService', () => {
         'Iteration count exceeded defined limit. Possible recursion. Please check your includes'
       );
     });
+    it('should replace nested content', async () => {
+      process.env.AZEXT_MAX_README_ITERATION = '3';
+      const rmService = new ReadmeService();
+      const readmeContent = `# Some title
+      
+      {{ #include-partial[file=file-one] }}
+          `;
+
+      const fileOneContent = `Hello
+
+      {{ #include-partial[file=file-two] }}
+      `;
+      const fileTwoContent = `{{ #task-field[task=some_task;field=version] }}`;
+
+      readSpy.mockImplementation((path: PathLike | any, options?: any) => {
+        if (path === '/some/readme.md')
+          return Promise.resolve(Buffer.from(readmeContent));
+        if ((path as string).endsWith('file-one.md')) {
+          return Promise.resolve(Buffer.from(fileOneContent));
+        }
+        if ((path as string).endsWith('file-two.md')) {
+          return Promise.resolve(Buffer.from(fileTwoContent));
+        }
+
+        throw new Error('Unknown path');
+      });
+      readmeConfigSpy.mockResolvedValue({
+        includeInputsFields: [],
+        requiredOptions: {} as any,
+        partials: {
+          'file-one': {
+            file: '../file-one.md'
+          },
+          'file-two': {
+            file: '../file-two.md'
+          }
+        }
+      });
+      taskServiceSpy.mockResolvedValue({
+        version: {
+          Major: 0,
+          Minor: 10,
+          Patch: 123
+        }
+      } as TaskDefinition);
+      writeSpy.mockResolvedValue();
+
+      const result = await rmService.processReadMe('/some/readme.md');
+      expect(result).toContain('Some title');
+      expect(result).toContain('Hello');
+      expect(result).toContain('0.10.123');
+    });
   });
 });
