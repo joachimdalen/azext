@@ -1,6 +1,13 @@
 {
   "issues": [
     {
+      "id": 1088796951,
+      "number": 30,
+      "submitter": "joachimdalen",
+      "title": "Process replacement commands in partial files",
+      "url": "https://github.com/joachimdalen/azext/issues/30"
+    },
+    {
       "id": 1093700253,
       "number": 40,
       "submitter": "joachimdalen",
@@ -86,6 +93,13 @@
     }
   ],
   "pullRequests": [
+    {
+      "id": 835470580,
+      "number": 45,
+      "submitter": "joachimdalen",
+      "title": "Process replacement commands in partial files",
+      "url": "https://github.com/joachimdalen/azext/pull/45"
+    },
     {
       "id": 816815655,
       "number": 43,

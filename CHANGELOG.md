@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.6.0 (2022-01-XX)
+
+### 🚀 Features (1)
+
+#### `readme@0.6.0`
+
+- Process replacement commands in partial files
+  - Suggested in [GH#30 - Process replacement commands in partial files](https://github.com/joachimdalen/azext/issues/30)
+  - Added in [PR#45 - Process replacement commands in partial files](https://github.com/joachimdalen/azext/pull/45)
+
+---
+
 ## 0.5.0 (2022-01-16)
 
 **🔥 BREAKING CHANGES 🔥**

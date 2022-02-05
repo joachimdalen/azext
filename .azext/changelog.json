@@ -1,5 +1,24 @@
 [
   {
+    "publishDate": "2022-01-XX",
+    "version": "0.6.0",
+
+    "modules": [
+      {
+        "name": "readme",
+        "version": "0.6.0",
+        "changes": [
+          {
+            "type": "feature",
+            "description": "Process replacement commands in partial files",
+            "issue": 30,
+            "pullRequest": 45
+          }
+        ]
+      }
+    ]
+  },
+  {
     "publishDate": "2022-01-16",
     "version": "0.5.0",
     "sections": {
