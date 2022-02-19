@@ -17,7 +17,8 @@
           {
             "type": "feature",
             "description": "Added asset handling for images to support multiple documentation displays",
-            "issue": 3
+            "issue": 3,
+            "pullRequest": 46
           }
         ]
       },
@@ -27,7 +28,8 @@
         "changes": [
           {
             "type": "fix",
-            "description": "Fixed extra splitting line added for the first version"
+            "description": "Fixed extra splitting line added for the first version",
+            "pullRequest": 46
           }
         ]
       }

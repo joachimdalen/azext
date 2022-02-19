@@ -27,6 +27,10 @@
       "name": "github",
       "imageFolder": "docs/images",
       "relative": true
+    },
+    {
+      "name": "marketplace",
+      "imageFolder": "marketplace/images"
     }
   ]
 }
