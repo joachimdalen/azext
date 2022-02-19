@@ -94,6 +94,13 @@
   ],
   "pullRequests": [
     {
+      "id": 858418927,
+      "number": 46,
+      "submitter": "joachimdalen",
+      "title": "Add asset handling and fix minor changelog issue",
+      "url": "https://github.com/joachimdalen/azext/pull/46"
+    },
+    {
       "id": 835470580,
       "number": 45,
       "submitter": "joachimdalen",

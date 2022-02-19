@@ -24,8 +24,9 @@ Command List
 
 Options
 
-  --input string    Input file containing the template
-  --output string   Output file to write replaced value to
+  --input string     Input file containing the template
+  --output string    Output file to write replaced value to
+  --profile string   Image profile to handle file paths
 
 Global Options
 

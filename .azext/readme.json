@@ -21,5 +21,16 @@
     "task-two-readme": {
       "file": "../testdata/task2/README.md"
     }
-  }
+  },
+  "profiles": [
+    {
+      "name": "github",
+      "imageFolder": "docs/images",
+      "relative": true
+    },
+    {
+      "name": "marketplace",
+      "imageFolder": "marketplace/images"
+    }
+  ]
 }

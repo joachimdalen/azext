@@ -8,7 +8,8 @@ import ReadmeInitCmdHandler from './handlers/readme-init-cmd-handler';
 
 enum ReadmeOptionNames {
   Input = 'input',
-  Output = 'output'
+  Output = 'output',
+  Profile = 'profile'
 }
 
 const readmeCommands: CommandBase = {
@@ -61,13 +62,18 @@ const readmeCommands: CommandBase = {
             {
               name: ReadmeOptionNames.Output,
               description: 'Output file to write replaced value to'
+            },
+            {
+              name: ReadmeOptionNames.Profile,
+              description: 'Image profile to handle file paths'
             }
           ]
         }
       ],
       options: [
         { name: ReadmeOptionNames.Input, alias: 'i' },
-        { name: ReadmeOptionNames.Output, alias: 'o' }
+        { name: ReadmeOptionNames.Output, alias: 'o' },
+        { name: ReadmeOptionNames.Profile, alias: 'p' }
       ],
       subCommands: [defaultHelpCommand]
     },

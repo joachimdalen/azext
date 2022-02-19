@@ -2,13 +2,25 @@
 
 ## 0.6.0 (2022-01-XX)
 
-### 🚀 Features (1)
+### 🚀 Features (2)
 
 #### `readme@0.6.0`
 
 - Process replacement commands in partial files
+
   - Suggested in [GH#30 - Process replacement commands in partial files](https://github.com/joachimdalen/azext/issues/30)
   - Added in [PR#45 - Process replacement commands in partial files](https://github.com/joachimdalen/azext/pull/45)
+
+- Added asset handling for images to support multiple documentation displays
+  - Suggested in [GH#3 - Documentation generation](https://github.com/joachimdalen/azext/issues/3)
+  - Added in [PR#46 - Add asset handling and fix minor changelog issue](https://github.com/joachimdalen/azext/pull/46)
+
+### 🐛 Fixes (1)
+
+#### `changelog@0.6.0`
+
+- Fixed extra splitting line added for the first version
+  - Fixed in [PR#46 - Add asset handling and fix minor changelog issue](https://github.com/joachimdalen/azext/pull/46)
 
 ---
 
@@ -98,18 +110,6 @@
 
 ## 0.2.2 (2021-12-26)
 
-### 💬 Other (2)
-
-#### `readme@0.2.2`
-
-- Refactor how cli parameters are set in the cli definition
-  - Pull Request: [PR#25 - Fix wrong option names being passed from cli to handler](https://github.com/joachimdalen/azext/pull/25)
-
-#### `init@0.2.2`
-
-- Refactor how cli parameters are set in the cli definition
-  - Pull Request: [PR#25 - Fix wrong option names being passed from cli to handler](https://github.com/joachimdalen/azext/pull/25)
-
 ### 🐛 Fixes (3)
 
 #### `changelog@0.2.2`
@@ -128,6 +128,18 @@
 - Fixed an issue where the cli would look for `.azext` directory when trying to create it
   - Reported in [GH#21 - Can not initialize in a new project](https://github.com/joachimdalen/azext/issues/21)
   - Fixed in [PR#26 - Fix not being able to initialize in a new project](https://github.com/joachimdalen/azext/pull/26)
+
+### 💬 Other (2)
+
+#### `readme@0.2.2`
+
+- Refactor how cli parameters are set in the cli definition
+  - Pull Request: [PR#25 - Fix wrong option names being passed from cli to handler](https://github.com/joachimdalen/azext/pull/25)
+
+#### `init@0.2.2`
+
+- Refactor how cli parameters are set in the cli definition
+  - Pull Request: [PR#25 - Fix wrong option names being passed from cli to handler](https://github.com/joachimdalen/azext/pull/25)
 
 ---
 

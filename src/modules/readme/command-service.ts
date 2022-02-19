@@ -59,7 +59,7 @@ export default class CommandService {
   }
 
   getCommandParameters(parameters: string, command: ReplacementCommand) {
-    const exp = /(?<param>[a-zA-Z0-9-_]+.)=(?<val>[a-zA-Z0-9-_]+.)/g;
+    const exp = /(?<param>[a-zA-Z0-9-_]+.)=(?<val>[a-zA-Z0-9-_\\.]+.)/g;
     let m;
 
     const parsedGroups: { [key: string]: string }[] = [];
@@ -74,7 +74,6 @@ export default class CommandService {
     }
 
     const options: { [key: string]: string | undefined } = {};
-
     for (const opt of command.options) {
       const param = parsedGroups.find((p) => p.param === opt.name);
 

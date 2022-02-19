@@ -4,6 +4,7 @@ import { ActionResult } from '../../constants';
 import ConfigProvider from '../../data-providers/config-provider';
 import CommandService from './command-service';
 import { ReadmeConfig } from './models';
+import { ReadmeOptions } from './options';
 import { README_DEFAULT_FILE, README_NAME } from './readme-constats';
 
 export default class ReadmeService {
@@ -36,8 +37,8 @@ export default class ReadmeService {
     };
   }
 
-  async processReadMe(filePath: string) {
-    const fullFilePath = this._configProvider.getFullFilePath(filePath);
+  async processReadMe(options: ReadmeOptions) {
+    const fullFilePath = this._configProvider.getFullFilePath(options.input);
     let content = (await fs.readFile(fullFilePath)).toString();
     let matches = this._cmdService.getMatches(content);
     let count = 0;
@@ -55,7 +56,10 @@ export default class ReadmeService {
 
           if (commandResult && match.full) {
             const formatter = commandResult.command.formatter();
-            const dd = formatter.getOptions(commandResult.options);
+            const dd = formatter.getOptions({
+              ...options,
+              ...commandResult.options
+            });
             const res = await formatter.getFormatted(dd);
 
             if (res !== undefined) {

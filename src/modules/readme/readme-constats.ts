@@ -1,4 +1,5 @@
 import IncludeFileFormatter from './formatters/include-file-formatter';
+import IncludeImageFormatter from './formatters/include-image-formatter';
 import TaskFieldFormatter from './formatters/task-field-formatter';
 import TaskInputFormatter from './formatters/task-input-formatter';
 import { ReadmeConfig } from './models/readme-config';
@@ -38,5 +39,10 @@ export const replacementCommands: ReplacementCommand[] = [
     command: 'include-partial',
     formatter: () => new IncludeFileFormatter(),
     options: [{ name: 'file' }, { name: 'wrap', optional: true }]
+  },
+  {
+    command: 'include-image',
+    formatter: () => new IncludeImageFormatter(),
+    options: [{ name: 'imagePath' }]
   }
 ];

@@ -3,7 +3,9 @@ import { EOL } from 'os';
 
 import ConfigProvider from '../../../data-providers/config-provider';
 import { ReadmeConfig } from '../models';
-import ReplacementCommandFormatter from '../models/replacement-command-formatter';
+import ReplacementCommandFormatter, {
+  ReplacementOptions
+} from '../models/replacement-command-formatter';
 import TaskService from '../task-service';
 
 export interface IncludeFileFormatterOptions {
@@ -19,7 +21,9 @@ export default class IncludeFileFormatter extends ReplacementCommandFormatter<In
     this._service = new TaskService();
     this._configProvider = new ConfigProvider();
   }
-  async getFormatted(options: IncludeFileFormatterOptions): Promise<any> {
+  async getFormatted(
+    options: ReplacementOptions<IncludeFileFormatterOptions>
+  ): Promise<any> {
     if (options.file === undefined) {
       throw new Error('Missing required properties: file');
     }
