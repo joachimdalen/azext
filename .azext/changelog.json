@@ -13,6 +13,21 @@
             "description": "Process replacement commands in partial files",
             "issue": 30,
             "pullRequest": 45
+          },
+          {
+            "type": "feature",
+            "description": "Added asset handling for images to support multiple documentation displays",
+            "issue": 3
+          }
+        ]
+      },
+      {
+        "name": "changelog",
+        "version": "0.6.0",
+        "changes": [
+          {
+            "type": "fix",
+            "description": "Fixed extra splitting line added for the first version"
           }
         ]
       }

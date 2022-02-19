@@ -179,3 +179,7 @@ _Will be pretty in the markdown file, but not in rendered markup_
     preserveComments: false
 
 ```
+
+# Include Image
+
+![azext-icon.png](../docs/images/azext-icon.png)

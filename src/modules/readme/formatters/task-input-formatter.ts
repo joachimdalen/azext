@@ -3,7 +3,9 @@ import { EOL } from 'os';
 import { isModuleInstalled } from '../../../core';
 import Replacer from '../../../core/replacer';
 import { TaskDefinition, TaskInputDefinition } from '../models';
-import ReplacementCommandFormatter from '../models/replacement-command-formatter';
+import ReplacementCommandFormatter, {
+  ReplacementOptions
+} from '../models/replacement-command-formatter';
 import { Table } from '../models/table';
 import { TableHeader } from '../models/table-header';
 import TaskService from '../task-service';
@@ -23,7 +25,9 @@ export default class TaskInputFormatter extends ReplacementCommandFormatter<Task
     this._service = new TaskService();
     this._replacer = new Replacer();
   }
-  async getFormatted(options: TaskInputFormatterOptions): Promise<string> {
+  async getFormatted(
+    options: ReplacementOptions<TaskInputFormatterOptions>
+  ): Promise<string> {
     const task = await this._service.getTaskDefinition(options.task);
 
     if (task === undefined) return '';

@@ -494,7 +494,6 @@ class Generator {
     }
 
     this.addContributors(builder, cfg, release, context);
-    builder.addSplitter();
   }
 
   buildFile(context: GeneratorContext, logs: ChangelogDefinition[]): string {
@@ -511,6 +510,10 @@ class Generator {
 
     for (const version of logs) {
       this.addVersion(builder, cfg, version, context);
+
+      if (logs.indexOf(version) !== logs.length) {
+        builder.addSplitter();
+      }
     }
     return builder.get();
   }

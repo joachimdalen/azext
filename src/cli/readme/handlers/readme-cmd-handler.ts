@@ -15,7 +15,7 @@ export default class ReadmeCmdHandler extends BaseCommandHandler<ReadmeOptions> 
     this._configProvider = new ConfigProvider();
   }
   async handleCommand(options: ReadmeOptions): Promise<void> {
-    const res = await this._service.processReadMe(options.input);
+    const res = await this._service.processReadMe(options);
 
     const fullOutputPath = this._configProvider.getFullFilePath(options.output);
     await fs.writeFile(fullOutputPath, res);

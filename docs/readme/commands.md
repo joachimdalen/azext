@@ -8,6 +8,7 @@ Supported commands:
 
 - [Task Input](#task-input)
 - [Task Field](#task-field)
+- [Include Image](#include-image)
 
 ## Task Input
 
@@ -71,7 +72,7 @@ The task fild command parses your `task.json` and extracts data.
 | task         | Key of task defined in `mapping.json`                             |
 | field        | The field to fetch data from                                      |
 | objectHandle | How to handle objects. Valid options are `json` and `json-pretty` |
-| coreFormat   | Wraps the field in a code block                                   |
+| codeFormat   | Wraps the field in a code block                                   |
 
 ## Example
 
@@ -80,3 +81,33 @@ Version: {{ #task-input[task=demo-task;field=version] }}
 ```
 
 Version: 0.3.3
+
+## Include Image
+
+The command allows you to include images that might be located in different places for different files, such as one location for documentation on GitHub and another one located in your extension.
+
+This requires the profile to be set in `readme.json`.
+
+```json
+"profiles": [
+  {
+    "name": "github",
+    "imageFolder": "docs/images",
+    "relative": true
+  },
+  {
+    "name": "marketplace",
+    "imageFolder": "marketplace/images"
+  }
+]
+```
+
+**Command:** `include-image`
+
+| Parameter | Description                                             |
+| --------- | ------------------------------------------------------- |
+| imagePath | Relative path to your image based on the profile folder |
+
+```md
+{{ #include-image[imagePath=azext-icon.png] }}
+```

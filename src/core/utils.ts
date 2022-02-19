@@ -10,7 +10,7 @@ export const isIssue = (item: GitHubIssue | undefined): item is GitHubIssue => {
   return !!item;
 };
 
-export const distinct = (value: any, index: number, self: any[]) => {
+export const distinct = <T>(value: T, index: number, self: T[]) => {
   return self.indexOf(value) === index;
 };
 

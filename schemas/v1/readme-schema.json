@@ -52,6 +52,25 @@
           "required": ["file"]
         }
       }
+    },
+    "profiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "imageFolder": {
+            "type": "string"
+          },
+          "relative": {
+            "type": "boolean"
+          }
+        },
+        "required": ["name", "imageFolder"]
+      }
     }
   }
 }

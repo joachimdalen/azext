@@ -62,7 +62,10 @@ describe('ReadmeService', () => {
       } as TaskDefinition);
       writeSpy.mockResolvedValue();
 
-      const result = await rmService.processReadMe('/some/readme.md');
+      const result = await rmService.processReadMe({
+        input: '/some/readme.md',
+        output: ''
+      });
       expect(result.indexOf('0.10.123') > 0).toBeTruthy();
     });
 
@@ -106,7 +109,12 @@ describe('ReadmeService', () => {
       });
       writeSpy.mockResolvedValue();
 
-      expect(rmService.processReadMe('/some/readme.md')).rejects.toThrow(
+      expect(
+        rmService.processReadMe({
+          input: '/some/readme.md',
+          output: ''
+        })
+      ).rejects.toThrow(
         'Iteration count exceeded defined limit. Possible recursion. Please check your includes'
       );
     });
@@ -157,7 +165,10 @@ describe('ReadmeService', () => {
       } as TaskDefinition);
       writeSpy.mockResolvedValue();
 
-      const result = await rmService.processReadMe('/some/readme.md');
+      const result = await rmService.processReadMe({
+        input: '/some/readme.md',
+        output: ''
+      });
       expect(result).toContain('Some title');
       expect(result).toContain('Hello');
       expect(result).toContain('0.10.123');

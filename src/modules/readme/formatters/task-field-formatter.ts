@@ -2,7 +2,9 @@ import { EOL } from 'os';
 
 import Replacer from '../../../core/replacer';
 import { TaskDefinition } from '../models';
-import ReplacementCommandFormatter from '../models/replacement-command-formatter';
+import ReplacementCommandFormatter, {
+  ReplacementOptions
+} from '../models/replacement-command-formatter';
 import { Table } from '../models/table';
 import { TableHeader } from '../models/table-header';
 import TaskService from '../task-service';
@@ -22,7 +24,9 @@ export default class TaskFieldFormatter extends ReplacementCommandFormatter<Task
     this._service = new TaskService();
     this._replacer = new Replacer();
   }
-  async getFormatted(options: TaskFieldFormatterOptions): Promise<any> {
+  async getFormatted(
+    options: ReplacementOptions<TaskFieldFormatterOptions>
+  ): Promise<any> {
     const task = await this._service.getTaskDefinition(options.task);
 
     if (task === undefined) return '';
