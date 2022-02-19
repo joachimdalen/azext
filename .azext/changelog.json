@@ -1,8 +1,14 @@
 [
   {
-    "publishDate": "2022-01-XX",
+    "publishDate": "2022-02-19",
     "version": "0.6.0",
-
+    "changes": [
+      {
+        "type": "maint",
+        "description": "Update dependencies",
+        "issue": 47
+      }
+    ],
     "modules": [
       {
         "name": "readme",

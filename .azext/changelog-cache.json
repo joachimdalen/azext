@@ -1,6 +1,13 @@
 {
   "issues": [
     {
+      "id": 1144551846,
+      "number": 47,
+      "submitter": "joachimdalen",
+      "title": " Update dependencies",
+      "url": "https://github.com/joachimdalen/azext/pull/47"
+    },
+    {
       "id": 1088796951,
       "number": 30,
       "submitter": "joachimdalen",

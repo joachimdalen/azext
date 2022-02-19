@@ -1,6 +1,13 @@
 # Changelog
 
-## 0.6.0 (2022-01-XX)
+## 0.6.0 (2022-02-19)
+
+### 🛠️ Maintenance (1)
+
+- Update dependencies
+  - Issue: [GH#47 - Update dependencies](https://github.com/joachimdalen/azext/pull/47)
+
+## 📦 Module changes
 
 ### 🚀 Features (2)
 
@@ -160,6 +167,15 @@ This release introduces a new command (`azext readme`) to manage documentation. 
 
 ---
 
+### 🛠️ Maintenance (2)
+
+- Split CLI and implementation in preparation for Node API
+
+  - Pull Request: [PR#6 - Refactor to support for usage from node](https://github.com/joachimdalen/azext/pull/6)
+
+- Forced path of configuration files to be in folder `.azext/`
+  - Pull Request: [PR#12 - Refactoring and docs generation](https://github.com/joachimdalen/azext/pull/12)
+
 ### 🚀 Features (1)
 
 - Add support for global options
@@ -169,15 +185,6 @@ This release introduces a new command (`azext readme`) to manage documentation. 
 
 - Added more detailed documentation
   - Changed in [PR#7 - Update documentation](https://github.com/joachimdalen/azext/pull/7)
-
-### 🛠️ Maintenance (2)
-
-- Split CLI and implementation in preparation for Node API
-
-  - Pull Request: [PR#6 - Refactor to support for usage from node](https://github.com/joachimdalen/azext/pull/6)
-
-- Forced path of configuration files to be in folder `.azext/`
-  - Pull Request: [PR#12 - Refactoring and docs generation](https://github.com/joachimdalen/azext/pull/12)
 
 ## 📦 Module changes
 
