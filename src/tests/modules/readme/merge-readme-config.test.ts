@@ -20,16 +20,6 @@ describe('mergeReadmeConfig', () => {
     const config = mergeReadmeConfig(userConfig);
 
     expect(config).toEqual({
-      includeInputsFields: [
-        { field: 'name', title: 'Option' },
-        { field: 'defaultValue', title: 'Default Value' },
-        { field: 'required', title: 'Required' },
-        { field: 'helpMarkDown', title: 'Help' }
-      ],
-      requiredOptions: {
-        false: ':x:',
-        true: ':white_check_mark:'
-      },
       partials: {
         'env-usage-one': {
           file: '../testdata/examples/exp1.yml'

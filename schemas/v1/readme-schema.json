@@ -3,41 +3,8 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "additionalProperties": false,
-  "required": ["includeInputsFields", "requiredOptions"],
+  "required": [],
   "properties": {
-    "includeInputsFields": {
-      "type": "array",
-      "title": "Task mappings",
-      "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "field": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "align": {
-            "type": "string",
-            "enum": ["left", "center", "right"]
-          }
-        },
-        "required": ["field", "title", "align"]
-      }
-    },
-    "requiredOptions": {
-      "type": "object",
-      "properties": {
-        "false": {
-          "type": "string"
-        },
-        "true": {
-          "type": "string"
-        }
-      },
-      "required": ["false", "true"]
-    },
     "partials": {
       "type": "object",
       "properties": {

@@ -1,8 +1,7 @@
 import { EOL } from 'os';
 
 import { isModuleInstalled } from '../../../core';
-import Replacer from '../../../core/replacer';
-import { TaskDefinition, TaskInputDefinition } from '../models';
+import { TaskDefinition, TaskInputType } from '../models';
 import ReplacementCommandFormatter, {
   ReplacementOptions
 } from '../models/replacement-command-formatter';
@@ -15,16 +14,14 @@ export interface TaskInputFormatterOptions {
   type: 'table' | 'example';
 }
 
-type TT = keyof TaskInputDefinition;
 export default class TaskInputFormatter extends ReplacementCommandFormatter<TaskInputFormatterOptions> {
   private _service: TaskService;
-  private _replacer: Replacer;
-  private readonly codeFields: TT[] = ['name', 'defaultValue'];
+
   constructor() {
     super();
     this._service = new TaskService();
-    this._replacer = new Replacer();
   }
+
   async getFormatted(
     options: ReplacementOptions<TaskInputFormatterOptions>
   ): Promise<string> {
@@ -74,67 +71,49 @@ export default class TaskInputFormatter extends ReplacementCommandFormatter<Task
   }
 
   private async getTable(task: TaskDefinition): Promise<Table> {
-    const getBool = (s: any) => s as boolean;
     const config = await this._service.getReadMeConfig();
 
     if (config === undefined) {
       throw new Error('Failed to find readme config');
     }
 
-    const headerKeys = config.includeInputsFields.map((x) => x.field);
-    const headerInfo: TableHeader[] = config.includeInputsFields.map((x) => {
-      return {
-        align: x.align || 'left',
-        title: x.title
-      };
-    });
+    const headers: TableHeader[] = [
+      {
+        title: 'Argument',
+        align: 'left'
+      },
+      { title: 'Description', align: 'left' }
+    ];
 
     const rws = task.inputs.map((row) => {
       const b: string[] = [];
-      headerKeys.map((rowKey: string) => {
-        const key = rowKey as keyof TaskInputDefinition;
-        const val = row[key];
-        let inVal: any = '';
-        if (val !== undefined) {
-          if (this.codeFields.includes(key)) {
-            inVal = '`' + row[key] + '`';
-          } else {
-            inVal = row[key];
-          }
-        }
+      b.push('`' + row.name + '` <br />' + row.label);
+      let inputString = row.required ? '**(Required)** ' : '**(Optional)** ';
+      inputString =
+        row.helpMarkDown !== undefined
+          ? inputString + row.helpMarkDown + ' <br /> '
+          : inputString + ' <br /> ';
+      if (row.type === TaskInputType.PickList) {
+        inputString =
+          inputString + this.formatOptions(row.options) + ' <br /> ';
+      }
+      if (row.defaultValue) {
+        inputString =
+          inputString + 'Default value: ' + '`' + row.defaultValue + '`';
+      }
+      b.push(inputString);
 
-        if (rowKey === 'required') {
-          inVal = this._replacer.replaceEmojisIf(
-            (getBool(inVal)
-              ? config?.requiredOptions.true
-              : config?.requiredOptions.false) || inVal,
-            true
-          );
-        }
-
-        if (rowKey === 'visibleRule') {
-          inVal = this._service.parseVisibleRule(inVal);
-        }
-
-        if (rowKey === 'options') {
-          inVal = this.formatOptions(inVal);
-        }
-
-        if (inVal === '') inVal = '--';
-
-        b.push(inVal);
-      });
       return b;
     });
 
     return {
-      header: headerInfo,
+      header: headers,
       rows: rws
     };
   }
   private formatOptions(input: { [key: string]: string }) {
-    return Object.keys(input)
+    return `Options: ${Object.keys(input)
       .map((k) => '`' + k + '`')
-      .join(', ');
+      .join(', ')}`;
   }
 }

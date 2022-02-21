@@ -1,5 +1,4 @@
 import fs from 'fs/promises';
-import { PathLike } from 'fs';
 import TaskService from '../../../../modules/readme/task-service';
 import IncludeImageFormatter from '../../../../modules/readme/formatters/include-image-formatter';
 
@@ -21,8 +20,6 @@ describe('IncludeImageFormatter', () => {
       const formatter = new IncludeImageFormatter();
 
       readmeConfigSpy.mockResolvedValue({
-        includeInputsFields: [],
-        requiredOptions: {} as any,
         profiles: [
           {
             name: 'github',
@@ -46,8 +43,6 @@ describe('IncludeImageFormatter', () => {
       const formatter = new IncludeImageFormatter();
 
       readmeConfigSpy.mockResolvedValue({
-        includeInputsFields: [],
-        requiredOptions: {} as any,
         profiles: [
           {
             name: 'github',
@@ -73,8 +68,6 @@ describe('IncludeImageFormatter', () => {
       const formatter = new IncludeImageFormatter();
 
       readmeConfigSpy.mockResolvedValue({
-        includeInputsFields: [],
-        requiredOptions: {} as any,
         profiles: [
           {
             name: 'github',
@@ -97,8 +90,6 @@ describe('IncludeImageFormatter', () => {
       const formatter = new IncludeImageFormatter();
 
       readmeConfigSpy.mockResolvedValue({
-        includeInputsFields: [],
-        requiredOptions: {} as any,
         profiles: [
           {
             name: 'github',

@@ -68,5 +68,8 @@
   },
   "peerDependencies": {
     "prettier": "^2.5.1"
+  },
+  "engines": {
+    "node": ">=15"
   }
 }
