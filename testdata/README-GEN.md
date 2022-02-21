@@ -65,11 +65,11 @@ This is some documentation for task 1. Current version is: 0.3.3
 | Argument                                   | Description                                                                                                                         |
 | :----------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------- |
 | `mode` <br />Mode                          | **(Optional)** Some additional help with [markdown link](#) <br /> Options: `replace`, `substitute` <br /> Default value: `replace` |
-| `inputType` <br />Input Mode               | **(Required)** undefined <br /> Options: `file`, `inline` <br /> Default value: `file`                                              |
-| `content` <br />Content                    | **(Optional)** undefined <br />                                                                                                     |
+| `inputType` <br />Input Mode               | **(Required)** <br /> Options: `file`, `inline` <br /> Default value: `file`                                                        |
+| `content` <br />Content                    | **(Optional)** <br />                                                                                                               |
 | `inputFile` <br />Input File               | **(Optional)** Input file to perform transformation on <br /> Default value: `.env`                                                 |
 | `outputFile` <br />Output File             | **(Optional)** File to write transformed values to <br /> Default value: `.env`                                                     |
-| `preserveComments` <br />Preserve Comments | **(Optional)** undefined <br />                                                                                                     |
+| `preserveComments` <br />Preserve Comments | **(Optional)** <br />                                                                                                               |
 
 
 ### Output variables

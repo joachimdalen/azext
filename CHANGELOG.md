@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.7.0 (2022-02-21)
+
+**🔥 BREAKING CHANGES 🔥**
+
+- Format for task input generation has changed
+- Removed `includeInputFields` and `requiredOptions` from README config
+
+---
+
+### 🚀 Features (1)
+
+#### `readme@0.7.0`
+
+- New layout for task input
+  - Suggested in [GH#48 - Rewrite task input command to produce better output](https://github.com/joachimdalen/azext/pull/48)
+
+---
+
 ## 0.6.0 (2022-02-19)
 
 ### 🛠️ Maintenance (1)
@@ -167,6 +185,11 @@ This release introduces a new command (`azext readme`) to manage documentation. 
 
 ---
 
+### 🚀 Features (1)
+
+- Add support for global options
+  - Added in [PR#7 - Update documentation](https://github.com/joachimdalen/azext/pull/7)
+
 ### 🛠️ Maintenance (2)
 
 - Split CLI and implementation in preparation for Node API
@@ -175,11 +198,6 @@ This release introduces a new command (`azext readme`) to manage documentation. 
 
 - Forced path of configuration files to be in folder `.azext/`
   - Pull Request: [PR#12 - Refactoring and docs generation](https://github.com/joachimdalen/azext/pull/12)
-
-### 🚀 Features (1)
-
-- Add support for global options
-  - Added in [PR#7 - Update documentation](https://github.com/joachimdalen/azext/pull/7)
 
 ### 📝 Documentation (1)
 
