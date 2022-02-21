@@ -1,5 +1,34 @@
 [
   {
+    "publishDate": "2022-02-21",
+    "version": "0.7.0",
+    "sections": {
+      "breakingChanges": [
+        {
+          "type": "list-item",
+          "content": "Format for task input generation has changed"
+        },
+        {
+          "type": "list-item",
+          "content": "Removed `includeInputFields` and `requiredOptions` from README config"
+        }
+      ]
+    },
+    "modules": [
+      {
+        "name": "readme",
+        "version": "0.7.0",
+        "changes": [
+          {
+            "type": "feature",
+            "description": "New layout for task input",
+            "issue": 48
+          }
+        ]
+      }
+    ]
+  },
+  {
     "publishDate": "2022-02-19",
     "version": "0.6.0",
     "changes": [

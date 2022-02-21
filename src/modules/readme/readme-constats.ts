@@ -7,15 +7,10 @@ import { ReplacementCommand } from './models/replacement-command';
 
 export const README_NAME = 'readme.json';
 export const README_DEFAULT_FILE: ReadmeConfig = {
-  includeInputsFields: [
-    { field: 'name', title: 'Option' },
-    { field: 'defaultValue', title: 'Default Value' },
-    { field: 'required', title: 'Required' },
-    { field: 'helpMarkDown', title: 'Help' }
-  ],
-  requiredOptions: {
-    false: ':x:',
-    true: ':white_check_mark:'
+  partials: {
+    'some-partial': {
+      file: '../somefile.md'
+    }
   }
 };
 

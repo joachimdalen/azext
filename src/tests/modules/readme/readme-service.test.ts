@@ -96,8 +96,6 @@ describe('ReadmeService', () => {
         throw new Error('Unknown path');
       });
       readmeConfigSpy.mockResolvedValue({
-        includeInputsFields: [],
-        requiredOptions: {} as any,
         partials: {
           'file-one': {
             file: '../file-one.md'
@@ -145,8 +143,6 @@ describe('ReadmeService', () => {
         throw new Error('Unknown path');
       });
       readmeConfigSpy.mockResolvedValue({
-        includeInputsFields: [],
-        requiredOptions: {} as any,
         partials: {
           'file-one': {
             file: '../file-one.md'

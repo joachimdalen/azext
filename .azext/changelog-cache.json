@@ -1,6 +1,13 @@
 {
   "issues": [
     {
+      "id": 1146070530,
+      "number": 48,
+      "submitter": "joachimdalen",
+      "title": "Rewrite task input command to produce better output",
+      "url": "https://github.com/joachimdalen/azext/pull/48"
+    },
+    {
       "id": 1144551846,
       "number": 47,
       "submitter": "joachimdalen",
