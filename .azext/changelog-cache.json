@@ -108,6 +108,13 @@
   ],
   "pullRequests": [
     {
+      "id": 938675107,
+      "number": 49,
+      "submitter": "joachimdalen",
+      "title": "Update dependencies",
+      "url": "https://github.com/joachimdalen/azext/pull/49"
+    },
+    {
       "id": 858418927,
       "number": 46,
       "submitter": "joachimdalen",
